@@ -7,6 +7,16 @@ const nextConfig = {
             hostname: "w7.pngwing.com",
             port: "",
           },
+          {
+            protocol: "https",
+            hostname: "unsplash-assets.imgix.net",
+            port: "",
+          },
+          {
+            protocol: "https",
+            hostname: "images.unsplash.com",
+            port: "",
+          },
         ],
       },
 };

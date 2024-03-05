@@ -7,7 +7,7 @@ export interface INavbarProps {}
 
 export default function Navbar(props: INavbarProps) {
   return (
-    <div className="sticky top-[62px] bg-white h-14 text-sm">
+    <div className="sticky top-[62px] bg-white h-14 text-sm z-10">
       <div className="flex">
         <div className="flex gap-10 border-b ">
           <div className="flex gap-6 border-b-1 border-b-black items-center">

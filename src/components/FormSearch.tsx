@@ -2,15 +2,17 @@ import * as React from "react";
 import { GrSearch } from "react-icons/gr";
 import { MdOutlineControlCamera } from "react-icons/md";
 
-export interface IFormSearchProps {}
+export interface IFormSearchProps {
+  className?: String
+}
 
 export default function FormSearch(props: IFormSearchProps) {
   return (
-    <div className="flex items-center grow text-text relative rounded-3xl h-full bg-[#eee]">
+    <div className={"flex items-center grow text-text relative rounded-3xl h-full bg-[#eee] " + props?.className}>
       <button className="flex items-center h-full">
         <GrSearch className="w-8 h-8 pl-[14px] text-grey hover:text-black" />
       </button>
-      <div className="flex grow text-text bg-inherit h-full">
+      <div className="flex items-center grow text-text bg-inherit h-full">
         <input
           type="text"
           placeholder="Search high-resolution images"
