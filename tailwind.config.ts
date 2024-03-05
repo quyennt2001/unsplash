@@ -16,11 +16,12 @@ const config: Config = {
       colors: {
         text: "#111",
         grey: "#767676",
-        border: "#d1d1d1"
+        border: "#d1d1d1",
+        "modal-white": "rgba(255, 255, 255, 0.8)",
       },
       boxShadow: {
-        'popup': "0 8px 16px #00000029"
-      }
+        popup: "0 8px 16px #00000029",
+      },
     },
   },
   plugins: [],

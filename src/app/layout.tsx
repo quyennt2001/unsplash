@@ -18,10 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="w-full">
-        <header>
+        <header className="relative z-10">
           <Header />
         </header>
-        {children}
+        <div className="w-full px-5">{children}</div>
       </body>
     </html>
   );

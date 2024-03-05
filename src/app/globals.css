@@ -7,9 +7,39 @@
 @layer base {
   html {
     font-family: 'Roboto', sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 1.6;
+  }
+}
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 0px;
+    /* height: 20px; */
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #fafafa;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #aea9a9;
+    border-radius: 100vh;
+    border: 3px solid #f6f7ed;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #807f7f;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
