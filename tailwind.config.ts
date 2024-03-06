@@ -17,7 +17,7 @@ const config: Config = {
         text: "#111",
         grey: "#767676",
         border: "#d1d1d1",
-        "modal-white": "rgba(255, 255, 255, 0.8)",
+        "modal-white": "rgba(255, 255, 255, 0.2)",
         modal: "rgba(0, 0, 0, 0.3)"
       },
       boxShadow: {
