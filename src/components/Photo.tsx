@@ -22,7 +22,7 @@ export default function Photo(props: IPhotoProps) {
           className="w-full h-auto"
           sizes="100vw"
         />
-        <div className="absolute top-0 left-0 w-full h-full hidden flex-col justify-between group-hover:flex p-5">
+        <div className="absolute top-0 left-0 w-full h-full hidden flex-col bg-modal justify-between group-hover:flex p-5">
           <div className="flex justify-end gap-2">
             <button className="bg-white w-10 h-8 flex items-center justify-center rounded-sm text-grey hover:text-black">
               <FaHeart className=" w-[14px] h-[14px]" />

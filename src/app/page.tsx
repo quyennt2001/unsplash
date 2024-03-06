@@ -1,13 +1,20 @@
+'use client'
+
+import * as React from "react";
+import {useEffect} from 'react'
 import FormSearch from "@/components/FormSearch";
 import ListImage from "@/components/ListImage";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
-import * as React from "react";
 import { RiAttachment2 } from "react-icons/ri";
 
 export interface IHomeProps {}
 
 export default function Home(props: IHomeProps) {
+  useEffect(() => {
+    // console.log(window.innerHeight + window.scrollY - document.body.offsetHeight)
+  }, [])
+  
   return (
     <div>
       <Navbar />
@@ -69,7 +76,7 @@ export default function Home(props: IHomeProps) {
               </div>
             </div>
           </div>
-          <div className="w-full">
+          <div className="w-full min-h-[1000px]">
             <ListImage />
           </div>
         </div>

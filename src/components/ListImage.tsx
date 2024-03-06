@@ -2,35 +2,49 @@
 
 import * as React from "react";
 import { useState, useEffect } from "react";
-import Photo from "./Photo";
-// import Masonry from "react-responsive-masonry";
 import Masonry from "./Masonry";
 
 export interface IListImageProps {}
 
 export default function ListImage(props: IListImageProps) {
-  const [data, setData] = useState([]);
-  const [page, setPage] = useState(12);
+  const [data, setData] = useState<any>([]);
+  const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleScroll = () => {
+    if (
+      document.documentElement.offsetHeight -
+        (window.innerHeight + document.documentElement.scrollTop) <=
+        300 &&
+      !isLoading
+    ) {
+      fetchData();
+    }
+  };
+
+  const fetchData = async () => {
+    setIsLoading(false);
+    try {
+      const res = await fetch(`api/photos?page=${page}`);
+      const items = await res.json();
+      console.log(data)
+      console.log(items?.data)
+      // setData((prevItems: any) => [...prevItems, ...items?.data]);
+      setPage((prev) => prev + 1);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetch(`api/photos?per_page=${page}`)
-      .then((res) => res.json())
-      .then((data: any) => {
-        setData(data?.data);
-        // console.log(data?.data);
-      });
-  }, [page]);
+    fetchData();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [document.documentElement.scrollTop]);
 
   return (
-    // <Masonry columnsCount={3} gutter="20px">
-    //   {data?.map((item, i) => (
-    //     <Photo data={item} key={i} />
-    //   ))}
-    // </Masonry>
-    // <div className="grid grid-cols-3 gap-5">
-    //   {data?.map((item, i) => (
-    //     <Photo data={item} key={i} />
-    //   ))}
-    // </div>
     <Masonry images={data} />
   );
 }
