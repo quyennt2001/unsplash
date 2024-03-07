@@ -24,7 +24,7 @@ export default function ListPhotos({
       const res = await fetch(
         `/api/user?username=${params.username}&listname=${
           params.photos ? params.photos[0] : "photos"
-        }&per_page=10`
+        }&per_page=20`
       );
       const data = await res.json();
       // console.log(data?.data);
