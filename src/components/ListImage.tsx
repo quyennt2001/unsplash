@@ -15,7 +15,7 @@ export default function ListImage(props: IListImageProps) {
     if (
       document.documentElement.offsetHeight -
         (window.innerHeight + document.documentElement.scrollTop) <=
-        300 &&
+        200 &&
       !isLoading
     ) {
       fetchData();
@@ -23,17 +23,15 @@ export default function ListImage(props: IListImageProps) {
   };
 
   const fetchData = async () => {
-    setIsLoading(false);
+    setIsLoading(true);
     try {
       const res = await fetch(`api/photos?page=${page}`);
       const items = await res.json();
-      console.log(data)
-      console.log(items?.data)
-      // setData((prevItems: any) => [...prevItems, ...items?.data]);
-      setPage((prev) => prev + 1);
+      setData((prevItems: any) => [...prevItems, ...items?.data]);
     } catch (e) {
       console.log(e);
     } finally {
+      setPage((prev) => prev + 1);
       setIsLoading(false);
     }
   };
@@ -41,10 +39,8 @@ export default function ListImage(props: IListImageProps) {
   useEffect(() => {
     fetchData();
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [document.documentElement.scrollTop]);
+    // return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  return (
-    <Masonry images={data} />
-  );
+  return <Masonry images={data} />;
 }
