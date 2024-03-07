@@ -1,7 +1,4 @@
-"use client";
-
 import * as React from "react";
-import { useEffect } from "react";
 import FormSearch from "@/components/UI/FormSearch";
 import ListImage from "@/components/photo/ListImage";
 import Navbar from "@/components/home/Navbar";
@@ -12,10 +9,6 @@ import MenuCollection from "@/components/home/MenuCollection";
 export interface IHomeProps {}
 
 export default function Home(props: IHomeProps) {
-  useEffect(() => {
-    // console.log(window.innerHeight + window.scrollY - document.body.offsetHeight)
-  }, []);
-
   return (
     <div>
       <Navbar />
