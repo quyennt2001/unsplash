@@ -14,9 +14,9 @@ export default function Home(props: IHomeProps) {
       <Navbar />
       <div className="flex justify-center relative z-0">
         <div className="flex flex-col w-[1280px]">
-          <div className="flex items-end py-14 justify-between">
-            <div className="flex flex-col gap-4">
-              <div className="flex gap-2 items-end w-[672px] justify-between">
+          <div className="flex items-end py-14 gap-6 w-full">
+            <div className="flex flex-col gap-4 grow">
+              <div className="flex gap-2 flex-wrap items-end w-full justify-between">
                 <div className="flex grow flex-col gap-2">
                   <p className="capitalize text-[40px] font-bold">unsplash</p>
                   <div className="flex flex-col text-lg">
@@ -36,15 +36,14 @@ export default function Home(props: IHomeProps) {
                 <FormSearch className="rounded-lg" />
               </div>
             </div>
-            <div className="w-[280px] h-[280px] bg-white border border-gray-200 rounded-lg">
+            <div className="w-[280px] h-[280px] bg-white border border-gray-200 rounded-lg max-md:hidden">
               <MenuCollection />
             </div>
-            <div className="w-[280px] h-[280px] rounded-lg relative flex items-end">
-              <div className="flex absolute top-0 left-0 z-[2]">
+            <div className="w-[280px] h-[280px] rounded-lg relative flex items-end max-xl:hidden">
+              <div className="flex h-full w-full absolute top-0 left-0 z-[2]">
                 <Image
                   src="https://unsplash-assets.imgix.net/unsplashplus/asset-plus-018.jpg?dpr=1&h=280&w=280&auto=format&fit=crop&q=60"
-                  width={280}
-                  height={280}
+                  fill
                   alt=""
                   className="rounded-lg"
                 />

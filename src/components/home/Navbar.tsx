@@ -9,14 +9,14 @@ export default function Navbar(props: INavbarProps) {
   return (
     <div className="sticky top-[62px] bg-white h-14 text-sm z-10">
       <div className="flex">
-        <div className="flex gap-10 border-b ">
-          <div className="flex gap-6 border-b-1 border-b-black items-center">
+        <div className="flex gap-10 border-b w-full">
+          <div className="flex gap-6 border-b-1 border-b-black items-center overflow-hidden">
             <div className="flex gap-6 items-center">
               <Button name="editorial" selected={true} />
               <Button name="unsplash+" selected={false} />
               <span className="h-8 w-[2px] border-r-2 border-r-border"></span>
             </div>
-            <div className="flex gap-6 overflow-x-scroll no-scrollbar w-[1289px] relative">
+            <div className="flex gap-6 overflow-hidden relative">
               <div className="absolute right-0 top-0 h-14 flex items-center z-10 bg-white">
                 <button className="px-2 h-10 text-grey hover:text-black">
                   <MdOutlineNavigateNext className="h-7 w-7 " />

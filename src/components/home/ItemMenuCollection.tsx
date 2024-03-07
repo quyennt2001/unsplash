@@ -9,7 +9,7 @@ export default function ItemMenuCollection(props: IItemMenuCollectionProps) {
   const { data } = props;
   console.log(data);
   return (
-    <div className="px-3 py-2">
+    <div className="px-3 py-2 hover:bg-[#f5f5f5] rounded-md">
       <div className="flex gap-2 h-[34px]">
         <div className="relative h-8 w-8 rounded-md border">
           <Image

@@ -11,7 +11,7 @@ export default function Masonry(props: IMasonryProps) {
     column[i % 3]?.push(image);
   });
   return (
-    <div className="grid grid-cols-3 gap-5">
+    <div className="grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 gap-5">
       {column?.map((images, i) => {
         return (
           <div className="flex flex-col gap-5" key={i}>

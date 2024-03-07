@@ -8,7 +8,7 @@ export interface IFormSearchProps {
 
 export default function FormSearch(props: IFormSearchProps) {
   return (
-    <div className={"flex items-center grow text-text relative rounded-3xl h-full bg-[#eee] " + props?.className}>
+    <div className={"flex items-center grow text-text relative rounded-3xl h-full bg-[#eee] hover:bg-[#e7e7e7] " + props?.className}>
       <button className="flex items-center h-full">
         <GrSearch className="w-8 h-8 pl-[14px] text-grey hover:text-black" />
       </button>

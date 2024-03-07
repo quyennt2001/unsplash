@@ -21,7 +21,7 @@ export default function RootLayout({
         <header className="z-30 sticky top-0">
           <Header />
         </header>
-        <div className="w-full px-5">{children}</div>
+        <div className="w-full md:px-5">{children}</div>
       </body>
     </html>
   );
