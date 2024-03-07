@@ -1,7 +1,7 @@
 "use client";
 
-import PhotoDetailHeader from "@/components/PhotoDetailHeader";
-import PhotoDetailInfor from "@/components/PhotoDetailInfor";
+import PhotoDetailHeader from "@/components/photo/PhotoDetailHeader";
+import PhotoDetailInfor from "@/components/photo/PhotoDetailInfor";
 import Image from "next/image";
 import * as React from "react";
 import { useState, useEffect } from "react";

@@ -1,10 +1,10 @@
 import Image from "next/image";
 import * as React from "react";
-import FormSearch from "./FormSearch";
+import FormSearch from "../UI/FormSearch";
 import { FiMenu } from "react-icons/fi";
-import logo from "../../public/logo.png";
-import Button from "./Button";
-import Dropdown from "./Dropdown";
+import logo from '../../../public/logo.png';
+import Button from "../UI/Button";
+import Dropdown from "../UI/Dropdown";
 import Link from "next/link";
 
 export interface IHeaderProps {}

@@ -1,8 +1,8 @@
 import Link from "next/link";
 import * as React from "react";
 import img from "../../public/logo.png";
-import Avatar from "./Avatar";
-import ButtonIcon from "./ButtonIcon";
+import Avatar from "../UI/Avatar";
+import ButtonIcon from "../UI/ButtonIcon";
 import { FaHeart } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { IconType } from "react-icons";

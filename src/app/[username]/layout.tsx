@@ -1,8 +1,8 @@
 "use client";
 
-import Tabs from "@/components/Tabs";
+import Tabs from "@/components/user/Tabs";
 import { useState, useEffect } from "react";
-import UserInformation from "@/components/UserInformation";
+import UserInformation from "@/components/user/UserInformation";
 import Image from "next/image";
 import * as React from "react";
 import logo from "../../../public/logo.png";

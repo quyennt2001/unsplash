@@ -1,11 +1,10 @@
 "use client";
 
-import Collection from "@/components/Collection";
-import Masonry from "@/components/Masonry";
+import Collection from "@/components/collection/Collection";
+import Masonry from "@/components/photo/Masonry";
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { CATEGORIES } from "../../../data/category";
-import Tag from "@/components/Tag";
+import Tag from "@/components/UI/Tag";
 import Empty from "@/components/Empty";
 
 export interface IListPhotosProps {}

@@ -4,9 +4,9 @@ import { FaHeart } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { FaArrowDown } from "react-icons/fa";
 import Link from "next/link";
-import ButtonIcon from "./ButtonIcon";
+import ButtonIcon from "../UI/ButtonIcon";
 import { IconType } from "react-icons";
-import Avatar from "./Avatar";
+import Avatar from "../UI/Avatar";
 
 export interface IPhotoProps {
   data: any;

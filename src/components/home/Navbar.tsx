@@ -1,5 +1,5 @@
 import * as React from "react";
-import Button from "./Button";
+import Button from "../UI/Button";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
 

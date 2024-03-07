@@ -1,5 +1,5 @@
 import * as React from "react";
-import ButtonIcon from "./ButtonIcon";
+import ButtonIcon from "../UI/ButtonIcon";
 import { IoIosShareAlt } from "react-icons/io";
 import { IconType } from "react-icons";
 import { FaShare } from "react-icons/fa6";
@@ -8,7 +8,7 @@ import { GoKebabHorizontal } from "react-icons/go";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { LuCalendar } from "react-icons/lu";
 import { AiOutlineFileProtect } from "react-icons/ai";
-import Tag from "./Tag";
+import Tag from "../UI/Tag";
 import Link from "next/link";
 import { MdOutlineCameraAlt } from "react-icons/md";
 

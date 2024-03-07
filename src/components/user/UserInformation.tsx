@@ -11,8 +11,8 @@ import { FaCaretDown } from "react-icons/fa";
 import { FaEarthAsia } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import { RiTwitterXLine } from "react-icons/ri";
-import Tag from "@/components/Tag";
-import Dropdown from "./Dropdown";
+import Tag from "@/components/UI/Tag";
+import Dropdown from "../UI/Dropdown";
 
 export interface IUserInformationProps {
   user: any;

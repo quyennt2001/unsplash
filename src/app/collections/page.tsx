@@ -1,6 +1,6 @@
 "use client";
 
-import Collection from "@/components/Collection";
+import Collection from "@/components/collection/Collection";
 import * as React from "react";
 import { useState, useEffect } from "react";
 

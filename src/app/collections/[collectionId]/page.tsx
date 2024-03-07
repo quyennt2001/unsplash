@@ -1,15 +1,15 @@
 "use client";
 
-import Avatar from "@/components/Avatar";
-import ButtonIcon from "@/components/ButtonIcon";
+import Avatar from "@/components/UI/Avatar";
+import ButtonIcon from "@/components/UI/ButtonIcon";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { FaShare } from "react-icons/fa6";
 import { MdInfo } from "react-icons/md";
 import { GoKebabHorizontal } from "react-icons/go";
 import { IconType } from "react-icons";
-import Masonry from "@/components/Masonry";
-import Collection from "@/components/Collection";
+import Masonry from "@/components/photo/Masonry";
+import Collection from "@/components/collection/Collection";
 
 export interface IDetailCollectionProps {}
 

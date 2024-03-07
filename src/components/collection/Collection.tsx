@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
-import Tag from "./Tag";
+import Tag from "../UI/Tag";
 
 export interface ICollectionProps {
   data: any;
