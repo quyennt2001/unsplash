@@ -12,33 +12,50 @@ import { FaEarthAsia } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import { RiTwitterXLine } from "react-icons/ri";
 import Tag from "@/components/Tag";
+import Dropdown from "./Dropdown";
 
 export interface IUserInformationProps {
   user: any;
 }
 
 export default function UserInformation(props: IUserInformationProps) {
-  const ref = useRef<HTMLInputElement>(null);
-  const [isClick, setIsClick] = useState(false);
+  const refConnect = useRef<HTMLInputElement>(null);
+  const refMenu = useRef<HTMLInputElement>(null);
+  const [isClickConnect, setIsClickConnect] = useState(false);
+  const [isClickMenu, setIsClickMenu] = useState(false);
   const { user } = props;
 
-  const handleClick = (event: MouseEvent) => {
-    if (ref.current && !ref.current.contains(event.target as Node)) {
-      setIsClick(false);
+  const handleClickConnect = (event: MouseEvent) => {
+    if (
+      refConnect.current &&
+      !refConnect.current.contains(event.target as Node)
+    ) {
+      setIsClickConnect(false);
+    }
+  };
+
+  const handleClickMenu = (event: MouseEvent) => {
+    if (refMenu.current && !refMenu.current.contains(event.target as Node)) {
+      setIsClickMenu(false);
     }
   };
 
   useEffect(() => {
-    if (!isClick) return;
-    window.addEventListener("mousedown", handleClick);
-    return () => window.removeEventListener("mousedown", handleClick);
-  }, [isClick]);
+    if (isClickConnect) {
+      window.addEventListener("mousedown", handleClickConnect);
+      return () => window.removeEventListener("mousedown", handleClickConnect);
+    }
+    if (isClickMenu) {
+      window.addEventListener("mousedown", handleClickMenu);
+      return () => window.removeEventListener("mousedown", handleClickMenu);
+    }
+  }, [isClickConnect, isClickMenu]);
 
   return (
     <div className="flex justify-center pt-14 pb-14 relative z-20">
       <div className="flex w-[1280px] gap-12">
         <div className="w-[32%] flex items-start justify-end">
-          <div className="relative">
+          <div className="relative border rounded-full">
             <Image
               src={user?.profile_image?.large}
               height={150}
@@ -62,9 +79,22 @@ export default function UserInformation(props: IUserInformationProps) {
               <p className="capitalize text-[40px] font-bold ">
                 {user?.first_name} {user?.last_name}
               </p>
-              <button className="h-8 bg-white border border-border text-[#767676] px-[11px] rounded-[4px]">
-                <GoKebabHorizontal className="h-[18px] w-[18px]" />
-              </button>
+              <div className="relative group">
+                <button
+                  onClick={() => setIsClickMenu(!isClickMenu)}
+                  className="h-8 bg-white border border-border text-[#767676] px-[11px] rounded-[4px] hover:border-black hover:text-black"
+                >
+                  <GoKebabHorizontal className="h-[18px] w-[18px]" />
+                </button>
+                {isClickMenu && (
+                  <div ref={refMenu}>
+                    <Dropdown
+                      items={["Follow", "Share profile", "Report"]}
+                      right={true}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
             <div className="flex flex-col gap-4">
               <p className="max-w-[70%] text-wrap">{user?.bio}</p>
@@ -76,15 +106,15 @@ export default function UserInformation(props: IUserInformationProps) {
                 <div className="relative">
                   <button
                     className="flex gap-2 text-grey hover:text-black items-center text-sm"
-                    onClick={() => setIsClick(!isClick)}
+                    onClick={() => setIsClickConnect(!isClickConnect)}
                   >
                     <GrAttachment />
                     Connect with {user?.first_name}
                     <FaCaretDown className="h-4 w-4" />
                   </button>
-                  {isClick && (
+                  {isClickConnect && (
                     <div
-                      ref={ref}
+                      ref={refConnect}
                       className="absolute z-[1] top-6 shadow-popup rounded-[4px] origin-top-left py-2 bg-white border border-border"
                     >
                       <button className="flex gap-6 items-center text-sm h-9 w-full px-4 py-2 hover:bg-gray-100 text-grey z-[3]">

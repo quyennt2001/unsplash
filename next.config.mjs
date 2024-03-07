@@ -29,6 +29,14 @@ const nextConfig = {
           },
         ],
       },
+    // rewrites: async () => {
+    //   return [
+    //     {
+    //       source: '/@:username/',
+    //       destination: "/:username"
+    //     }
+    //   ]
+    // }
 };
 
 export default nextConfig;

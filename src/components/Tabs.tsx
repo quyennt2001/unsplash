@@ -11,11 +11,13 @@ import path from "path";
 
 export interface ITabsProps {
   username: any;
+  data: any;
 }
 
 export default function Tabs(props: ITabsProps) {
+  const { username, data } = props;
   const searchParams = useSearchParams();
-  const pathname = usePathname()
+  const pathname = usePathname();
   const list = searchParams.get("photos");
   // console.log(pathname.split('/')[2])
   return (
@@ -24,23 +26,23 @@ export default function Tabs(props: ITabsProps) {
         <ItemTab
           icon={MdInsertPhoto as IconType}
           name="photos"
-          count="2.1k"
-          selected={!pathname.split('/')[2] ? true : false}
-          to={`/${props.username}`}
+          count={data?.photos}
+          selected={!pathname.split("/")[2] ? true : false}
+          to={`/${username}`}
         />
         <ItemTab
           icon={FaHeart as IconType}
           name="likes"
-          count="39k"
-          selected={pathname.split('/')[2] === "likes" ? true : false}
-          to={`/${props.username}/likes`}
+          count={data?.likes}
+          selected={pathname.split("/")[2] === "likes" ? true : false}
+          to={`/${username}/likes`}
         />
         <ItemTab
           icon={IoMdPhotos as IconType}
           name="collections"
-          count="7k"
-          selected={pathname.split('/')[2] === "collections" ? true : false}
-          to={`/${props.username}/collections`}
+          count={data?.collections}
+          selected={pathname.split("/")[2] === "collections" ? true : false}
+          to={`/${username}/collections`}
         />
       </div>
     </div>
