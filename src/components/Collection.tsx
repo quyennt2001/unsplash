@@ -5,7 +5,7 @@ import Tag from "./Tag";
 
 export interface ICollectionProps {
   data: any;
-  username: String;
+  username?: String;
 }
 
 export default function Collection(props: ICollectionProps) {
@@ -14,7 +14,7 @@ export default function Collection(props: ICollectionProps) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-col">
-        <Link href="#">
+        <Link href={`/collections/${data?.id}`}>
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-3 grid-rows-2 grid-flow-col gap-[2px] relative group">
               <div className="absolute top-0 left-0 h-full w-full z-10 rounded-md bg-modal-white group-hover:flex hidden"></div>
@@ -60,7 +60,9 @@ export default function Collection(props: ICollectionProps) {
         <div className="flex gap-2 items-center text-grey text-sm">
           <p className="">{data?.total_photos} photos</p>
           <span className="h-[1px] w-[1px] rounded-full bg-grey"></span>
-          <p className="">Curated by {props?.username}</p>
+          <p className="">
+            Curated by {props?.username || data?.user?.username}
+          </p>
         </div>
       </div>
       <div className="flex gap-2 flex-wrap">

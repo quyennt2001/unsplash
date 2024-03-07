@@ -6,9 +6,7 @@ import Image from "next/image";
 import * as React from "react";
 import { useState, useEffect } from "react";
 
-export interface IPhotoLayoutProps {}
-
-export default function PhotoLayout({ params }: { params: { slug: string } }) {
+export default function DetailPhoto({ params }: { params: { slug: string } }) {
   const [photo, setPhoto] = useState<any>({});
 
   const fetchData = async () => {
