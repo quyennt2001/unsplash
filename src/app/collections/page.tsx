@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/components/Loading";
 import Collection from "@/components/collection/Collection";
 import * as React from "react";
 import { useState, useEffect } from "react";
@@ -45,6 +46,7 @@ export default function ListCollections(props: IListCollectionsProps) {
   return (
     <div className="flex justify-center">
       <div className="flex flex-col w-[1280px]">
+        {isLoading && <Loading />}
         <div className="pt-14 pb-[72px] flex flex-col gap-4">
           <p className="text-5xl font-bold">Collections</p>
           <p className="text-lg max-md:text-[15px]">
@@ -55,7 +57,7 @@ export default function ListCollections(props: IListCollectionsProps) {
             </span>
           </p>
         </div>
-        <div className="grid grid-cols-3 gap-x-4 gap-y-10 max-lg:grid-cols-2">
+        <div className="grid grid-cols-3 gap-x-4 gap-y-10 max-lg:grid-cols-2 max-sm:grid-cols-1">
           {collections?.map((col: any, i: number) => (
             <Collection key={i} data={col} />
           ))}

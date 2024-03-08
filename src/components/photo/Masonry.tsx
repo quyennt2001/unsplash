@@ -11,8 +11,6 @@ export default function Masonry(props: IMasonryProps) {
   props?.images?.forEach((image: any, i) => {
     column[i % props?.columnCount]?.push(image);
   });
-  console.log(props?.columnCount)
-  console.log(column)
   return (
     <div className="grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 gap-5 w-full">
       {column?.map((images, i) => {

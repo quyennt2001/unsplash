@@ -1,6 +1,6 @@
 import * as React from "react";
 import FormSearch from "@/components/UI/FormSearch";
-import ListImage from "@/components/photo/ListImage";
+import ImageInfinite from "@/components/photo/ImageInfinite";
 import Navbar from "@/components/home/Navbar";
 import Image from "next/image";
 import { RiAttachment2 } from "react-icons/ri";
@@ -61,7 +61,7 @@ export default function Home(props: IHomeProps) {
             </div>
           </div>
           <div className="w-full min-h-[1000px]">
-            <ListImage />
+            <ImageInfinite />
           </div>
         </div>
       </div>

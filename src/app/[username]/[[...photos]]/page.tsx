@@ -6,6 +6,8 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import Tag from "@/components/UI/Tag";
 import Empty from "@/components/Empty";
+import ListData from "@/components/ListData";
+import Loading from "@/components/Loading";
 
 export interface IListPhotosProps {}
 
@@ -17,8 +19,10 @@ export default function ListPhotos({
   const [images, setImages] = useState<any>([]);
   const [categories, setCategories] = useState<any>([]);
   const listname = params?.photos ? params?.photos[0] : "photos";
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async () => {
+    setIsLoading(true);
     try {
       const res = await fetch(
         `/api/user?username=${params.username}&listname=${
@@ -30,6 +34,8 @@ export default function ListPhotos({
       setImages(data?.data);
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -56,6 +62,11 @@ export default function ListPhotos({
   return (
     <div className="flex justify-center">
       <div className="w-[1280px]">
+        {isLoading && (
+          <div className="w-full min-h-[400px] flex items-center justify-center">
+            <Loading className="flex" />
+          </div>
+        )}
         {images?.length > 0 ? (
           listname === "collections" ? (
             <div className="grid grid-cols-3 gap-x-4 gap-y-10 max-lg:grid-cols-2 max-sm:grid-cols-1">
@@ -65,14 +76,7 @@ export default function ListPhotos({
             </div>
           ) : (
             <>
-              <div className="">
-                <div className="flex max-lg:hidden">
-                  <Masonry images={images} columnCount={3} />
-                </div>
-                <div className="hidden max-lg:flex">
-                  <Masonry images={images} columnCount={2} />
-                </div>
-              </div>
+              <ListData data={images} />
               <div className="py-12">
                 <button className="h-16 bg-white border border-border text-grey px-4 w-full rounded font-medium hover:border-black hover:text-black">
                   Load more

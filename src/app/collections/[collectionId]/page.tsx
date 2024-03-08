@@ -10,6 +10,7 @@ import { GoKebabHorizontal } from "react-icons/go";
 import { IconType } from "react-icons";
 import Masonry from "@/components/photo/Masonry";
 import Collection from "@/components/collection/Collection";
+import ListData from "@/components/ListData";
 
 export interface IDetailCollectionProps {}
 
@@ -89,14 +90,7 @@ export default function DetailCollection({
         </div>
         <div className="flex mb-6">{collection?.total_photos} photos</div>
         <div className="flex flex-col gap-[72px]">
-          <div className="">
-            <div className="flex max-lg:hidden">
-              <Masonry images={photos} columnCount={3} />
-            </div>
-            <div className="hidden max-lg:flex">
-              <Masonry images={photos} columnCount={2} />
-            </div>
-          </div>
+          <ListData data={photos} />
           <div className="flex flex-col">
             <p className="text-2xl font-semibold mt-4 mb-6">
               You might also like

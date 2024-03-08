@@ -3,6 +3,8 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import Masonry from "./Masonry";
+import ListData from "../ListData";
+import Loading from "../Loading";
 
 export interface IListImageProps {}
 
@@ -43,13 +45,9 @@ export default function ListImage(props: IListImageProps) {
   }, []);
 
   return (
-    <div className="">
-        <div className="flex max-lg:hidden">
-          <Masonry images={data} columnCount={3} />
-        </div>
-        <div className="hidden max-lg:flex">
-          <Masonry images={data} columnCount={2} />
-        </div>
+    <div>
+      <ListData data={data} />
+      {isLoading && <Loading />}
     </div>
   );
 }

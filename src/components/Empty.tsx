@@ -1,6 +1,7 @@
 import Image from "next/image";
 import * as React from "react";
 import empty from "../../public/empty.avif";
+import Loading from "./Loading";
 
 export interface IEmptyProps {}
 
