@@ -14,7 +14,7 @@ export default function MenuCollection(props: IMenuCollectionProps) {
     try {
       const res = await fetch(`/api/collections?page=2&per_page=4`);
       const data = await res.json();
-      console.log(data?.data);
+      // console.log(data?.data);
       setCollections(data?.data);
     } catch (e) {
       console.log(e);

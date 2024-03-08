@@ -42,5 +42,14 @@ export default function ListImage(props: IListImageProps) {
     // return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return <Masonry images={data} />;
+  return (
+    <div className="">
+        <div className="flex max-lg:hidden">
+          <Masonry images={data} columnCount={3} />
+        </div>
+        <div className="hidden max-lg:flex">
+          <Masonry images={data} columnCount={2} />
+        </div>
+    </div>
+  );
 }
