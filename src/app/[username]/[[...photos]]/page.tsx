@@ -58,14 +58,21 @@ export default function ListPhotos({
       <div className="w-[1280px]">
         {images?.length > 0 ? (
           listname === "collections" ? (
-            <div className="grid grid-cols-3 gap-x-4 gap-y-10 max-lg:grid-cols-2">
+            <div className="grid grid-cols-3 gap-x-4 gap-y-10 max-lg:grid-cols-2 max-sm:grid-cols-1">
               {images?.map((col: any, i: number) => (
                 <Collection key={i} data={col} username={params.username} />
               ))}
             </div>
           ) : (
             <>
-              <Masonry images={images} />
+              <div className="">
+                <div className="flex max-lg:hidden">
+                  <Masonry images={images} columnCount={3} />
+                </div>
+                <div className="hidden max-lg:flex">
+                  <Masonry images={images} columnCount={2} />
+                </div>
+              </div>
               <div className="py-12">
                 <button className="h-16 bg-white border border-border text-grey px-4 w-full rounded font-medium hover:border-black hover:text-black">
                   Load more

@@ -71,9 +71,11 @@ export default function DetailCollection({
       <div className="w-[1280px] mb-14">
         <div className="pt-14 pb-[72px] gap-4 flex flex-col">
           <p className="text-5xl font-bold">{collection?.title}</p>
-          <div className="flex justify-between">
-            <div className="flex flex-col gap-6">
-              <p className="text-lg">{collection?.description}</p>
+          <div className="flex justify-between max-md:flex-col max-md:gap-6">
+            <div className="flex flex-col gap-6 w-1/2 max-md:w-full">
+              <p className="text-lg max-md:text-[15px]">
+                {collection?.description}
+              </p>
               <div className="flex gap-2 items-center">
                 <Avatar src={collection?.user?.profile_image?.large} />
                 <p>{collection?.user?.name}</p>
@@ -87,12 +89,19 @@ export default function DetailCollection({
         </div>
         <div className="flex mb-6">{collection?.total_photos} photos</div>
         <div className="flex flex-col gap-[72px]">
-          <Masonry images={photos} />
+          <div className="">
+            <div className="flex max-lg:hidden">
+              <Masonry images={photos} columnCount={3} />
+            </div>
+            <div className="hidden max-lg:flex">
+              <Masonry images={photos} columnCount={2} />
+            </div>
+          </div>
           <div className="flex flex-col">
             <p className="text-2xl font-semibold mt-4 mb-6">
               You might also like
             </p>
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-6">
               {relateds?.map((item: any, i: number) => (
                 <Collection data={item} key={i} />
               ))}

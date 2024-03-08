@@ -53,8 +53,8 @@ export default function UserInformation(props: IUserInformationProps) {
 
   return (
     <div className="flex justify-center pt-14 pb-14 relative z-20">
-      <div className="flex w-[1280px] gap-12">
-        <div className="w-[32%] flex items-start justify-end">
+      <div className="flex w-[1280px] gap-12 max-md:flex-col max-md:gap-6">
+        <div className="w-[32%] max-md:w-full flex items-start justify-end max-md:justify-start">
           <div className="relative border rounded-full">
             <Image
               src={user?.profile_image?.large}
@@ -68,15 +68,15 @@ export default function UserInformation(props: IUserInformationProps) {
             </div>
           </div>
         </div>
-        <div className="w-[68%] flex flex-col gap-4">
+        <div className="w-[68%] max-md:w-full flex flex-col gap-4">
           <div>
-            <button className="bg-[#f5f5f5] rounded-[70px] py-1 px-3">
+            <button className="bg-[#f5f5f5] rounded-[70px] py-1 px-3 max-md:hidden">
               Subscriber
             </button>
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex gap-6 items-center">
-              <p className="capitalize text-[40px] font-bold ">
+              <p className="capitalize text-[40px] max-md:text-[28px] font-bold ">
                 {user?.first_name} {user?.last_name}
               </p>
               <div className="relative group">
@@ -97,7 +97,7 @@ export default function UserInformation(props: IUserInformationProps) {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <p className="max-w-[70%] text-wrap">{user?.bio}</p>
+              <p className="w-[70%] max-lg:w-[90%] text-wrap text-[15px] leading-[1.6] max-md:w-full">{user?.bio}</p>
               <div className="flex flex-col gap-2">
                 <button className="flex gap-2 text-grey hover:text-black items-center text-sm">
                   <HiMapPin className="h-4 w-4" />

@@ -24,11 +24,11 @@ export default function ItemTab(props: IItemTabProps) {
       >
         {
           <props.icon
-            className={props?.selected ? "text-black" : "text-border"}
+            className={"max-md:hidden " + (props?.selected ? "text-black" : "text-border")}
           />
         }
         <p className="capitalize text-sm">{props?.name}</p>
-        <p className="text-sm">{props?.count}</p>
+        <p className="text-sm max-md:hidden">{props?.count}</p>
       </div>
     </Link>
   );
