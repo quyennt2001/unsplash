@@ -5,10 +5,8 @@ import ButtonIcon from "@/components/UI/ButtonIcon";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { FaShare } from "react-icons/fa6";
-import { MdInfo } from "react-icons/md";
 import { GoKebabHorizontal } from "react-icons/go";
 import { IconType } from "react-icons";
-import Masonry from "@/components/photo/Masonry";
 import Collection from "@/components/collection/Collection";
 import ListData from "@/components/ListData";
 
@@ -27,7 +25,6 @@ export default function DetailCollection({
     try {
       const res = await fetch(`/api/collections/${params?.collectionId}`);
       const data = await res.json();
-      // console.log(data?.data);
       setCollection(data?.data);
     } catch (e) {
       console.log(e);
@@ -39,9 +36,7 @@ export default function DetailCollection({
       const res = await fetch(
         `/api/collections/${params?.collectionId}/photos`
       );
-      // console.log(res);
       const data = await res.json();
-      // console.log("photos", data?.data);
       setPhotos(data?.data);
     } catch (e) {
       console.log(e);
@@ -54,7 +49,7 @@ export default function DetailCollection({
         `/api/collections/${params?.collectionId}/related`
       );
       const data = await res.json();
-      console.log(data?.data);
+      // console.log(data?.data);
       setRelateds(data?.data);
     } catch (e) {
       console.log(e);

@@ -36,22 +36,24 @@ export default function DetailPhoto({ params }: { params: { slug: string } }) {
           <Loading className="flex" />
         </div>
       ) : (
-        <div>
-          <PhotoDetailHeader data={photo?.user} />
-          <div className="py-[10px] px-[300px] flex justify-center">
-            <div className="relative">
-              <Image
-                src={photo?.urls?.regular}
-                height={0}
-                width={0}
-                alt=""
-                className="w-full h-auto"
-                sizes="100vw"
-              />
+        // <div className="fixed flex top-0 left-0 right-0 bottom-0 items-center justify-center bg-modal z-20">
+          <div className="bg-white">
+            <PhotoDetailHeader data={photo?.user} />
+            <div className="py-[10px] px-[300px] flex justify-center">
+              <div className="relative">
+                <Image
+                  src={photo?.urls?.regular}
+                  height={0}
+                  width={0}
+                  alt=""
+                  className="w-full h-auto"
+                  sizes="100vw"
+                />
+              </div>
             </div>
+            <PhotoDetailInfor data={photo} />
           </div>
-          <PhotoDetailInfor data={photo} />
-        </div>
+        // </div>
       )}
     </div>
   );

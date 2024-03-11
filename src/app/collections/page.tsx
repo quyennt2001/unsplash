@@ -3,23 +3,23 @@
 import Loading from "@/components/Loading";
 import Collection from "@/components/collection/Collection";
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export interface IListCollectionsProps {}
 
 export default function ListCollections(props: IListCollectionsProps) {
   const [collections, setCollections] = useState<any>([]);
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const page = useRef(1)
 
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`/api/collections?page=${page}`);
+      const res = await fetch(`/api/collections?page=${page.current}`);
       const data = await res?.json();
       setCollections((prev: any) => [...prev, ...data?.data]);
-      // console.log(data?.data);
-      setPage(page + 1);
+      page.current ++
     } catch (e) {
       console.log(e);
     } finally {

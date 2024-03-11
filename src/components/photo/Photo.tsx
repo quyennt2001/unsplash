@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import * as React from "react";
+import { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { FaArrowDown } from "react-icons/fa";
@@ -7,16 +10,39 @@ import Link from "next/link";
 import ButtonIcon from "../UI/ButtonIcon";
 import { IconType } from "react-icons";
 import Avatar from "../UI/Avatar";
+import ModalPhoto from "./ModalPhoto";
 
 export interface IPhotoProps {
   data: any;
 }
 
 export default function Photo(props: IPhotoProps) {
+  const [isShow, setIsShow] = useState(false);
   const { data } = props;
+
   return (
-    <Link href={{pathname: `/photos/${data?.slug}`}}>
-      <div className="w-full h-auto relative cursor-zoom-in group">
+    // <Link href={{pathname: `/photos/${data?.slug}`}}>
+    <>
+      {isShow && (
+        <ModalPhoto photo={data} setIsShow={setIsShow} isShow={isShow} />
+      )}
+      <div
+        className="w-full h-auto relative cursor-zoom-in group"
+        onClick={() => {
+          setIsShow(true);
+          document.body.style.overflow = "hidden";
+          window.history.replaceState(
+            // {
+            //   ...window.history.state,
+            //   as: `/photos/${data?.slug}`,
+            //   url: `/photos/${data?.slug}`,
+            // },
+            null,
+            "",
+            `/photos/${data?.slug}`
+          );
+        }}
+      >
         <div className="relative w-full">
           <Image
             src={data?.urls?.regular}
@@ -52,6 +78,7 @@ export default function Photo(props: IPhotoProps) {
           </div>
         </div>
       </div>
-    </Link>
+    </>
+    // </Link>
   );
 }

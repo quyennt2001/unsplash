@@ -5,14 +5,16 @@ import Navbar from "@/components/home/Navbar";
 import Image from "next/image";
 import { RiAttachment2 } from "react-icons/ri";
 import MenuCollection from "@/components/home/MenuCollection";
+import ModalPhoto from "@/components/photo/ModalPhoto";
 
 export interface IHomeProps {}
 
 export default function Home(props: IHomeProps) {
   return (
-    <div>
+    <div className="no-scrollbar">
       <Navbar />
-      <div className="flex justify-center relative z-0">
+      {/* <ModalPhoto /> */}
+      <div className="flex justify-center relative">
         <div className="flex flex-col w-[1280px]">
           <div className="flex items-end py-14 gap-6 w-full">
             <div className="flex flex-col gap-4 grow">
@@ -24,7 +26,7 @@ export default function Home(props: IHomeProps) {
                     <p>Powered by creators everywhere.</p>
                   </div>
                 </div>
-                <button className="h-8 bg-[#eee] rounded-lg flex items-center flex-wrap gap-2 text-[12px] px-3">
+                <button className="h-8 bg-[#eee] rounded-lg flex items-center flex-wrap gap-2 text-[12px] px-3 hover:bg-[#e7e7e7]">
                   Supported by
                   <div className="flex items-center gap-2 font-bold uppercase">
                     <RiAttachment2 />

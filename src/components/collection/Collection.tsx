@@ -32,7 +32,7 @@ export default function Collection(props: ICollectionProps) {
               <div className="row-span-1 col-span-1 h-max">
                 <div className="relative aspect-[9/10]">
                   <Image
-                    src={preview_photo[1].urls.small_s3}
+                    src={preview_photo[1]?.urls.small_s3 || preview_photo[0].urls.regular}
                     objectFit="contains"
                     fill
                     alt=""
@@ -43,7 +43,7 @@ export default function Collection(props: ICollectionProps) {
               <div className="row-span-1 col-span-1">
                 <div className="relative aspect-[9/10]">
                   <Image
-                    src={preview_photo[2].urls.small_s3}
+                    src={preview_photo[2]?.urls.small_s3 || preview_photo[0].urls.regular}
                     objectFit="contains"
                     fill
                     alt=""
@@ -53,7 +53,7 @@ export default function Collection(props: ICollectionProps) {
               </div>
             </div>
             <div className="truncate text-lg font-semibold">
-              {data?.description}
+              {data?.title}
             </div>
           </div>
         </Link>

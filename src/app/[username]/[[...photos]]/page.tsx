@@ -1,10 +1,8 @@
 "use client";
 
 import Collection from "@/components/collection/Collection";
-import Masonry from "@/components/photo/Masonry";
 import * as React from "react";
 import { useState, useEffect } from "react";
-import Tag from "@/components/UI/Tag";
 import Empty from "@/components/Empty";
 import ListData from "@/components/ListData";
 import Loading from "@/components/Loading";
@@ -17,7 +15,6 @@ export default function ListPhotos({
   params: { photos: string[any]; username: string };
 }) {
   const [images, setImages] = useState<any>([]);
-  const [categories, setCategories] = useState<any>([]);
   const listname = params?.photos ? params?.photos[0] : "photos";
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,10 +24,9 @@ export default function ListPhotos({
       const res = await fetch(
         `/api/user?username=${params.username}&listname=${
           params.photos ? params.photos[0] : "photos"
-        }&per_page=20`
+        }&per_page=200`
       );
       const data = await res.json();
-      // console.log(data?.data);
       setImages(data?.data);
     } catch (e) {
       console.log(e);
@@ -39,24 +35,8 @@ export default function ListPhotos({
     }
   };
 
-  const fetchUser = async () => {
-    try {
-      const res = await fetch(`/api/user?username=${params?.username}`);
-      const data = await res.json();
-      // console.log(data?.data?.tags?.aggregated);
-      setCategories(data?.data?.tags?.aggregated);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    fetchUser();
-  }, [params?.username]);
-
   useEffect(() => {
     fetchData();
-    // console.log(params?.photos);
   }, [params.photos]);
 
   return (
@@ -75,24 +55,7 @@ export default function ListPhotos({
               ))}
             </div>
           ) : (
-            <>
-              <ListData data={images} />
-              <div className="py-12">
-                <button className="h-16 bg-white border border-border text-grey px-4 w-full rounded font-medium hover:border-black hover:text-black">
-                  Load more
-                </button>
-              </div>
-              <div className="flex flex-col gap-6 py-5">
-                <p className="text-2xl font-semibold leading-[1.3]">
-                  Pawel's work appears in the following categories
-                </p>
-                <div className="flex gap-2 flex-wrap">
-                  {categories?.map((cate: any, i: number) => (
-                    <Tag name={cate?.source?.title || cate?.title} key={i} />
-                  ))}
-                </div>
-              </div>
-            </>
+            <ListData data={images} />
           )
         ) : (
           <Empty />

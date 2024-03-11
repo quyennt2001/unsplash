@@ -11,6 +11,7 @@ import { AiOutlineFileProtect } from "react-icons/ai";
 import Tag from "../UI/Tag";
 import Link from "next/link";
 import { MdOutlineCameraAlt } from "react-icons/md";
+import { PiShareFatFill } from "react-icons/pi";
 
 export interface IPhotoDetailInforProps {
   data: any;
@@ -25,11 +26,11 @@ export default function PhotoDetailInfor(props: IPhotoDetailInforProps) {
           <div className="flex gap-28 items-center">
             <div className="flex flex-col h-full justify-between">
               <p className="text-grey text-sm">Views</p>
-              <p className="font-medium">{data?.views}</p>
+              <p className="font-medium">{data?.views || 0}</p>
             </div>
             <div className="flex flex-col h-full justify-between">
               <p className=" text-grey text-sm">Downloads</p>
-              <p className="font-medium">{data?.downloads}</p>
+              <p className="font-medium">{data?.downloads || 0}</p>
             </div>
             <div className="flex flex-col h-full justify-between">
               <p className=" text-grey text-sm">Featured in</p>
@@ -39,17 +40,20 @@ export default function PhotoDetailInfor(props: IPhotoDetailInforProps) {
             </div>
           </div>
           <div className="flex gap-2 items-center">
-            <ButtonIcon icon={FaShare as IconType} name="share" />
-            <ButtonIcon icon={MdInfo as IconType} name="info" />
+            <ButtonIcon icon={PiShareFatFill as IconType} name="share" />
             <ButtonIcon icon={GoKebabHorizontal as IconType} />
           </div>
         </div>
         <div className="flex flex-col gap-[6px] text-grey">
-          <div className="flex gap-[6px] items-center">
-            <LuCalendar className="h-[14px] w-[14px]" />
-            <p className="text-sm">Published on {data?.created_at}</p>
-          </div>
-          {data?.exif && (
+          {data?.created_at && (
+            <div className="flex gap-[6px] items-center">
+              <LuCalendar className="h-[14px] w-[14px]" />
+              <p className="text-sm">
+                Published on {data?.created_at.substring(0, 10)}
+              </p>
+            </div>
+          )}
+          {data?.exif?.name && (
             <div className="flex gap-[6px] items-center">
               <MdOutlineCameraAlt className="h-[14px] w-[14px]" />
               <p className="text-sm">{data?.exif?.name}</p>
