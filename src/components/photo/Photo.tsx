@@ -38,7 +38,7 @@ export default function Photo(props: IPhotoProps) {
   return (
     <>
       {isShow && (
-        <ModalPhoto photo={data} setIsShow={setIsShow} isShow={isShow} />
+        <ModalPhoto slug={data?.slug} setIsShow={setIsShow} isShow={isShow} />
       )}
       <div className="w-full h-auto relative cursor-zoom-in group">
         <div className="relative w-full">

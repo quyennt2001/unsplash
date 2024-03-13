@@ -10,13 +10,19 @@ import { FaAngleDown } from "react-icons/fa6";
 
 export interface IPhotoDetailHeaderProps {
   data: any;
+  sticky: number;
 }
 
 export default function PhotoDetailHeader(props: IPhotoDetailHeaderProps) {
-  const { data } = props;
+  const { data, sticky } = props;
   // console.log(data);
   return (
-    <div className="sticky top-[62px] bg-white h-[62px] text-sm z-10">
+    <div
+      className={
+        `sticky bg-white h-[62px] text-sm z-10 ` +
+        (sticky ? `top-[${sticky}px]` : "top-0")
+      }
+    >
       <div className="py-[13px] flex items-center gap-2 justify-between">
         <Link href={`/${data?.username}`} className="flex items-center gap-2">
           <Avatar src={data?.profile_image?.large} />
