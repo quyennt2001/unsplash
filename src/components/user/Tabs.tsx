@@ -7,7 +7,6 @@ import { MdInsertPhoto } from "react-icons/md";
 import { FaHeart } from "react-icons/fa6";
 import { IoMdPhotos } from "react-icons/io";
 import { IconType } from "react-icons";
-import path from "path";
 
 export interface ITabsProps {
   username: any;
@@ -16,10 +15,8 @@ export interface ITabsProps {
 
 export default function Tabs(props: ITabsProps) {
   const { username, data } = props;
-  const searchParams = useSearchParams();
   const pathname = usePathname();
-  const list = searchParams.get("photos");
-  // console.log(pathname.split('/')[2])
+
   return (
     <div className="mb-14 border-b border-b-border sticky top-[62px] bg-white z-10">
       <div className="flex gap-8">

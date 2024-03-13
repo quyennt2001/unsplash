@@ -1,7 +1,4 @@
-"use client";
-
 import Tabs from "@/components/user/Tabs";
-import { useState, useEffect } from "react";
 import UserInformation from "@/components/user/UserInformation";
 import Image from "next/image";
 import * as React from "react";
@@ -9,11 +6,21 @@ import logo from "../../../public/logo.png";
 import Tag from "@/components/UI/Tag";
 import api from "../api/axiosConfig";
 
-export default function UserLayout({
+async function getData(username: string) {
+  try {
+    const res = await api(`/users/${username}`);
+    const data = JSON.parse(JSON.stringify(res));
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export default async function UserLayout({
   children,
   params,
 }: Readonly<{ children: React.ReactNode; params: { username: string } }>) {
-  const [user, setUser] = useState<any>({});
+  const user = await getData(params?.username);
 
   const formatNumber = (num: number, precision = 1) => {
     const map = [
@@ -34,20 +41,6 @@ export default function UserLayout({
     return num;
   };
 
-  const fetchData = async () => {
-    try {
-      const res = await api(`/users/${params?.username}`)
-      const data = JSON.parse(JSON.stringify(res));
-      // console.log(data)
-      setUser(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
   return (
     <div className="">
       <UserInformation user={user} />
@@ -69,7 +62,6 @@ export default function UserLayout({
         }}
       />
       <div>{children}</div>
-
       <div className="w-full flex justify-center">
         <div className="w-[1280px] py-20 flex flex-col gap-10">
           <div className="flex flex-col gap-10">

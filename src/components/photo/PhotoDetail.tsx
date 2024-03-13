@@ -24,7 +24,6 @@ export default function PhotoDetail(props: IPhotoDetailProps) {
       const res = await api(`/photos/${slug}`);
       const data = JSON.parse(JSON.stringify(res));
       setPhoto(data);
-      // console.log(data);
     } catch (e) {
       console.log(e);
     } finally {
@@ -40,7 +39,7 @@ export default function PhotoDetail(props: IPhotoDetailProps) {
     <div className="bg-white">
       <PhotoDetailHeader data={photo?.user} sticky={sticky} />
       <div className="py-[10px] px-[300px] flex justify-center">
-        <div className="relative">
+        <div className="relative min-h-[300px] min-w-[400px] bg-sketelon">
           <Image
             src={photo?.urls?.regular}
             height={0}

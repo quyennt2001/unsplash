@@ -43,8 +43,8 @@ export default function ListCollections(props: IListCollectionsProps) {
   }, [page]);
 
   useEffect(() => {
-    // window.addEventListener("scroll", handleScroll);
-    // return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (

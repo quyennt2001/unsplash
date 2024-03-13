@@ -23,13 +23,9 @@ export default function Photo(props: IPhotoProps) {
   const handleClickShowModal = () => {
     setIsShow(true);
     document.body.style.overflow = "hidden";
-    window.history.replaceState(
-      // {
-      //   ...window.history.state,
-      //   as: `/photos/${data?.slug}`,
-      //   url: `/photos/${data?.slug}`,
-      // },
+    window.history.pushState(
       null,
+      // null,
       "",
       `/photos/${data?.slug}`
     );

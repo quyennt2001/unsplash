@@ -2,55 +2,47 @@
 
 import Collection from "@/components/collection/Collection";
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Empty from "@/components/Empty";
 import ListData from "@/components/ListData";
-import Loading from "@/components/Loading";
 import api from "@/app/api/axiosConfig";
+import { useRouter } from "next/navigation";
 
 export default function ListPhotos({
   params,
 }: {
   params: { photos: string[any]; username: string };
 }) {
-  const [images, setImages] = useState<any>([]);
   const listname = params?.photos ? params?.photos[0] : "photos";
-  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState<any>({});
+  const router = useRouter()
 
-  const fetchData = async () => {
-    setIsLoading(true);
+  const getData = async () => {
     try {
-      const res = await api(
-        `/users/${params?.username}/${
-          params?.photos ? params?.photos[0] : "photos"
-        }`
-      );
-      const data = JSON.parse(JSON.stringify(res))
-      setImages(data) 
-      // console.log(data)
+      const res = await api(`/users/${params?.username}/${listname}`);
+      const data = JSON.parse(JSON.stringify(res));
+      setData(data);
     } catch (e) {
       console.log(e);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchData();
-  }, [params.photos]);
+    getData();
+  }, [params?.username]);
 
   return (
     <div className="flex justify-center">
       <div className="w-[1280px]">
-        {images?.length > 0 ? (
+        {data?.length > 0 ? (
           listname === "collections" ? (
             <div className="grid grid-cols-3 gap-x-4 gap-y-10 max-lg:grid-cols-2 max-sm:grid-cols-1">
-              {images?.map((col: any, i: number) => (
+              {data?.map((col: any, i: number) => (
                 <Collection key={i} data={col} username={params.username} />
               ))}
             </div>
           ) : (
-            <ListData data={images} />
+            <ListData data={data} />
           )
         ) : (
           <Empty />

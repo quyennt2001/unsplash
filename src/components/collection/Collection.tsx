@@ -10,7 +10,7 @@ export interface ICollectionProps {
 
 export default function Collection(props: ICollectionProps) {
   const { data } = props;
-  const preview_photo = data?.preview_photos;
+  const preview_photo = data?.preview_photos || [''];
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-col">
@@ -21,7 +21,7 @@ export default function Collection(props: ICollectionProps) {
               <div className="row-span-2 col-span-2">
                 <div className="relative h-full">
                   <Image
-                    src={preview_photo[0].urls.regular}
+                    src={preview_photo[0]?.urls?.regular || preview_photo[0]}
                     objectFit="cover"
                     fill
                     alt=""
@@ -32,7 +32,7 @@ export default function Collection(props: ICollectionProps) {
               <div className="row-span-1 col-span-1 h-max">
                 <div className="relative aspect-[9/10]">
                   <Image
-                    src={preview_photo[1]?.urls.small_s3 || preview_photo[0].urls.regular}
+                    src={preview_photo[1]?.urls?.regular || preview_photo[0]}
                     objectFit="cover"
                     fill
                     alt=""
@@ -43,7 +43,7 @@ export default function Collection(props: ICollectionProps) {
               <div className="row-span-1 col-span-1">
                 <div className="relative aspect-[9/10]">
                   <Image
-                    src={preview_photo[2]?.urls.small_s3 || preview_photo[0].urls.regular}
+                    src={preview_photo[2]?.urls?.regular || preview_photo[0]}
                     objectFit="cover"
                     fill
                     alt=""
