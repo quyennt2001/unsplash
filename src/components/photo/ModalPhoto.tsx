@@ -1,6 +1,5 @@
 "use client";
 
-import Loading from "@/components/Loading";
 import PhotoDetailHeader from "@/components/photo/PhotoDetailHeader";
 import PhotoDetailInfor from "@/components/photo/PhotoDetailInfor";
 import Image from "next/image";

@@ -10,18 +10,16 @@ export interface IListCollectionsProps {}
 
 export default function ListCollections(props: IListCollectionsProps) {
   const [collections, setCollections] = useState<any>([]);
-  // const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const page = useRef(1)
 
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const res = await api(`/collections?page=${page.current}`)
-      const data = JSON.parse(JSON.stringify(res))
-      console.log(data)
-      setCollections((prev: any) => [...prev, ...data])
-      page.current ++
+      const res = await api(`/collections?page=${page}`);
+      const data = JSON.parse(JSON.stringify(res));
+      // console.log(data);
+      setCollections((prev: any) => [...prev, ...data]);
     } catch (e) {
       console.log(e);
     } finally {
@@ -33,22 +31,25 @@ export default function ListCollections(props: IListCollectionsProps) {
     if (
       document.documentElement.offsetHeight -
         (window.innerHeight + document.documentElement.scrollTop) <=
-        50 &&
+        300 &&
       !isLoading
     ) {
-      fetchData();
+      setPage((prev) => prev + 1);
     }
   };
 
   useEffect(() => {
     fetchData();
-    window.addEventListener("scroll", handleScroll);
+  }, [page]);
+
+  useEffect(() => {
+    // window.addEventListener("scroll", handleScroll);
+    // return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <div className="flex justify-center">
       <div className="flex flex-col w-[1280px]">
-        {isLoading && <Loading />}
         <div className="pt-14 pb-[72px] flex flex-col gap-4">
           <p className="text-5xl font-bold">Collections</p>
           <p className="text-lg max-md:text-[15px]">
@@ -63,7 +64,13 @@ export default function ListCollections(props: IListCollectionsProps) {
           {collections?.map((col: any, i: number) => (
             <Collection key={i} data={col} />
           ))}
+          {/* {isLoading && <Loading />} */}
         </div>
+        {isLoading && (
+          <div className="w-full">
+            <Loading />
+          </div>
+        )}
       </div>
     </div>
   );

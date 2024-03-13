@@ -47,12 +47,10 @@ export default function DetailCollection({
 
   const fetchRelated = async () => {
     try {
-      const res = await fetch(
-        `/api/collections/${params?.collectionId}/related`
-      );
-      const data = await res.json();
-      // console.log(data?.data);
-      setRelateds(data?.data);
+      const res = await api(`/collections/${params?.collectionId}/related`)
+      const data = JSON.parse(JSON.stringify(res))
+      // console.log(data)
+      setRelateds(data)
     } catch (e) {
       console.log(e);
     }
@@ -75,7 +73,7 @@ export default function DetailCollection({
                 {collection?.description}
               </p>
               <Link
-                href={`/${collection?.user?.name}`}
+                href={`/${collection?.user?.username}`}
                 className="flex gap-2 items-center"
               >
                 <Avatar src={collection?.user?.profile_image?.large} />

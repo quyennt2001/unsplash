@@ -28,7 +28,10 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
-    if (error.response && error.response.status === 403) {
+    if (
+      error.response &&
+      (error.response.status === 403 || error.response.status === 401)
+    ) {
       await rotateKey();
       return api(error.config);
     }

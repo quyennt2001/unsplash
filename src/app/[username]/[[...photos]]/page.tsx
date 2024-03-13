@@ -42,11 +42,6 @@ export default function ListPhotos({
   return (
     <div className="flex justify-center">
       <div className="w-[1280px]">
-        {isLoading && (
-          <div className="w-full min-h-[400px] flex items-center justify-center">
-            <Loading className="flex" />
-          </div>
-        )}
         {images?.length > 0 ? (
           listname === "collections" ? (
             <div className="grid grid-cols-3 gap-x-4 gap-y-10 max-lg:grid-cols-2 max-sm:grid-cols-1">

@@ -13,7 +13,6 @@ export default function Home(props: IHomeProps) {
   return (
     <div className="no-scrollbar">
       <Navbar />
-      {/* <ModalPhoto /> */}
       <div className="flex justify-center relative">
         <div className="flex flex-col w-[1280px]">
           <div className="flex items-end py-14 gap-6 w-full">

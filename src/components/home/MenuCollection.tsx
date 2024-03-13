@@ -1,36 +1,19 @@
-"use client";
-
 import * as React from "react";
-import { useState, useEffect } from "react";
 import ItemMenuCollection from "./ItemMenuCollection";
 import Link from "next/link";
-import Loading from "../Loading";
 import SkItemMenuElement from "../skeleton/SkItemMenuCollection";
 import api from "@/app/api/axiosConfig";
 
 export interface IMenuCollectionProps {}
 
-export default function MenuCollection(props: IMenuCollectionProps) {
-  const [collections, setCollections] = useState<any>([]);
-  const [isLoading, setIsLoading] = useState(false);
+async function getData() {
+  const res = await api(`/collections?per_page=4`);
+  const data = JSON.parse(JSON.stringify(res));
+  return data;
+}
 
-  const fetchData = async () => {
-    setIsLoading(true);
-    try {
-      const res = await api(`/collections?per_page=4`);
-      const data = JSON.parse(JSON.stringify(res));
-      // console.log(data);
-      setCollections(data);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+export default async function MenuCollection(props: IMenuCollectionProps) {
+  const collections = await getData();
 
   return (
     <div className="w-full h-full flex flex-col">
@@ -53,7 +36,6 @@ export default function MenuCollection(props: IMenuCollectionProps) {
             <>
               {collections?.map((item: any, i: number) => (
                 <ItemMenuCollection data={item} key={i} />
-                // <SkItemMenuElement />
               ))}
             </>
           )}

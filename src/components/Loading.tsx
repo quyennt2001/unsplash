@@ -10,7 +10,7 @@ export default function Loading(props: ILoadingProps) {
       className={
         props?.className
           ? props?.className
-          : "fixed bottom-5 left-0 right-0 flex items-center justify-center"
+          : "relative top-10 left-0 right-0 flex items-center justify-center w-full"
       }
     >
       <svg
