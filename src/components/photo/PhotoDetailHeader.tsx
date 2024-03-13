@@ -14,7 +14,7 @@ export interface IPhotoDetailHeaderProps {
 
 export default function PhotoDetailHeader(props: IPhotoDetailHeaderProps) {
   const { data } = props;
-  console.log(data);
+  // console.log(data);
   return (
     <div className="sticky top-[62px] bg-white h-[62px] text-sm z-10">
       <div className="py-[13px] flex items-center gap-2 justify-between">

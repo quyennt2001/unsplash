@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import ItemMenuCollection from "./ItemMenuCollection";
 import Link from "next/link";
 import Loading from "../Loading";
+import SkItemMenuElement from "../skeleton/SkItemMenuCollection";
+import api from "@/app/api/axiosConfig";
 
 export interface IMenuCollectionProps {}
 
@@ -15,10 +17,10 @@ export default function MenuCollection(props: IMenuCollectionProps) {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`/api/collections?page=2&per_page=4`);
-      const data = await res.json();
-      // console.log(data?.data);
-      setCollections(data?.data);
+      const res = await api(`/collections?per_page=4`);
+      const data = JSON.parse(JSON.stringify(res));
+      // console.log(data);
+      setCollections(data);
     } catch (e) {
       console.log(e);
     } finally {
@@ -39,11 +41,22 @@ export default function MenuCollection(props: IMenuCollectionProps) {
         </Link>
       </div>
       <div className="px-2 pb-3 flex items-center justify-center">
-        {isLoading && <Loading className="flex" />}
-        <div className="flex flex-col justify-between">
-          {collections?.map((item: any, i: number) => (
-            <ItemMenuCollection data={item} key={i} />
-          ))}
+        <div className="flex flex-col justify-between w-full">
+          {!collections.length ? (
+            <>
+              <SkItemMenuElement />
+              <SkItemMenuElement />
+              <SkItemMenuElement />
+              <SkItemMenuElement />
+            </>
+          ) : (
+            <>
+              {collections?.map((item: any, i: number) => (
+                <ItemMenuCollection data={item} key={i} />
+                // <SkItemMenuElement />
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>

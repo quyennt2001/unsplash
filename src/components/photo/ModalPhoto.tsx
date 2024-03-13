@@ -27,7 +27,8 @@ export default function ModalPhoto(props: IHomeProps) {
 
   const handleClose = () => {
     setIsShow(false);
-    window.history.replaceState(null, '', '/')
+    window.history.replaceState(null, "", "/");
+    document.body.style.overflow = "auto";
   };
 
   useEffect(() => {
@@ -35,7 +36,8 @@ export default function ModalPhoto(props: IHomeProps) {
     const handleClickOutSide = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setIsShow(false);
-        window.history.replaceState(null, '', '/')
+        window.history.replaceState(null, "", "/");
+        document.body.style.overflow = "auto";
       }
     };
     window.addEventListener("mousedown", handleClickOutSide);
@@ -47,7 +49,10 @@ export default function ModalPhoto(props: IHomeProps) {
       <button className="absolute left-0 top-0 p-2" onClick={handleClose}>
         <IoMdClose className="h-6 w-6 text-white opacity-[0.8] hover:opacity-[1]" />
       </button>
-      <div className="bg-white rounded-lg px-5 w-full h-max cursor-default" ref={ref}>
+      <div
+        className="bg-white rounded-lg px-5 w-full h-max cursor-default"
+        ref={ref}
+      >
         <div className=" h-[62px] text-sm z-10 w-full">
           <div className="py-[13px] flex items-center gap-2 justify-between">
             <Link

@@ -18,7 +18,8 @@ const config: Config = {
         grey: "#767676",
         border: "#d1d1d1",
         "modal-white": "rgba(255, 255, 255, 0.2)",
-        modal: "rgba(0, 0, 0, 0.4)"
+        modal: "rgba(0, 0, 0, 0.4)",
+        sketelon: 'rgba(0, 0, 0, 0.06)'
       },
       boxShadow: {
         popup: "0 8px 16px #00000029",

@@ -9,6 +9,8 @@ import { GoKebabHorizontal } from "react-icons/go";
 import { IconType } from "react-icons";
 import Collection from "@/components/collection/Collection";
 import ListData from "@/components/ListData";
+import Link from "next/link";
+import api from "@/app/api/axiosConfig";
 
 export interface IDetailCollectionProps {}
 
@@ -23,9 +25,10 @@ export default function DetailCollection({
 
   const fetchCollection = async () => {
     try {
-      const res = await fetch(`/api/collections/${params?.collectionId}`);
-      const data = await res.json();
-      setCollection(data?.data);
+      const res = await api(`/collections/${params?.collectionId}`);
+      const data = JSON.parse(JSON.stringify(res));
+      // console.log(data);
+      setCollection(data);
     } catch (e) {
       console.log(e);
     }
@@ -33,11 +36,10 @@ export default function DetailCollection({
 
   const fetchPhotos = async () => {
     try {
-      const res = await fetch(
-        `/api/collections/${params?.collectionId}/photos`
-      );
-      const data = await res.json();
-      setPhotos(data?.data);
+      const res = await api(`/collections/${params?.collectionId}/photos`);
+      const data = JSON.parse(JSON.stringify(res));
+      // console.log(res);
+      setPhotos(data);
     } catch (e) {
       console.log(e);
     }
@@ -72,10 +74,13 @@ export default function DetailCollection({
               <p className="text-lg max-md:text-[15px]">
                 {collection?.description}
               </p>
-              <div className="flex gap-2 items-center">
+              <Link
+                href={`/${collection?.user?.name}`}
+                className="flex gap-2 items-center"
+              >
                 <Avatar src={collection?.user?.profile_image?.large} />
                 <p>{collection?.user?.name}</p>
-              </div>
+              </Link>
             </div>
             <div className="flex gap-2">
               <ButtonIcon icon={FaShare as IconType} name="share" />

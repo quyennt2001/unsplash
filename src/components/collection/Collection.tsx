@@ -22,7 +22,7 @@ export default function Collection(props: ICollectionProps) {
                 <div className="relative h-full">
                   <Image
                     src={preview_photo[0].urls.regular}
-                    objectFit="contains"
+                    objectFit="cover"
                     fill
                     alt=""
                     className="rounded-l-md"
@@ -33,7 +33,7 @@ export default function Collection(props: ICollectionProps) {
                 <div className="relative aspect-[9/10]">
                   <Image
                     src={preview_photo[1]?.urls.small_s3 || preview_photo[0].urls.regular}
-                    objectFit="contains"
+                    objectFit="cover"
                     fill
                     alt=""
                     className="rounded-se-md"
@@ -44,7 +44,7 @@ export default function Collection(props: ICollectionProps) {
                 <div className="relative aspect-[9/10]">
                   <Image
                     src={preview_photo[2]?.urls.small_s3 || preview_photo[0].urls.regular}
-                    objectFit="contains"
+                    objectFit="cover"
                     fill
                     alt=""
                     className="rounded-ee-md"

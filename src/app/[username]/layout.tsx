@@ -7,6 +7,7 @@ import Image from "next/image";
 import * as React from "react";
 import logo from "../../../public/logo.png";
 import Tag from "@/components/UI/Tag";
+import api from "../api/axiosConfig";
 
 export default function UserLayout({
   children,
@@ -35,10 +36,10 @@ export default function UserLayout({
 
   const fetchData = async () => {
     try {
-      const res = await fetch(`/api/user?username=${params?.username}`);
-      const data = await res.json();
-      // console.log(data?.data);
-      setUser(data?.data);
+      const res = await api(`/users/${params?.username}`)
+      const data = JSON.parse(JSON.stringify(res));
+      // console.log(data)
+      setUser(data);
     } catch (e) {
       console.log(e);
     }

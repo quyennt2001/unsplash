@@ -9,6 +9,11 @@
 # testing
 /coverage
 
+api/collections
+api/photos
+api/user
+skeleton
+
 # next.js
 /.next/
 /out/

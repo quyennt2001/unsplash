@@ -1,5 +1,6 @@
 "use client";
 
+import api from "@/app/api/axiosConfig";
 import Loading from "@/components/Loading";
 import PhotoDetailHeader from "@/components/photo/PhotoDetailHeader";
 import PhotoDetailInfor from "@/components/photo/PhotoDetailInfor";
@@ -14,10 +15,10 @@ export default function DetailPhoto({ params }: { params: { slug: string } }) {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`/api/photos/${params?.slug}`);
-      const data = await res.json();
-      console.log(data?.data);
-      setPhoto(data?.data);
+      const res = await api(`/photos/${params?.slug}`);
+      const data = JSON.parse(JSON.stringify(res));
+      setPhoto(data);
+      // console.log(data);
     } catch (e) {
       console.log(e);
     } finally {
@@ -37,22 +38,22 @@ export default function DetailPhoto({ params }: { params: { slug: string } }) {
         </div>
       ) : (
         // <div className="fixed flex top-0 left-0 right-0 bottom-0 items-center justify-center bg-modal z-20">
-          <div className="bg-white">
-            <PhotoDetailHeader data={photo?.user} />
-            <div className="py-[10px] px-[300px] flex justify-center">
-              <div className="relative">
-                <Image
-                  src={photo?.urls?.regular}
-                  height={0}
-                  width={0}
-                  alt=""
-                  className="w-full h-auto"
-                  sizes="100vw"
-                />
-              </div>
+        <div className="bg-white">
+          <PhotoDetailHeader data={photo?.user} />
+          <div className="py-[10px] px-[300px] flex justify-center">
+            <div className="relative">
+              <Image
+                src={photo?.urls?.regular}
+                height={0}
+                width={0}
+                alt=""
+                className="w-full h-auto"
+                sizes="100vw"
+              />
             </div>
-            <PhotoDetailInfor data={photo} />
           </div>
+          <PhotoDetailInfor data={photo} />
+        </div>
         // </div>
       )}
     </div>

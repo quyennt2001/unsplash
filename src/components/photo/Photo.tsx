@@ -17,32 +17,30 @@ export interface IPhotoProps {
 }
 
 export default function Photo(props: IPhotoProps) {
-  const [isShow, setIsShow] = useState(false);
+  const [isShow, setIsShow] = useState<boolean>(false);
   const { data } = props;
 
+  const handleClickShowModal = () => {
+    setIsShow(true);
+    document.body.style.overflow = "hidden";
+    window.history.replaceState(
+      // {
+      //   ...window.history.state,
+      //   as: `/photos/${data?.slug}`,
+      //   url: `/photos/${data?.slug}`,
+      // },
+      null,
+      "",
+      `/photos/${data?.slug}`
+    );
+  };
+
   return (
-    // <Link href={{pathname: `/photos/${data?.slug}`}}>
     <>
       {isShow && (
         <ModalPhoto photo={data} setIsShow={setIsShow} isShow={isShow} />
       )}
-      <div
-        className="w-full h-auto relative cursor-zoom-in group"
-        onClick={() => {
-          setIsShow(true);
-          document.body.style.overflow = "hidden";
-          window.history.replaceState(
-            // {
-            //   ...window.history.state,
-            //   as: `/photos/${data?.slug}`,
-            //   url: `/photos/${data?.slug}`,
-            // },
-            null,
-            "",
-            `/photos/${data?.slug}`
-          );
-        }}
-      >
+      <div className="w-full h-auto relative cursor-zoom-in group">
         <div className="relative w-full">
           <Image
             src={data?.urls?.regular}
@@ -52,7 +50,10 @@ export default function Photo(props: IPhotoProps) {
             className="w-full h-auto"
             sizes="100vw"
           />
-          <div className="absolute top-0 left-0 w-full h-full hidden flex-col bg-modal justify-between group-hover:flex p-5">
+          <div
+            className="absolute top-0 left-0 w-full h-full hidden flex-col bg-modal justify-between group-hover:flex p-5"
+            onClick={handleClickShowModal}
+          >
             <div className="flex justify-end gap-2">
               <ButtonIcon icon={FaHeart as IconType} />
               <ButtonIcon icon={FaPlus as IconType} />
@@ -79,6 +80,5 @@ export default function Photo(props: IPhotoProps) {
         </div>
       </div>
     </>
-    // </Link>
   );
 }

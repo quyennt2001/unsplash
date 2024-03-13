@@ -6,8 +6,7 @@ import { useState, useEffect } from "react";
 import Empty from "@/components/Empty";
 import ListData from "@/components/ListData";
 import Loading from "@/components/Loading";
-
-export interface IListPhotosProps {}
+import api from "@/app/api/axiosConfig";
 
 export default function ListPhotos({
   params,
@@ -21,13 +20,14 @@ export default function ListPhotos({
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(
-        `/api/user?username=${params.username}&listname=${
-          params.photos ? params.photos[0] : "photos"
-        }&per_page=200`
+      const res = await api(
+        `/users/${params?.username}/${
+          params?.photos ? params?.photos[0] : "photos"
+        }`
       );
-      const data = await res.json();
-      setImages(data?.data);
+      const data = JSON.parse(JSON.stringify(res))
+      setImages(data) 
+      // console.log(data)
     } catch (e) {
       console.log(e);
     } finally {

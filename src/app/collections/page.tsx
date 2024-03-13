@@ -4,6 +4,7 @@ import Loading from "@/components/Loading";
 import Collection from "@/components/collection/Collection";
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
+import api from "../api/axiosConfig";
 
 export interface IListCollectionsProps {}
 
@@ -16,9 +17,10 @@ export default function ListCollections(props: IListCollectionsProps) {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`/api/collections?page=${page.current}`);
-      const data = await res?.json();
-      setCollections((prev: any) => [...prev, ...data?.data]);
+      const res = await api(`/collections?page=${page.current}`)
+      const data = JSON.parse(JSON.stringify(res))
+      console.log(data)
+      setCollections((prev: any) => [...prev, ...data])
       page.current ++
     } catch (e) {
       console.log(e);
