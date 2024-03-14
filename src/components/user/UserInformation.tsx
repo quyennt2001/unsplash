@@ -70,7 +70,7 @@ export default function UserInformation(props: IUserInformationProps) {
         </div>
         <div className="w-[68%] max-md:w-full flex flex-col gap-4">
           <div>
-            <button className="bg-[#f5f5f5] rounded-[70px] py-1 px-3 max-md:hidden">
+            <button className="bg-bg rounded-[70px] py-1 px-3 max-md:hidden">
               Subscriber
             </button>
           </div>

@@ -11,7 +11,7 @@ export default function ItemMenuCollection(props: IItemMenuCollectionProps) {
 
   return (
     <Link href={`/collections/${data?.id}`}>
-      <button className="px-3 py-2 hover:bg-[#f5f5f5] rounded-md text-start w-full">
+      <button className="px-3 py-2 hover:bg-bg rounded-md text-start w-full">
         <div className="flex gap-2 h-[34px]">
           <div className="relative h-8 w-8 rounded-md border">
             <Image

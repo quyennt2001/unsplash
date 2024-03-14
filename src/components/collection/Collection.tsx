@@ -10,7 +10,7 @@ export interface ICollectionProps {
 
 export default function Collection(props: ICollectionProps) {
   const { data } = props;
-  const preview_photo = data?.preview_photos || [''];
+  const preview_photo = data?.preview_photos || [""];
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-col">
@@ -20,41 +20,45 @@ export default function Collection(props: ICollectionProps) {
               <div className="absolute top-0 left-0 h-full w-full z-10 rounded-md bg-modal-white group-hover:flex hidden"></div>
               <div className="row-span-2 col-span-2">
                 <div className="relative h-full">
-                  <Image
-                    src={preview_photo[0]?.urls?.regular || preview_photo[0]}
-                    objectFit="cover"
-                    fill
-                    alt=""
-                    className="rounded-l-md"
-                  />
+                  {preview_photo[0]?.urls?.regular && (
+                    <Image
+                      src={preview_photo[0]?.urls?.regular}
+                      objectFit="cover"
+                      fill
+                      alt=""
+                      className="rounded-l-md"
+                    />
+                  )}
                 </div>
               </div>
               <div className="row-span-1 col-span-1 h-max">
-                <div className="relative aspect-[9/10]">
-                  <Image
-                    src={preview_photo[1]?.urls?.regular || preview_photo[0]}
-                    objectFit="cover"
-                    fill
-                    alt=""
-                    className="rounded-se-md"
-                  />
+                <div className="relative aspect-[9/10] bg-bg rounded-tr-md">
+                  {preview_photo[1]?.urls?.regular && (
+                    <Image
+                      src={preview_photo[1]?.urls?.regular || preview_photo[0]}
+                      objectFit="cover"
+                      fill
+                      alt=""
+                      className="rounded-tr-md"
+                    />
+                  )}
                 </div>
               </div>
               <div className="row-span-1 col-span-1">
-                <div className="relative aspect-[9/10]">
-                  <Image
-                    src={preview_photo[2]?.urls?.regular || preview_photo[0]}
-                    objectFit="cover"
-                    fill
-                    alt=""
-                    className="rounded-ee-md"
-                  />
+                <div className="relative aspect-[9/10] bg-bg rounded-br-md">
+                  {preview_photo[2]?.urls?.regular && (
+                    <Image
+                      src={preview_photo[2]?.urls?.regular}
+                      objectFit="cover"
+                      fill
+                      alt=""
+                      className="rounded-l-md"
+                    />
+                  )}
                 </div>
               </div>
             </div>
-            <div className="truncate text-lg font-semibold">
-              {data?.title}
-            </div>
+            <div className="truncate text-lg font-semibold">{data?.title}</div>
           </div>
         </Link>
         <div className="flex gap-2 items-center text-grey text-sm">
