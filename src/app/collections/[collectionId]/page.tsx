@@ -49,7 +49,7 @@ export default async function DetailCollection({
   const collection = await getCollections(params?.collectionId);
   const photos = await getPhotos(params?.collectionId);
   const relateds = await getRelateds(params?.collectionId);
-
+  
   return (
     <div className="flex justify-center">
       <div className="w-[1280px] mb-14">

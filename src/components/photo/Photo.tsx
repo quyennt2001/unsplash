@@ -18,6 +18,7 @@ export interface IPhotoProps {
 
 export default function Photo(props: IPhotoProps) {
   const [isShow, setIsShow] = useState<boolean>(false);
+
   const { data } = props;
 
   const handleClickShowModal = () => {
@@ -25,7 +26,6 @@ export default function Photo(props: IPhotoProps) {
     document.body.style.overflow = "hidden";
     window.history.pushState(
       null,
-      // null,
       "",
       `/photos/${data?.slug}`
     );

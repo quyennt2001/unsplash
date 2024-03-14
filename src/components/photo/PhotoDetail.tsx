@@ -38,8 +38,8 @@ export default function PhotoDetail(props: IPhotoDetailProps) {
   return (
     <div className="bg-white">
       <PhotoDetailHeader data={photo?.user} sticky={sticky} />
-      <div className="py-[10px] px-[300px] flex justify-center">
-        <div className="relative min-h-[300px] min-w-[400px] bg-sketelon">
+      <div className=" flex justify-center">
+        <div className="relative min-h-[300px] min-w-[400px] max-md:w-full bg-sketelon">
           <Image
             src={photo?.urls?.regular}
             height={0}

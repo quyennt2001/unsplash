@@ -25,7 +25,7 @@ export default async function MenuCollection(props: IMenuCollectionProps) {
       </div>
       <div className="px-2 pb-3 flex items-center justify-center">
         <div className="flex flex-col justify-between w-full">
-          {!collections.length ? (
+          {!collections?.length ? (
             <>
               <SkItemMenuElement />
               <SkItemMenuElement />

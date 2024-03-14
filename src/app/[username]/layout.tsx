@@ -20,7 +20,9 @@ export default async function UserLayout({
   children,
   params,
 }: Readonly<{ children: React.ReactNode; params: { username: string } }>) {
-  const user = await getData(params?.username);
+  // if (!params.username) return <div>Not found</div>
+
+  const user = await getData(params.username);
 
   const formatNumber = (num: number, precision = 1) => {
     const map = [

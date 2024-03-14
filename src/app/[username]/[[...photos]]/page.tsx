@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import Empty from "@/components/Empty";
 import ListData from "@/components/ListData";
 import api from "@/app/api/axiosConfig";
-import { useRouter } from "next/navigation";
 
 export default function ListPhotos({
   params,
@@ -15,7 +14,7 @@ export default function ListPhotos({
 }) {
   const listname = params?.photos ? params?.photos[0] : "photos";
   const [data, setData] = useState<any>({});
-  const router = useRouter()
+  const [loading, setLoading] = useState(true);
 
   const getData = async () => {
     try {
@@ -24,17 +23,26 @@ export default function ListPhotos({
       setData(data);
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     getData();
-  }, [params?.username]);
+    document.body.style.overflow = "auto";
+  }, [params]);
 
   return (
     <div className="flex justify-center">
       <div className="w-[1280px]">
-        {data?.length > 0 ? (
+        {loading ? (
+          <div className="grid grid-cols-3 gap-x-4 gap-y-10 max-lg:grid-cols-2 max-sm:grid-cols-1">
+            <div className="bg-bg w-full aspect-[3/4]"></div>
+            <div className="bg-bg w-full aspect-[3/4]"></div>
+            <div className="bg-bg w-full aspect-[3/4]"></div>
+          </div>
+        ) : data?.length > 0 ? (
           listname === "collections" ? (
             <div className="grid grid-cols-3 gap-x-4 gap-y-10 max-lg:grid-cols-2 max-sm:grid-cols-1">
               {data?.map((col: any, i: number) => (

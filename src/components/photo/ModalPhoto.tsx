@@ -28,7 +28,7 @@ export default function ModalPhoto(props: IHomeProps) {
   }, [isShow]);
 
   return (
-    <div className="fixed top-0 left-0 right-0 bottom-0 bg-modal flex justify-center z-50 px-[120px] overflow-y-scroll">
+    <div className="fixed top-0 left-0 right-0 bottom-0 bg-modal flex justify-center z-50 px-[120px] max-xl:px-[70px] max-md:px-0 overflow-y-scroll">
       <div
         className="bg-white rounded-lg px-5 w-full h-max cursor-default my-5"
         ref={ref}

@@ -24,7 +24,7 @@ export default function PhotoDetailHeader(props: IPhotoDetailHeaderProps) {
       }
     >
       <div className="py-[13px] flex items-center gap-2 justify-between">
-        <Link href={`/${data?.username}`} className="flex items-center gap-2" onClick={() => document.body.style.overflow = "auto"}>
+        <Link href={`/${data?.username}`} className="flex items-center gap-2">
           <Avatar src={data?.profile_image?.medium} />
           <div className="flex flex-col justify-between">
             <p className="capitalize text-[15px] font-medium">{data?.name}</p>
