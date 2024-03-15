@@ -9,7 +9,7 @@ import { IoMdPhotos } from "react-icons/io";
 import { IconType } from "react-icons";
 
 export interface ITabsProps {
-  username: any;
+  username: string;
   data: any;
 }
 

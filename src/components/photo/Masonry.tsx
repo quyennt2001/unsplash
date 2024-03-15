@@ -3,16 +3,17 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import Photo from "./Photo";
+import { IPhoto } from "@/interfaces/photo";
 
 export interface IMasonryProps {
-  images: Array<any>;
+  images: IPhoto[];
   columnCount: number
 }
 
 export default function Masonry(props: IMasonryProps) {
   const [numColumns, setNumColumns] = useState(props.columnCount)
   const column: Array<any> = [...Array(numColumns)].map(() => []);
-  props?.images?.forEach((image: any, i) => {
+  props.images.forEach((image: any, i) => {
     column[i % numColumns]?.push(image);
   });
 

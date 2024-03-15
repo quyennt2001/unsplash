@@ -4,7 +4,7 @@ export interface IUser {
   username: string;
   name: string;
   first_name: string;
-  last_name: any;
+  last_name: string;
   twitter_username: string;
   portfolio_url: string;
   bio: string;

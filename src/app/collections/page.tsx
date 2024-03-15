@@ -5,26 +5,24 @@ import Collection from "@/components/collection/Collection";
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 import api from "../api/axiosConfig";
+import { ICollection } from "@/interfaces/collection";
+import SkPhoto from "@/components/skeleton/SkPhoto";
+import SkCollection from "@/components/skeleton/SkCollection";
 
 export interface IListCollectionsProps {}
 
 export default function ListCollections(props: IListCollectionsProps) {
-  const [collections, setCollections] = useState<any>([]);
+  const [collections, setCollections] = useState<ICollection[]>([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async () => {
-    setIsLoading(true);
-    try {
-      const res = await api(`/collections?page=${page}`);
-      const data = JSON.parse(JSON.stringify(res));
-      // console.log(data);
-      setCollections((prev: any) => [...prev, ...data]);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setIsLoading(false);
-    }
+    const res = await fetch(`/api/collections?page=${page}`);
+    if (res.ok) {
+      const data = await res.json();
+      setCollections((prev: ICollection[]) => [...prev, ...data]);
+    } else setCollections([]);
+    setIsLoading(false);
   };
 
   const handleScroll = () => {
@@ -35,6 +33,7 @@ export default function ListCollections(props: IListCollectionsProps) {
       !isLoading
     ) {
       setPage((prev) => prev + 1);
+      setIsLoading(true);
     }
   };
 
@@ -60,12 +59,15 @@ export default function ListCollections(props: IListCollectionsProps) {
             </span>
           </p>
         </div>
-        <div className="grid grid-cols-3 gap-x-4 gap-y-10 max-lg:grid-cols-2 max-sm:grid-cols-1">
-          {collections?.map((col: any, i: number) => (
-            <Collection key={i} data={col} />
-          ))}
-          {/* {isLoading && <Loading />} */}
-        </div>
+        {!collections.length ? (
+          <SkCollection />
+        ) : (
+          <div className="grid grid-cols-3 gap-x-4 gap-y-10 max-lg:grid-cols-2 max-sm:grid-cols-1">
+            {collections.map((col: ICollection, i: number) => (
+              <Collection key={i} data={col} />
+            ))}
+          </div>
+        )}
         {isLoading && (
           <div className="w-full">
             <Loading />

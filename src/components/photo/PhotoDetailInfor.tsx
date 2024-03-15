@@ -12,9 +12,10 @@ import Tag from "../UI/Tag";
 import Link from "next/link";
 import { MdOutlineCameraAlt } from "react-icons/md";
 import { PiShareFatFill } from "react-icons/pi";
+import { IDetailPhoto, ITag } from "@/interfaces/detailPhoto";
 
 export interface IPhotoDetailInforProps {
-  data: any;
+  data: IDetailPhoto;
 }
 
 export default function PhotoDetailInfor(props: IPhotoDetailInforProps) {
@@ -26,11 +27,11 @@ export default function PhotoDetailInfor(props: IPhotoDetailInforProps) {
           <div className="flex gap-28 items-center">
             <div className="flex flex-col h-full justify-between">
               <p className="text-grey text-sm">Views</p>
-              <p className="font-medium">{data?.views?.toLocaleString('en-US') || 0}</p>
+              <p className="font-medium">{data.views.toLocaleString('en-US') || 0}</p>
             </div>
             <div className="flex flex-col h-full justify-between">
               <p className=" text-grey text-sm">Downloads</p>
-              <p className="font-medium">{data?.downloads?.toLocaleString('en-US') || 0}</p>
+              <p className="font-medium">{data.downloads.toLocaleString('en-US') || 0}</p>
             </div>
             <div className="flex flex-col h-full justify-between">
               <p className=" text-grey text-sm">Featured in</p>
@@ -44,20 +45,20 @@ export default function PhotoDetailInfor(props: IPhotoDetailInforProps) {
             <ButtonIcon icon={GoKebabHorizontal as IconType} />
           </div>
         </div>
-        <p className="text-sm max-w-[50%]">{data?.description}</p>
+        <p className="text-sm max-w-[50%]">{data.description}</p>
         <div className="flex flex-col gap-[6px] text-grey">
           {data?.created_at && (
             <div className="flex gap-[6px] items-center">
               <LuCalendar className="h-[14px] w-[14px]" />
               <p className="text-sm">
-                Published on {data?.created_at.substring(0, 10)}
+                Published on {data.created_at.substring(0, 10)}
               </p>
             </div>
           )}
           {data?.exif?.name && (
             <div className="flex gap-[6px] items-center">
               <MdOutlineCameraAlt className="h-[14px] w-[14px]" />
-              <p className="text-sm">{data?.exif?.name}</p>
+              <p className="text-sm">{data.exif.name}</p>
             </div>
           )}
           <div className="flex gap-[6px] items-center">
@@ -66,8 +67,8 @@ export default function PhotoDetailInfor(props: IPhotoDetailInforProps) {
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
-          {data?.tags?.map((item: any, i: number) => (
-            <Tag key={i} name={item?.title} />
+          {data.tags.map((item: ITag, i: number) => (
+            <Tag key={i} name={item.title} />
           ))}
         </div>
       </div>

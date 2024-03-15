@@ -4,13 +4,15 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import ListData from "../ListData";
 import Loading from "../Loading";
-import api from "@/app/api/axiosConfig";
+import { IPhoto } from "@/interfaces/photo";
+import Empty from "../Empty";
+import SkPhoto from "../skeleton/SkPhoto";
 
 export interface IListImageProps {}
 
 export default function ImageInfinite(props: IListImageProps) {
-  const [data, setData] = useState<any>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState<IPhoto[]>([]);
+  const [isLoading, setIsLoading] = useState(false);;
   const [page, setPage] = useState(1);
 
   const handleScroll = () => {
@@ -24,35 +26,34 @@ export default function ImageInfinite(props: IListImageProps) {
     }
   };
 
-  const fetchData = async () => {
+  const fetchData = React.useCallback(async () => {
     setIsLoading(true);
-    try {
-      const res = await api.get(`/photos?page=${page}`);
-      const data = JSON.parse(JSON.stringify(res));
-      if (!data.data) {
-        setData((prevItems: any) => [...prevItems, ...data]);
-      }
-      // console.log(res);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setIsLoading(false);
+    const res = await fetch(`/api/photos?page=${page}`);
+    if (res.ok) {
+      const data: IPhoto[] = await res.json();
+      setData((prev) => [...prev, ...data]);
+    } else {
+      setData([]);
     }
-  };
+    setIsLoading(false);
+  }, [page]);
 
   useEffect(() => {
     fetchData();
   }, [page]);
 
   useEffect(() => {
-    // fetchData();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  if (!data.length) {
+    return <SkPhoto />;
+  }
+
   return (
     <div className="relative">
-      <ListData data={data} />
+      <ListData isLoading={isLoading} data={data} />
       {isLoading && (
         <div className="w-full">
           <Loading />

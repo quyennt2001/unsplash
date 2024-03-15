@@ -11,9 +11,10 @@ import ButtonIcon from "../UI/ButtonIcon";
 import { IconType } from "react-icons";
 import Avatar from "../UI/Avatar";
 import ModalPhoto from "./ModalPhoto";
+import { IPhoto } from "@/interfaces/photo";
 
 export interface IPhotoProps {
-  data: any;
+  data: IPhoto;
 }
 
 export default function Photo(props: IPhotoProps) {
@@ -27,7 +28,7 @@ export default function Photo(props: IPhotoProps) {
     window.history.pushState(
       null,
       "",
-      `/photos/${data?.slug}`
+      `/photos/${data.slug}`
     );
   };
 
@@ -36,7 +37,7 @@ export default function Photo(props: IPhotoProps) {
       {isShow && (
         <ModalPhoto slug={data?.slug} setIsShow={setIsShow} isShow={isShow} />
       )}
-      <div className="w-full h-auto relative cursor-zoom-in group">
+      <div className="w-full h-auto relative cursor-zoom-in group mb-5">
         <div className="relative w-full">
           <Image
             src={data?.urls?.regular}

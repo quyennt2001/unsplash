@@ -5,7 +5,6 @@ import Navbar from "@/components/home/Navbar";
 import Image from "next/image";
 import { RiAttachment2 } from "react-icons/ri";
 import MenuCollection from "@/components/home/MenuCollection";
-import ModalPhoto from "@/components/photo/ModalPhoto";
 
 export interface IHomeProps {}
 

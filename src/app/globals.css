@@ -41,13 +41,6 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-
-  .masonry {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(3, minmax(120px, 1fr));
-    /* grid-template-rows: masonry; */
-  }
 }
 
 :root {

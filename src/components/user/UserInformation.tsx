@@ -13,9 +13,10 @@ import { FaInstagram } from "react-icons/fa";
 import { RiTwitterXLine } from "react-icons/ri";
 import Tag from "@/components/UI/Tag";
 import Dropdown from "../UI/Dropdown";
+import { ICustom, IDetailUser } from "@/interfaces/detailUser";
 
 export interface IUserInformationProps {
-  user: any;
+  user: IDetailUser;
 }
 
 export default function UserInformation(props: IUserInformationProps) {
@@ -135,7 +136,7 @@ export default function UserInformation(props: IUserInformationProps) {
               </div>
               <p className="">Interests</p>
               <div className="flex gap-2 flex-wrap">
-                {user?.tags?.custom?.map((tag: any, i: number) => (
+                {user.tags.custom.map((tag: ICustom, i: number) => (
                   <Tag key={i} name={tag?.source?.title || tag?.title} />
                 ))}
               </div>

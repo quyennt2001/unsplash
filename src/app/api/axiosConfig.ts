@@ -1,15 +1,10 @@
 import axios from "axios";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-const CLIENT_ID = process.env.NEXT_PUBLIC_ACCESS_KEY?.split(",") || "";
+export const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+export const CLIENT_ID = process.env.NEXT_PUBLIC_ACCESS_KEY?.split(",") || "";
 let keyIdx = 0;
-//  || 'Tat0iOoBBA2FAL8bd_nrQXL8qWWOz40zKVsRmqCxBL4';
 
 const api = axios.create({
-  // baseURL: BASE_URL,
-  // headers: {
-  //   Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
-  // },
 });
 
 api.interceptors.request.use(async (config) => {

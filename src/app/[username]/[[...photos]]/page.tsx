@@ -1,61 +1,42 @@
-"use client";
-
 import Collection from "@/components/collection/Collection";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import Empty from "@/components/Empty";
 import ListData from "@/components/ListData";
 import api from "@/app/api/axiosConfig";
+import SkCollection from "@/components/skeleton/SkCollection";
+import UserPhoto from "../../../components/user/UserPhoto";
+import { BASE_URL, CLIENT_ID } from "@/app/api/axiosConfig";
+import { ICollection } from "@/interfaces/collection";
+import { IPhoto } from "@/interfaces/photo";
+import SkPhoto from "@/components/skeleton/SkPhoto";
 
-export default function ListPhotos({
+let keyIdx = 0;
+async function getData(listname: string, username: string) {
+  const res = await fetch(
+    `${BASE_URL}/users/${username}/${listname}?client_id=${CLIENT_ID[keyIdx]}`
+  );
+  if (res.ok) {
+    return res.json();
+  }
+  if (res.status === 403) {
+    keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+    return getData(listname, username);
+  }
+  return [];
+}
+
+export default async function ListPhotos({
   params,
 }: {
   params: { photos: string[any]; username: string };
 }) {
-  const listname = params?.photos ? params?.photos[0] : "photos";
-  const [data, setData] = useState<any>({});
-  const [loading, setLoading] = useState(true);
+  const listname = params?.photos ? params.photos[0] : "photos";
+  const data: ICollection[] | IPhoto[] = await getData(listname, params.username);
 
-  const getData = async () => {
-    try {
-      const res = await api(`/users/${params?.username}/${listname}`);
-      const data = JSON.parse(JSON.stringify(res));
-      setData(data);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
-  };
+  if(!data.length) {
+    return <Empty />
+  }
 
-  useEffect(() => {
-    getData();
-    document.body.style.overflow = "auto";
-  }, [params]);
-
-  return (
-    <div className="flex justify-center">
-      <div className="w-[1280px]">
-        {loading ? (
-          <div className="grid grid-cols-3 gap-x-4 gap-y-10 max-lg:grid-cols-2 max-sm:grid-cols-1">
-            <div className="bg-bg w-full aspect-[3/4]"></div>
-            <div className="bg-bg w-full aspect-[3/4]"></div>
-            <div className="bg-bg w-full aspect-[3/4]"></div>
-          </div>
-        ) : data?.length > 0 ? (
-          listname === "collections" ? (
-            <div className="grid grid-cols-3 gap-x-4 gap-y-10 max-lg:grid-cols-2 max-sm:grid-cols-1">
-              {data?.map((col: any, i: number) => (
-                <Collection key={i} data={col} username={params.username} />
-              ))}
-            </div>
-          ) : (
-            <ListData data={data} />
-          )
-        ) : (
-          <Empty />
-        )}
-      </div>
-    </div>
-  );
+  return <UserPhoto data={data} listname={listname} />;
 }
