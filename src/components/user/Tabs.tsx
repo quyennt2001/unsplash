@@ -23,21 +23,21 @@ export default function Tabs(props: ITabsProps) {
         <ItemTab
           icon={MdInsertPhoto as IconType}
           name="photos"
-          count={data?.photos}
+          count={data?.photos || 0}
           selected={!pathname.split("/")[2] ? true : false}
           to={`/${username}`}
         />
         <ItemTab
           icon={FaHeart as IconType}
           name="likes"
-          count={data?.likes}
+          count={data?.likes || 0}
           selected={pathname.split("/")[2] === "likes" ? true : false}
           to={`/${username}/likes`}
         />
         <ItemTab
           icon={IoMdPhotos as IconType}
           name="collections"
-          count={data?.collections}
+          count={data?.collections || 0}
           selected={pathname.split("/")[2] === "collections" ? true : false}
           to={`/${username}/collections`}
         />

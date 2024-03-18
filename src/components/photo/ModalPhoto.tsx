@@ -6,6 +6,7 @@ import PhotoDetail from "./PhotoDetail";
 import { IDetailPhoto } from "@/interfaces/detailPhoto";
 import Empty from "../Empty";
 import SkPhotoDetail from "../skeleton/SkPhotoDetail";
+import { BASE_URL, CLIENT_ID } from "@/app/api/apiConfig";
 
 export interface IHomeProps {
   slug: string;
@@ -13,19 +14,33 @@ export interface IHomeProps {
   isShow: boolean;
 }
 
+let keyIdx = 0;
+
 export default function ModalPhoto(props: IHomeProps) {
   const { slug, setIsShow, isShow } = props;
   const ref = useRef<HTMLInputElement>(null);
   const [data, setData] = useState<IDetailPhoto>();
 
   const fetchData = async () => {
-    const res = await fetch(`/api/photos/${slug}`);
-    if (res.ok) {
-      const data = await res.json();
-      setData(data);
-    } else {
-      setData(undefined);
-    }
+    fetch(`${BASE_URL}/photos/${slug}`, {
+      headers: {
+        Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        if (res.status === 403) {
+          keyIdx = (keyIdx + 1) % CLIENT_ID.length
+          return fetchData();
+        }
+        throw new Error("Error in modal photo");
+      })
+      .then((data) => setData(data))
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   useEffect(() => {
@@ -51,7 +66,11 @@ export default function ModalPhoto(props: IHomeProps) {
         className="bg-white rounded-lg px-5 w-full h-max cursor-default my-5"
         ref={ref}
       >
-        {data ? <PhotoDetail photo={data} slug={slug} sticky={0} /> : <SkPhotoDetail />}
+        {data ? (
+          <PhotoDetail photo={data} sticky={0} />
+        ) : (
+          <SkPhotoDetail />
+        )}
       </div>
     </div>
   );

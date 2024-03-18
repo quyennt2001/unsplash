@@ -12,6 +12,7 @@ import { IconType } from "react-icons";
 import Avatar from "../UI/Avatar";
 import ModalPhoto from "./ModalPhoto";
 import { IPhoto } from "@/interfaces/photo";
+import Empty from "../Empty";
 
 export interface IPhotoProps {
   data: IPhoto;
@@ -21,6 +22,10 @@ export default function Photo(props: IPhotoProps) {
   const [isShow, setIsShow] = useState<boolean>(false);
 
   const { data } = props;
+
+  if(!data?.slug) {
+    return <Empty />
+  }
 
   const handleClickShowModal = () => {
     setIsShow(true);
@@ -35,7 +40,7 @@ export default function Photo(props: IPhotoProps) {
   return (
     <>
       {isShow && (
-        <ModalPhoto slug={data?.slug} setIsShow={setIsShow} isShow={isShow} />
+        <ModalPhoto slug={data.slug} setIsShow={setIsShow} isShow={isShow} />
       )}
       <div className="w-full h-auto relative cursor-zoom-in group mb-5">
         <div className="relative w-full">

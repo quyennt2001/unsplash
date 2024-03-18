@@ -31,7 +31,7 @@ export default function UserPhoto(
           ))}
         </div>
         ) : (
-        <ListData data={data} isLoading={false} />)}
+        <ListData data={data} />)}
       </div>
     </div>
   );

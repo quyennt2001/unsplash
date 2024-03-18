@@ -15,7 +15,7 @@ export default function Header(props: IHeaderProps) {
       <div className="py-[11px] px-[20px] h-[62px] flex items-center gap-4">
         <Link href="/">
           <button className="w-9 h-9 relative">
-            <Image src={logo} alt=""  style={{objectFit: 'cover'}} />
+            <Image src={logo} alt="" style={{objectFit: 'cover'}} />
           </button>
         </Link>
         <div className="flex items-center gap-4 grow h-full">

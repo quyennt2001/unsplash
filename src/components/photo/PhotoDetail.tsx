@@ -5,7 +5,6 @@ import Image from "next/image";
 import * as React from "react";
 
 export interface IPhotoDetailProps {
-  slug: string;
   sticky: number;
   photo: IDetailPhoto;
 }
@@ -15,11 +14,11 @@ export default function PhotoDetail(props: IPhotoDetailProps) {
 
   return (
     <div className="bg-white">
-      <PhotoDetailHeader data={photo.user} sticky={sticky} />
+      <PhotoDetailHeader data={photo?.user} sticky={sticky} />
       <div className=" flex justify-center">
         <div className="relative min-h-[300px] min-w-[400px] max-md:w-full bg-sketelon">
           <Image
-            src={photo.urls.regular}
+            src={photo?.urls?.regular}
             height={0}
             width={0}
             alt=""

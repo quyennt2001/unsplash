@@ -1,11 +1,9 @@
 import * as React from "react";
 import ItemMenuCollection from "./ItemMenuCollection";
 import Link from "next/link";
-import SkItemMenuElement from "../skeleton/SkItemMenuCollection";
-import api from "@/app/api/axiosConfig";
 import { ICollection } from "@/interfaces/collection";
 import Empty from "../Empty";
-import { BASE_URL, CLIENT_ID } from "@/app/api/axiosConfig";
+import { BASE_URL, CLIENT_ID } from "@/app/api/apiConfig";
 
 export interface IMenuCollectionProps {}
 

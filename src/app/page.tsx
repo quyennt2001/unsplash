@@ -5,6 +5,7 @@ import Navbar from "@/components/home/Navbar";
 import Image from "next/image";
 import { RiAttachment2 } from "react-icons/ri";
 import MenuCollection from "@/components/home/MenuCollection";
+import ListImage from "@/components/home/ListImage";
 
 export interface IHomeProps {}
 
@@ -43,9 +44,11 @@ export default function Home(props: IHomeProps) {
               <div className="flex h-full w-full absolute top-0 left-0 z-[2]">
                 <Image
                   src="https://unsplash-assets.imgix.net/unsplashplus/asset-plus-018.jpg?dpr=1&h=280&w=280&auto=format&fit=crop&q=60"
-                  fill
+                  height={0}
+                  width={0}
+                  sizes="100vw"
                   alt=""
-                  className="rounded-lg"
+                  className="rounded-lg w-full h-auto"
                 />
               </div>
               <div className="p-5 flex flex-col gap-2 text-white font-semibold relative z-[3]">
@@ -61,7 +64,7 @@ export default function Home(props: IHomeProps) {
             </div>
           </div>
           <div className="w-full min-h-[1000px]">
-            <ImageInfinite />
+            <ListImage />
           </div>
         </div>
       </div>

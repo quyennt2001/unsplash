@@ -17,7 +17,9 @@ export default function ItemMenuCollection(props: IItemMenuCollectionProps) {
           <div className="relative h-8 w-8 rounded-md border">
             <Image
               src={data.preview_photos[0].urls.regular}
-              fill
+              height={0}
+              width={0}
+              sizes="100vw"
               alt=""
               className="rounded-md h-8 w-8"
             />

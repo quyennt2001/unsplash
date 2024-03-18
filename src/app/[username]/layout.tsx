@@ -4,23 +4,31 @@ import Image from "next/image";
 import * as React from "react";
 import logo from "../../../public/logo.png";
 import Tag from "@/components/UI/Tag";
-import { BASE_URL, CLIENT_ID } from "../api/axiosConfig";
+import { BASE_URL, CLIENT_ID } from "../api/apiConfig";
 import Empty from "@/components/Empty";
 import { IAggregated, IDetailUser } from "@/interfaces/detailUser";
 
 let keyIdx = 0;
 async function getData(username: string) {
-  const res = await fetch(
-    `${BASE_URL}/users/${username}?client_id=${CLIENT_ID[keyIdx]}`
-  );
-  if (res.ok) {
-    return res.json();
+  try {
+    const res = await fetch(
+      `${BASE_URL}/users/${username}`, {
+        headers: {
+          Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`
+        }
+      }
+    );
+    if (res.ok) {
+      return await res.json() as IDetailUser;
+    }
+    if (res.status === 403) {
+      keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+      return getData(username);
+    }
+    throw new Error(res.statusText)
+  } catch (e) {
+    console.log(e)
   }
-  if (res.status === 403) {
-    keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-    return getData(username);
-  }
-  return "";
 }
 
 export default async function UserLayout({
@@ -29,8 +37,8 @@ export default async function UserLayout({
 }: Readonly<{ children: React.ReactNode; params: { username: string } }>) {
   if (!params.username) return <Empty />
 
-  const user: IDetailUser = await getData(params.username);
-  console.log(user)
+  const user = await getData(params.username);
+
   if (!user) {
     return <Empty />;
   }
@@ -61,17 +69,17 @@ export default async function UserLayout({
         username={params.username}
         data={{
           photos:
-            user.total_photos < 1000
-              ? user.total_photos
-              : formatNumber(user.total_photos),
+            user?.total_photos < 1000
+              ? user?.total_photos
+              : formatNumber(user?.total_photos),
           likes:
-            user.total_likes < 1000
-              ? user.total_likes
-              : formatNumber(user.total_likes),
+            user?.total_likes < 1000
+              ? user?.total_likes
+              : formatNumber(user?.total_likes),
           collections:
-            user.total_collections < 1000
-              ? user.total_collections
-              : formatNumber(user.total_collections),
+            user?.total_collections < 1000
+              ? user?.total_collections
+              : formatNumber(user?.total_collections),
         }}
       />
       <div>{children}</div>
@@ -82,7 +90,7 @@ export default async function UserLayout({
               Pawel's work appears in the following categories
             </p>
             <div className="flex gap-2 flex-wrap">
-              {user.tags.aggregated.map((cate: IAggregated, i: number) => (
+              {user?.tags?.aggregated.map((cate: IAggregated, i: number) => (
                 <Tag name={cate?.source?.title || cate?.title} key={i} />
               ))}
             </div>

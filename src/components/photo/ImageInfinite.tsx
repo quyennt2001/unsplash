@@ -1,34 +1,42 @@
 "use client";
 
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import ListData from "../ListData";
 import Loading from "../Loading";
 import { IPhoto } from "@/interfaces/photo";
-import Empty from "../Empty";
 import SkPhoto from "../skeleton/SkPhoto";
+import { BASE_URL, CLIENT_ID } from "@/app/api/apiConfig";
 
-export interface IListImageProps {}
+export interface IListImageProps {
+  initialValue: IPhoto[];
+}
 
 export default function ImageInfinite(props: IListImageProps) {
-  const [data, setData] = useState<IPhoto[]>([]);
-  const [isLoading, setIsLoading] = useState(false);;
-  const [page, setPage] = useState(1);
+  const [data, setData] = useState<IPhoto[]>(props.initialValue);
+  const [isLoading, setIsLoading] = useState(false);
+  // const [page, setPage] = useState(2);
+  const page = useRef(2);
 
   const handleScroll = () => {
-    if (
+    const isScroll =
       document.documentElement.offsetHeight -
-        (window.innerHeight + document.documentElement.scrollTop) <=
-        200 &&
-      !isLoading
-    ) {
-      setPage((prev) => prev + 1);
+        (window.innerHeight + window.scrollY) <=
+      200;
+    if (isScroll && !isLoading) {
+      fetchData();
+      page.current++;
     }
   };
 
-  const fetchData = React.useCallback(async () => {
+  let keyIdx = 0
+  const fetchData = async () => {
     setIsLoading(true);
-    const res = await fetch(`/api/photos?page=${page}`);
+    const res = await fetch(`${BASE_URL}/photos?page=${page.current}`, {
+      headers: {
+        Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`
+      }
+    });
     if (res.ok) {
       const data: IPhoto[] = await res.json();
       setData((prev) => [...prev, ...data]);
@@ -36,11 +44,7 @@ export default function ImageInfinite(props: IListImageProps) {
       setData([]);
     }
     setIsLoading(false);
-  }, [page]);
-
-  useEffect(() => {
-    fetchData();
-  }, [page]);
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);

@@ -1,79 +1,36 @@
-"use client";
-
-import Loading from "@/components/Loading";
-import Collection from "@/components/collection/Collection";
 import * as React from "react";
-import { useState, useEffect, useRef } from "react";
-import api from "../api/axiosConfig";
 import { ICollection } from "@/interfaces/collection";
-import SkPhoto from "@/components/skeleton/SkPhoto";
-import SkCollection from "@/components/skeleton/SkCollection";
+import { BASE_URL, CLIENT_ID } from "../api/apiConfig";
+import Empty from "@/components/Empty";
+import CollectionInfinte from "@/components/collection/CollectionInfinite";
 
 export interface IListCollectionsProps {}
 
-export default function ListCollections(props: IListCollectionsProps) {
-  const [collections, setCollections] = useState<ICollection[]>([]);
-  const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const fetchData = async () => {
-    const res = await fetch(`/api/collections?page=${page}`);
-    if (res.ok) {
-      const data = await res.json();
-      setCollections((prev: ICollection[]) => [...prev, ...data]);
-    } else setCollections([]);
-    setIsLoading(false);
-  };
-
-  const handleScroll = () => {
-    if (
-      document.documentElement.offsetHeight -
-        (window.innerHeight + document.documentElement.scrollTop) <=
-        300 &&
-      !isLoading
-    ) {
-      setPage((prev) => prev + 1);
-      setIsLoading(true);
+let keyIdx = 0;
+async function getData() {
+  try {
+    const res = await fetch(`${BASE_URL}/collections?page=1`, {
+      headers: {
+        Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+      },
+    });
+    if (res.status === 403) {
+      keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+      return getData();
     }
-  };
+    if (res.ok) {
+      return (await res.json()) as ICollection[];
+    }
+    throw new Error(res.statusText)
+  } catch (e) {
+    console.log(e);
+  }
+}
 
-  useEffect(() => {
-    fetchData();
-  }, [page]);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return (
-    <div className="flex justify-center">
-      <div className="flex flex-col w-[1280px]">
-        <div className="pt-14 pb-[72px] flex flex-col gap-4">
-          <p className="text-5xl font-bold">Collections</p>
-          <p className="text-lg max-md:text-[15px]">
-            Explore the world through collections of beautiful photos free to
-            use under the <br className="max-md:hidden" />
-            <span className="underline cursor-pointer text-grey">
-              Unsplash License
-            </span>
-          </p>
-        </div>
-        {!collections.length ? (
-          <SkCollection />
-        ) : (
-          <div className="grid grid-cols-3 gap-x-4 gap-y-10 max-lg:grid-cols-2 max-sm:grid-cols-1">
-            {collections.map((col: ICollection, i: number) => (
-              <Collection key={i} data={col} />
-            ))}
-          </div>
-        )}
-        {isLoading && (
-          <div className="w-full">
-            <Loading />
-          </div>
-        )}
-      </div>
-    </div>
-  );
+export default async function ListCollections(props: IListCollectionsProps) {
+  const data = await getData();
+  if (!data) {
+    return <Empty />;
+  }
+  return <CollectionInfinte initialValue={data} />;
 }

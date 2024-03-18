@@ -7,54 +7,72 @@ import { IconType } from "react-icons";
 import Collection from "@/components/collection/Collection";
 import ListData from "@/components/ListData";
 import Link from "next/link";
-import api from "@/app/api/axiosConfig";
 import { ICollection } from "@/interfaces/collection";
 import { IPhoto } from "@/interfaces/photo";
-import { BASE_URL, CLIENT_ID } from "@/app/api/axiosConfig";
+import { BASE_URL, CLIENT_ID } from "@/app/api/apiConfig";
+import Empty from "@/components/Empty";
 
 export interface IDetailCollectionProps {}
 
 let keyIdx = 0;
 async function getCollections(collectionId: string) {
-  const res = await fetch(
-    `${BASE_URL}/collections/${collectionId}?client_id=${CLIENT_ID[keyIdx]}`
-  );
-  if (res.ok) {
-    return res.json();
+  try {
+    const res = await fetch(`${BASE_URL}/collections/${collectionId}`, {
+      headers: {
+        Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+      },
+    });
+    if (res.ok) {
+      return (await res.json()) as ICollection;
+    }
+    if (res.status === 401) {
+      keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+      return getCollections(collectionId);
+    }
+    throw new Error(res.statusText);
+  } catch (e) {
+    console.log(e);
   }
-  if (res.status === 403) {
-    keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-    return getCollections(collectionId);
-  }
-  return "";
 }
 
 async function getPhotos(collectionId: string) {
-  const res = await fetch(
-    `${BASE_URL}/collections/${collectionId}/photos?client_id=${CLIENT_ID[keyIdx]}`
-  );
-  if (res.ok) {
-    return res.json();
+  try {
+    const res = await fetch(`${BASE_URL}/collections/${collectionId}/photos`, {
+      headers: {
+        Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+      },
+    });
+    if (res.ok) {
+      return (await res.json()) as IPhoto[];
+    }
+    if (res.status === 403) {
+      keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+      return getPhotos(collectionId);
+    }
+    throw new Error(res.statusText);
+  } catch (e) {
+    console.log(e);
   }
-  if (res.status === 403) {
-    keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-    return getPhotos(collectionId);
-  }
-  return [];
 }
 
 async function getRelateds(collectionId: string) {
-  const res = await fetch(
-    `${BASE_URL}/collections/${collectionId}/related?client_id=${CLIENT_ID[keyIdx]}`
-  );
-  if (res.ok) {
-    return res.json();
+  try {
+    const res = await fetch(`${BASE_URL}/collections/${collectionId}/related`, {
+      headers: {
+        Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+      },
+    });
+    if (res.ok) {
+      return (await res.json()) as ICollection[];
+    }
+    if (res.status === 403) {
+      keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+      return getRelateds(collectionId);
+    }
+    throw new Error(res.statusText);
+  } catch (e) {
+    console.log(e);
   }
-  if (res.status === 403) {
-    keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-    return getRelateds(collectionId);
-  }
-  return [];
 }
 
 export default async function DetailCollection({
@@ -62,9 +80,13 @@ export default async function DetailCollection({
 }: {
   params: { collectionId: string };
 }) {
-  const collection: ICollection = await getCollections(params.collectionId);
-  const photos: IPhoto[] = await getPhotos(params.collectionId);
-  const relateds: ICollection[] = await getRelateds(params.collectionId);
+  const collection = await getCollections(params.collectionId);
+  const photos = (await getPhotos(params.collectionId)) || [];
+  const relateds = (await getRelateds(params.collectionId)) || [];
+
+  if (!collection) {
+    return <Empty />;
+  }
 
   return (
     <div className="flex justify-center">
@@ -90,9 +112,9 @@ export default async function DetailCollection({
             </div>
           </div>
         </div>
-        <div className="flex mb-6">{collection.total_photos} photos</div>
+        <div className="flex mb-6">{collection?.total_photos} photos</div>
         <div className="flex flex-col gap-[72px]">
-          <ListData data={photos} isLoading={false} />
+          <ListData data={photos} />
           <div className="flex flex-col">
             <p className="text-2xl font-semibold mt-4 mb-6">
               You might also like

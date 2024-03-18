@@ -136,7 +136,7 @@ export default function UserInformation(props: IUserInformationProps) {
               </div>
               <p className="">Interests</p>
               <div className="flex gap-2 flex-wrap">
-                {user.tags.custom.map((tag: ICustom, i: number) => (
+                {user?.tags?.custom.map((tag: ICustom, i: number) => (
                   <Tag key={i} name={tag?.source?.title || tag?.title} />
                 ))}
               </div>

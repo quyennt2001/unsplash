@@ -16,7 +16,9 @@ export interface IPhotoDetailHeaderProps {
 
 export default function PhotoDetailHeader(props: IPhotoDetailHeaderProps) {
   const { data, sticky } = props;
-  // console.log(data);
+  if(!data) {
+    return <></>
+  }
   return (
     <div
       className={
@@ -25,11 +27,11 @@ export default function PhotoDetailHeader(props: IPhotoDetailHeaderProps) {
       }
     >
       <div className="py-[13px] flex items-center gap-2 justify-between">
-        <Link href={`/${data.username}`} className="flex items-center gap-2">
-          <Avatar src={data.profile_image.medium} />
+        <Link href={`/${data?.username}`} className="flex items-center gap-2">
+          <Avatar src={data?.profile_image?.medium} />
           <div className="flex flex-col justify-between">
-            <p className="capitalize text-[15px] font-medium">{data.name}</p>
-            <p className="text-[12px] text-grey">{data.username}</p>
+            <p className="capitalize text-[15px] font-medium">{data?.name}</p>
+            <p className="text-[12px] text-grey">{data?.username}</p>
           </div>
         </Link>
         <div className="flex gap-2">
