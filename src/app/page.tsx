@@ -1,9 +1,8 @@
 import * as React from "react";
-import FormSearch from "@/components/UI/FormSearch";
-import ImageInfinite from "@/components/photo/ImageInfinite";
-import Navbar from "@/components/home/Navbar";
 import Image from "next/image";
 import { RiAttachment2 } from "react-icons/ri";
+import FormSearch from "@/components/UI/FormSearch";
+import Navbar from "@/components/home/Navbar";
 import MenuCollection from "@/components/home/MenuCollection";
 import ListImage from "@/components/home/ListImage";
 

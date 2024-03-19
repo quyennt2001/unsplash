@@ -15,7 +15,7 @@ async function getData() {
   })
     .then(async (res) => {
       if (res.ok) {
-        return (await res.json()) as ICollection[];
+        return await res.json() as ICollection[];
       }
       if (res.status === 403) {
         keyIdx = (keyIdx + 1) % CLIENT_ID.length;

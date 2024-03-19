@@ -9,6 +9,8 @@
 # testing
 /coverage
 
+@modal
+
 # next.js
 /.next/
 /out/

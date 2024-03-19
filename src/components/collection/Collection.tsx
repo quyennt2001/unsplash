@@ -79,7 +79,7 @@ export default function Collection(props: ICollectionProps) {
         <div className="flex gap-2 items-center text-grey text-sm">
           <p className="">{data?.total_photos || 0} photos</p>
           <span className="h-[1px] w-[1px] rounded-full bg-grey"></span>
-          <p className="">Curated by {props.username || data.user.username}</p>
+          <p className="">Curated by {props?.username || data?.user?.username}</p>
         </div>
       </div>
       <div className="flex gap-2 flex-wrap">

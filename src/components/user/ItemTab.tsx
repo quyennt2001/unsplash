@@ -19,12 +19,12 @@ export default function ItemTab(props: IItemTabProps) {
           "h-14 gap-2 flex items-center " +
           (props?.selected
             ? "text-black cursor-default border-b-[3px] border-black"
-            : "text-grey cursor-pointer")
+            : "text-grey cursor-pointer border-b-[3px] border-white hover:text-black")
         }
       >
         {
           <props.icon
-            className={"max-md:hidden " + (props?.selected ? "text-black" : "text-border")}
+            className={"max-md:hidden hover:text-inherit" + (props?.selected ? "text-black" : "text-border")}
           />
         }
         <p className="capitalize text-sm">{props?.name}</p>

@@ -22,6 +22,7 @@ export default function ItemMenuCollection(props: IItemMenuCollectionProps) {
               sizes="100vw"
               alt=""
               className="rounded-md h-8 w-8"
+              style={{objectFit: 'cover'}}
             />
           </div>
           <div className="flex flex-col grow max-w-[198px]">

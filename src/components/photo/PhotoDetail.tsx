@@ -15,17 +15,20 @@ export default function PhotoDetail(props: IPhotoDetailProps) {
   return (
     <div className="bg-white">
       <PhotoDetailHeader data={photo?.user} sticky={sticky} />
-      <div className=" flex justify-center">
-        <div className="relative min-h-[300px] min-w-[400px] max-md:w-full bg-sketelon">
-          <Image
-            src={photo?.urls?.regular}
-            height={0}
-            width={0}
-            alt=""
-            className="w-full h-auto"
-            sizes="100vw"
-          />
-        </div>
+      <div className=" flex justify-center py-[10px]">
+        <React.Suspense fallback={<p>loading</p>}>
+          <div className="relative max-h-[600px] max-md:w-full max-md:h-auto flex justify-center">
+            <Image
+              src={photo?.urls?.regular}
+              height={0}
+              width={0}
+              alt=""
+              className="w-auto h-full max-md:w-full max-md:h-auto"
+              sizes="100vw"
+              style={{ objectFit: "contain" }}
+            />
+          </div>
+        </React.Suspense>
       </div>
       <PhotoDetailInfor data={photo} />
     </div>

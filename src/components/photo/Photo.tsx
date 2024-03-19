@@ -23,18 +23,14 @@ export default function Photo(props: IPhotoProps) {
 
   const { data } = props;
 
-  if(!data?.slug) {
-    return <Empty />
+  if (!data?.slug) {
+    return <Empty />;
   }
 
   const handleClickShowModal = () => {
     setIsShow(true);
     document.body.style.overflow = "hidden";
-    window.history.pushState(
-      null,
-      "",
-      `/photos/${data.slug}`
-    );
+    window.history.pushState(null, "", `/photos/${data.slug}`);
   };
 
   return (
@@ -52,6 +48,7 @@ export default function Photo(props: IPhotoProps) {
             className="w-full h-auto"
             sizes="100vw"
           />
+          {/* <Link href={`/photos/${data.slug}`}> */}
           <div
             className="absolute top-0 left-0 w-full h-full hidden flex-col bg-modal justify-between group-hover:flex p-5"
             onClick={handleClickShowModal}
@@ -79,6 +76,7 @@ export default function Photo(props: IPhotoProps) {
               <ButtonIcon icon={FaArrowDown as IconType} />
             </div>
           </div>
+          {/* </Link> */}
         </div>
       </div>
     </>
