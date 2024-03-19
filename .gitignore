@@ -9,8 +9,6 @@
 # testing
 /coverage
 
-# skeleton
-
 # next.js
 /.next/
 /out/

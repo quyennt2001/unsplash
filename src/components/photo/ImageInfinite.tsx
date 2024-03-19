@@ -15,35 +15,48 @@ export interface IListImageProps {
 export default function ImageInfinite(props: IListImageProps) {
   const [data, setData] = useState<IPhoto[]>(props.initialValue);
   const [isLoading, setIsLoading] = useState(false);
-  // const [page, setPage] = useState(2);
+
   const page = useRef(2);
 
-  const handleScroll = () => {
+  const handleScroll = async () => {
     const isScroll =
       document.documentElement.offsetHeight -
         (window.innerHeight + window.scrollY) <=
       200;
-    if (isScroll && !isLoading) {
-      fetchData();
-      page.current++;
+    if (!isScroll || isLoading) {
+      return;
     }
+    fetchData();
+    page.current++;
   };
 
-  let keyIdx = 0
+  let keyIdx = 0;
   const fetchData = async () => {
     setIsLoading(true);
-    const res = await fetch(`${BASE_URL}/photos?page=${page.current}`, {
+    fetch(`${BASE_URL}/photos?page=${page.current}`, {
       headers: {
-        Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`
-      }
-    });
-    if (res.ok) {
-      const data: IPhoto[] = await res.json();
-      setData((prev) => [...prev, ...data]);
-    } else {
-      setData([]);
-    }
-    setIsLoading(false);
+        Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+      },
+    })
+      .then(async (res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        if (res.status === 403) {
+          keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+          fetchData();
+        }
+        throw new Error(res.statusText);
+      })
+      .then((data: IPhoto[]) => {
+        setData((prev) => [...prev, ...data]);
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -51,18 +64,20 @@ export default function ImageInfinite(props: IListImageProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  if (!data.length) {
-    return <SkPhoto />;
-  }
-
   return (
-    <div className="relative">
-      <ListData isLoading={isLoading} data={data} />
-      {isLoading && (
-        <div className="w-full">
-          <Loading />
+    <>
+      {!data.length ? (
+        <SkPhoto />
+      ) : (
+        <div className="relative">
+          <ListData data={data} />
+          {isLoading && (
+            <div className="w-full h-[500px]">
+              <Loading />
+            </div>
+          )}
         </div>
       )}
-    </div>
+    </>
   );
 }

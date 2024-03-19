@@ -33,7 +33,7 @@ export default function ModalPhoto(props: IHomeProps) {
         }
         if (res.status === 403) {
           keyIdx = (keyIdx + 1) % CLIENT_ID.length
-          return fetchData();
+          fetchData();
         }
         throw new Error("Error in modal photo");
       })

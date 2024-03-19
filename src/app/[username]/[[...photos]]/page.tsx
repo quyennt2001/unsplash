@@ -7,23 +7,24 @@ import { IPhoto } from "@/interfaces/photo";
 
 let keyIdx = 0;
 async function getData(listname: string, username: string) {
-  try {
-    const res = await fetch(`${BASE_URL}/users/${username}/${listname}`, {
-      headers: {
-        Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
-      },
+  return fetch(`${BASE_URL}/users/${username}/${listname}`, {
+    headers: {
+      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+    },
+  })
+    .then(async (res) => {
+      if (res.ok) {
+        return (await res.json()) as ICollection[] | IPhoto[];
+      }
+      if (res.status === 403) {
+        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+        getData(listname, username);
+      }
+      throw new Error(res.statusText);
+    })
+    .catch((e) => {
+      console.log(e);
     });
-    if (res.ok) {
-      return await res.json() as ICollection[] | IPhoto[];
-    }
-    if (res.status === 403) {
-      keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-      return getData(listname, username);
-    }
-    throw new Error(res.statusText)
-  } catch (e) {
-    console.log(e);
-  }
 }
 
 export default async function ListPhotos({
@@ -32,7 +33,7 @@ export default async function ListPhotos({
   params: { photos: string[any]; username: string };
 }) {
   const listname = params?.photos ? params.photos[0] : "photos";
-  const data= await getData(listname, params.username);
+  const data = await getData(listname, params.username);
 
   if (!data || !data.length) {
     return <Empty />;

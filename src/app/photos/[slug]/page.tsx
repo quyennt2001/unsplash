@@ -6,23 +6,22 @@ import Empty from "@/components/Empty";
 
 let keyIdx = 0;
 async function getData(slug: string) {
-  try {
-    const res = await fetch(`${BASE_URL}/photos/${slug}`, {
-      headers: {
-        Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
-      },
-    });
-    if (res.ok) {
-      return (await res.json()) as IDetailPhoto;
-    }
-    if (res.status === 403) {
-      keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-      return getData(slug);
-    }
-    throw new Error(res.statusText);
-  } catch (e) {
-    console.log(e);
-  }
+  return fetch(`${BASE_URL}/photos/${slug}`, {
+    headers: {
+      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+    },
+  })
+    .then(async (res) => {
+      if (res.ok) {
+        return (await res.json()) as IDetailPhoto;
+      }
+      if (res.status === 403) {
+        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+        getData(slug);
+      }
+      throw new Error(res.statusText);
+    })
+    .catch((e) => console.log(e));
 }
 
 export default async function PhotoPage({

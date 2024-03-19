@@ -8,19 +8,22 @@ export interface IListImageProps {}
 
 let keyIdx = 0;
 async function getData() {
-  const res = await fetch(
-    `${BASE_URL}/photos?client_id=${CLIENT_ID[keyIdx]}&page=1`
-  );
-  if (res.status === 403) {
-    keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-    return getData();
-  }
-  if (res.ok) {
-    return (await res.json()) as IPhoto[];
-  }
-  if (res.status !== 200) {
-    return [];
-  }
+  return fetch(`${BASE_URL}/photos?page=1`, {
+    headers: {
+      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+    },
+  })
+    .then(async (res) => {
+      if (res.ok) {
+        return (await res.json()) as IPhoto[];
+      }
+      if (res.status === 403) {
+        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+        getData();
+      }
+      throw new Error(res.statusText);
+    })
+    .catch((e) => console.log(e));
 }
 
 export default async function ListImage(props: IListImageProps) {

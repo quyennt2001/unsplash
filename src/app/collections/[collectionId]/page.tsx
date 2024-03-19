@@ -16,63 +16,60 @@ export interface IDetailCollectionProps {}
 
 let keyIdx = 0;
 async function getCollections(collectionId: string) {
-  try {
-    const res = await fetch(`${BASE_URL}/collections/${collectionId}`, {
-      headers: {
-        Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
-      },
-    });
-    if (res.ok) {
-      return (await res.json()) as ICollection;
-    }
-    if (res.status === 401) {
-      keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-      return getCollections(collectionId);
-    }
-    throw new Error(res.statusText);
-  } catch (e) {
-    console.log(e);
-  }
+  return fetch(`${BASE_URL}/collections/${collectionId}`, {
+    headers: {
+      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+    },
+  })
+    .then(async (res) => {
+      if (res.ok) {
+        return (await res.json()) as ICollection;
+      }
+      if (res.status === 403) {
+        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+        getCollections(collectionId);
+      }
+      throw new Error(res.statusText);
+    })
+    .catch((e) => console.log(e));
 }
 
 async function getPhotos(collectionId: string) {
-  try {
-    const res = await fetch(`${BASE_URL}/collections/${collectionId}/photos`, {
-      headers: {
-        Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
-      },
-    });
-    if (res.ok) {
-      return (await res.json()) as IPhoto[];
-    }
-    if (res.status === 403) {
-      keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-      return getPhotos(collectionId);
-    }
-    throw new Error(res.statusText);
-  } catch (e) {
-    console.log(e);
-  }
+  return fetch(`${BASE_URL}/collections/${collectionId}/photos`, {
+    headers: {
+      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+    },
+  })
+    .then(async (res) => {
+      if (res.ok) {
+        return (await res.json()) as IPhoto[];
+      }
+      if (res.status === 403) {
+        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+        getPhotos(collectionId)
+      }
+      throw new Error(res.statusText);
+    })
+    .catch((e) => console.log(e));
 }
 
 async function getRelateds(collectionId: string) {
-  try {
-    const res = await fetch(`${BASE_URL}/collections/${collectionId}/related`, {
-      headers: {
-        Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
-      },
-    });
+  return fetch(`${BASE_URL}/collections/${collectionId}/related`, {
+    headers: {
+      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+    },
+  })
+  .then(async (res) => {
     if (res.ok) {
-      return (await res.json()) as ICollection[];
+      return (await res.json()) as  ICollection[];
     }
     if (res.status === 403) {
       keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-      return getRelateds(collectionId);
+      getRelateds(collectionId)
     }
     throw new Error(res.statusText);
-  } catch (e) {
-    console.log(e);
-  }
+  })
+  .catch((e) => console.log(e));
 }
 
 export default async function DetailCollection({

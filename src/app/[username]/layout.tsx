@@ -10,32 +10,31 @@ import { IAggregated, IDetailUser } from "@/interfaces/detailUser";
 
 let keyIdx = 0;
 async function getData(username: string) {
-  try {
-    const res = await fetch(
-      `${BASE_URL}/users/${username}`, {
-        headers: {
-          Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`
-        }
+  return fetch(`${BASE_URL}/users/${username}`, {
+    headers: {
+      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+    },
+  })
+    .then(async(res) => {
+      if(res.ok) {
+        return await res.json() as IDetailUser
       }
-    );
-    if (res.ok) {
-      return await res.json() as IDetailUser;
-    }
-    if (res.status === 403) {
-      keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-      return getData(username);
-    }
-    throw new Error(res.statusText)
-  } catch (e) {
-    console.log(e)
-  }
+      if(res.status === 403) {
+        keyIdx = (keyIdx + 1) % CLIENT_ID.length
+        getData(username)
+      }
+      throw new Error(res.statusText)
+    })
+    .catch((e) => {
+      console.log(e)
+    })
 }
 
 export default async function UserLayout({
   children,
   params,
 }: Readonly<{ children: React.ReactNode; params: { username: string } }>) {
-  if (!params.username) return <Empty />
+  if (!params.username) return <Empty />;
 
   const user = await getData(params.username);
 

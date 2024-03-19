@@ -39,17 +39,21 @@ export default function CollectionInfinte(props: ICollectionInfinte) {
         Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
       },
     })
-      .then((res) => {
+      .then( async (res) => {
         if (res.ok) {
-          return res.json()
+          return (await res.json()) as ICollection[];
         }
-        throw new Error(res.statusText)
+        if (res.status === 403) {
+          keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+          fetchData();
+        }
+        throw new Error(res.statusText);
       })
-      .then((data: ICollection[]) => {
-        setCollections((prev) => [...prev, ...data])
+      .then((data) => {
+        setCollections((prev) => [...prev, ...data]);
       })
       .catch((e) => {
-        console.log(e)
+        console.log(e);
       })
       .finally(() => {
         setIsLoading(false);
@@ -62,33 +66,21 @@ export default function CollectionInfinte(props: ICollectionInfinte) {
   }, []);
 
   return (
-    <div className="flex justify-center">
-      <div className="flex flex-col w-[1280px]">
-        <div className="pt-14 pb-[72px] flex flex-col gap-4">
-          <p className="text-5xl font-bold">Collections</p>
-          <p className="text-lg max-md:text-[15px]">
-            Explore the world through collections of beautiful photos free to
-            use under the <br className="max-md:hidden" />
-            <span className="underline cursor-pointer text-grey">
-              Unsplash License
-            </span>
-          </p>
+    <div className="relative">
+      {!collections.length ? (
+        <SkCollection />
+      ) : (
+        <div className="grid grid-cols-3 gap-x-4 gap-y-10 max-lg:grid-cols-2 max-sm:grid-cols-1">
+          {collections.map((col: ICollection, i: number) => (
+            <Collection key={i} data={col} />
+          ))}
+          {isLoading && (
+            <div className="w-ful h-[600px]">
+              <Loading />
+            </div>
+          )}
         </div>
-        {!collections.length ? (
-          <SkCollection />
-        ) : (
-          <div className="grid grid-cols-3 gap-x-4 gap-y-10 max-lg:grid-cols-2 max-sm:grid-cols-1">
-            {collections.map((col: ICollection, i: number) => (
-              <Collection key={i} data={col} />
-            ))}
-          </div>
-        )}
-        {isLoading && (
-          <div className="w-full">
-            <Loading />
-          </div>
-        )}
-      </div>
+      )}
     </div>
   );
 }

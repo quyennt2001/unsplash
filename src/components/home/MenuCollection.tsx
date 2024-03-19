@@ -9,22 +9,27 @@ export interface IMenuCollectionProps {}
 
 let keyIdx = 0;
 async function getData() {
-  const res = await fetch(
-    `${BASE_URL}/collections?per_page=4&client_id=${CLIENT_ID[keyIdx]}`
-  );
-  if (res.ok) {
-    return res.json();
-  }
-  if (res.status === 403) {
-    keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-    return getData();
-  }
-  return [];
+  return fetch(`${BASE_URL}/collections?per_page=4`, {
+    headers: {
+      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+    },
+  })
+    .then(async (res) => {
+      if (res.ok) {
+        return (await res.json()) as ICollection[];
+      }
+      if (res.status === 403) {
+        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+        getData();
+      }
+      throw new Error(res.statusText);
+    })
+    .catch((e) => console.log(e));
 }
 
 export default async function MenuCollection(props: IMenuCollectionProps) {
-  const collections: ICollection[] = await getData();
-  if (!collections.length) {
+  const collections = await getData();
+  if (!collections || !collections.length) {
     return <Empty />;
   }
 
