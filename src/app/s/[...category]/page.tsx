@@ -45,6 +45,7 @@ export default async function SearchPage({
   ) {
     return <PageNotFound />;
   }
+  
   const [category, searchValue] = [...params.category];
   const data = await search(category, searchValue);
 
