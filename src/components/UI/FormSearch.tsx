@@ -60,7 +60,7 @@ export default function FormSearch(props: IFormSearchProps) {
 
   const handleClickRecent = (recentValue: string) => {
     setValue(recentValue);
-    router.push(`/s/${option}/${value}`);
+    router.push(`/s/${option}/${recentValue}`);
     setIsShownSearch(false);
   };
 
@@ -98,9 +98,13 @@ export default function FormSearch(props: IFormSearchProps) {
 
   useEffect(() => {
     if (isSearch) {
+      console.log("issearch");
       setOption(pathname[2]);
+      setValue(pathname[3]);
+    } else {
+      setValue("");
     }
-  }, [pathname]);
+  }, [pathname.length]);
 
   useEffect(() => {
     if (!localStorage.getItem("recentSearch")) {
