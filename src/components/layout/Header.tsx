@@ -13,7 +13,7 @@ export default function Header(props: IHeaderProps) {
   return (
     <div className="md:sticky md:top-0 text-text bg-white text-sm z-10">
       <div className="py-[11px] px-[20px] h-[62px] flex items-center gap-4">
-        <Link href="/">
+        <Link href="/" className="flex items-center">
           <button className="w-9 h-9 relative">
             <Image src={logo} alt="" style={{objectFit: 'cover'}} />
           </button>

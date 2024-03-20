@@ -32,9 +32,9 @@ export default function Home(props: IHomeProps) {
                   </div>
                 </button>
               </div>
-              <div className="h-[54px]">
+              {/* <div className="h-[54px]">
                 <FormSearch className="rounded-lg" />
-              </div>
+              </div> */}
             </div>
             <div className="w-[280px] h-[280px] bg-white border border-gray-200 rounded-lg max-md:hidden">
               <MenuCollection />

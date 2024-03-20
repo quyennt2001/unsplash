@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { GrSearch } from "react-icons/gr";
 import { IoCloseOutline } from "react-icons/io5";
 import { FaAngleDown } from "react-icons/fa6";
@@ -13,6 +13,7 @@ export interface IFormSearchProps {
 }
 
 export default function FormSearch(props: IFormSearchProps) {
+  const ref = useRef<HTMLInputElement>(null);
   const pathname = usePathname().split("/");
   const isSearch =
     pathname.length === 4 &&
@@ -39,6 +40,18 @@ export default function FormSearch(props: IFormSearchProps) {
       router.push(`/s/${item}/${value}`);
     }
   };
+
+  useEffect(() => {
+    if (!isShowOption) return;
+    const clickOutSide = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setIsShowOption(false);
+      }
+    };
+
+    window.addEventListener("mousedown", clickOutSide);
+    return () => window.removeEventListener("mousedown", clickOutSide);
+  }, [isShowOption]);
 
   useEffect(() => {
     if (isSearch) {
@@ -83,7 +96,10 @@ export default function FormSearch(props: IFormSearchProps) {
       </div>
       <div className="h-full relative w-32">
         {isShowOption && (
-          <div className="absolute top-[45px] left-0 w-full bg-white shadow border rounded-lg flex flex-col gap-1 text-grey py-[6px]">
+          <div
+            ref={ref}
+            className="absolute top-[45px] left-0 w-full bg-white shadow border rounded-lg flex flex-col gap-1 text-grey py-[6px]"
+          >
             {OPTIONS.filter((item: string) => item !== option).map(
               (item: string, i: number) => (
                 <button
@@ -99,9 +115,9 @@ export default function FormSearch(props: IFormSearchProps) {
         )}
         <button
           onClick={() => setIsShowOption(!isShowOption)}
-          className="flex items-center justify-center bg-white w-full h-full rounded-r-3xl text-grey gap-2 border-l-2 border-l-border"
+          className="flex items-center justify-center bg-white w-full h-full capitalize rounded-r-3xl text-grey gap-2 border-l-2 border-l-border"
         >
-          <p className="capitalize">{option}</p>
+          {option}
           <FaAngleDown />
         </button>
       </div>

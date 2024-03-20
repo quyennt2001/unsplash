@@ -25,11 +25,11 @@ async function getCollections(collectionId: string) {
       if (res.ok) {
         return (await res.json()) as ICollection;
       }
-      if (res.status === 403) {
+      if (res.status === 403 && keyIdx < CLIENT_ID.length) {
         keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-        getCollections(collectionId);
+        await getCollections(collectionId);
       }
-      throw new Error(res.statusText);
+      throw new Error(res.status + " " + res.statusText);
     })
     .catch((e) => console.log(e));
 }
@@ -44,11 +44,11 @@ async function getPhotos(collectionId: string) {
       if (res.ok) {
         return (await res.json()) as IPhoto[];
       }
-      if (res.status === 403) {
+      if (res.status === 403 && keyIdx < CLIENT_ID.length) {
         keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-        getPhotos(collectionId)
+        await getPhotos(collectionId);
       }
-      throw new Error(res.statusText);
+      throw new Error(res.status + " " + res.statusText);
     })
     .catch((e) => console.log(e));
 }
@@ -59,17 +59,17 @@ async function getRelateds(collectionId: string) {
       Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
-  .then(async (res) => {
-    if (res.ok) {
-      return (await res.json()) as  ICollection[];
-    }
-    if (res.status === 403) {
-      keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-      getRelateds(collectionId)
-    }
-    throw new Error(res.statusText);
-  })
-  .catch((e) => console.log(e));
+    .then(async (res) => {
+      if (res.ok) {
+        return (await res.json()) as ICollection[];
+      }
+      if (res.status === 403 && keyIdx < CLIENT_ID.length) {
+        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+        await getRelateds(collectionId);
+      }
+      throw new Error(res.status + " " + res.statusText);
+    })
+    .catch((e) => console.log(e));
 }
 
 export default async function DetailCollection({

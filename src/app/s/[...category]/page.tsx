@@ -11,8 +11,8 @@ import { IResultSearch } from "@/interfaces/search";
 import Image from "next/image";
 import logo from "../../../../public/logo.png";
 
-export interface ISearchPageProps {}
 export const OPTIONS = ["photos", "collections", "users"];
+
 let keyIdx = 0;
 async function search(category: string, query: string) {
   return fetch(`${BASE_URL}/search/${category}?query=${query}&per_page=20`, {
@@ -24,11 +24,11 @@ async function search(category: string, query: string) {
       if (res.ok) {
         return (await res.json()) as IResultSearch;
       }
-      if (res.status === 403) {
+      if (res.status === 403 && keyIdx < CLIENT_ID.length) {
         keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-        search(category, query);
+        await search(category, query);
       }
-      throw new Error(res.statusText);
+      throw new Error(res.status + " " + res.statusText);
     })
     .catch((e) => console.log("Error search ->", e));
 }
@@ -39,7 +39,6 @@ export default async function SearchPage({
   params: { category: string[] };
 }) {
   if (
-    !params.category ||
     params.category.length < 2 ||
     params.category.length > 2 ||
     !OPTIONS.includes(params.category[0])

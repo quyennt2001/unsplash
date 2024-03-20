@@ -27,15 +27,15 @@ export default function ModalPhoto(props: IHomeProps) {
         Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
       },
     })
-      .then((res) => {
+      .then(async (res) => {
         if (res.ok) {
           return res.json();
         }
-        if (res.status === 403) {
-          keyIdx = (keyIdx + 1) % CLIENT_ID.length
-          fetchData();
+        if (res.status === 403 && keyIdx < CLIENT_ID.length) {
+          keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+          await fetchData();
         }
-        throw new Error("Error in modal photo");
+        throw new Error(res.status + " " + res.statusText);
       })
       .then((data) => setData(data))
       .catch((e) => {
@@ -66,11 +66,7 @@ export default function ModalPhoto(props: IHomeProps) {
         className="bg-white rounded-lg px-5 w-full h-max cursor-default my-5"
         ref={ref}
       >
-        {data ? (
-          <PhotoDetail photo={data} sticky={0} />
-        ) : (
-          <SkPhotoDetail />
-        )}
+        {data ? <PhotoDetail photo={data} sticky={0} /> : <SkPhotoDetail />}
       </div>
     </div>
   );

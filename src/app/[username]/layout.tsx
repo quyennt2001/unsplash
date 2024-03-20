@@ -7,6 +7,7 @@ import Tag from "@/components/UI/Tag";
 import { BASE_URL, CLIENT_ID } from "../api/apiConfig";
 import Empty from "@/components/Empty";
 import { IAggregated, IDetailUser } from "@/interfaces/detailUser";
+import PageNotFound from "@/components/PageNotFound";
 
 let keyIdx = 0;
 async function getData(username: string) {
@@ -15,19 +16,19 @@ async function getData(username: string) {
       Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
-    .then(async(res) => {
-      if(res.ok) {
-        return await res.json() as IDetailUser
+    .then(async (res) => {
+      if (res.ok) {
+        return (await res.json()) as IDetailUser;
       }
-      if(res.status === 403) {
-        keyIdx = (keyIdx + 1) % CLIENT_ID.length
-        getData(username)
+      if (res.status === 403 && keyIdx < CLIENT_ID.length) {
+        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
+        await getData(username);
       }
-      throw new Error(res.statusText)
+      throw new Error(res.status + " " + res.statusText);
     })
     .catch((e) => {
-      console.log(e)
-    })
+      console.log(e);
+    });
 }
 
 export default async function UserLayout({
@@ -39,7 +40,7 @@ export default async function UserLayout({
   const user = await getData(params.username);
 
   if (!user) {
-    return <Empty />;
+    return <PageNotFound />;
   }
 
   const formatNumber = (num: number, precision = 1) => {

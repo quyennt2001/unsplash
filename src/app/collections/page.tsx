@@ -15,13 +15,13 @@ async function getData() {
   })
     .then(async (res) => {
       if (res.ok) {
-        return await res.json() as ICollection[];
+        return (await res.json()) as ICollection[];
       }
-      if (res.status === 403) {
+      if (res.status === 403 && keyIdx < CLIENT_ID.length) {
         keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-        getData();
+        await getData();
       }
-      throw new Error(res.statusText);
+      throw new Error(res.status + " " + res.statusText);
     })
     .catch((e) => console.log(e));
 }
