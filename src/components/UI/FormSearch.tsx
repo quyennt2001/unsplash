@@ -23,14 +23,19 @@ export default function FormSearch(props: IFormSearchProps) {
     pathname[1] === "s" &&
     OPTIONS.includes(pathname[2]);
 
+  const [value, setValue] = useState("");
   const [recentSearch, setRecentSearch] = useState<string[]>([]);
-  const [value, setValue] = useState<string>("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
   const [option, setOption] = useState(isSearch ? pathname[2] : OPTIONS[0]);
   const [isShowOption, setIsShowOption] = useState(false);
   const [isShownSearch, setIsShownSearch] = useState(false);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
+    const filter = recentSearch.filter((value: string) =>
+      value.toLocaleLowerCase().includes(e.target.value)
+    );
+    setSuggestions(filter);
   };
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -98,7 +103,6 @@ export default function FormSearch(props: IFormSearchProps) {
 
   useEffect(() => {
     if (isSearch) {
-      console.log("issearch");
       setOption(pathname[2]);
       setValue(pathname[3]);
     } else {
@@ -111,9 +115,9 @@ export default function FormSearch(props: IFormSearchProps) {
       localStorage.setItem("recentSearch", JSON.stringify([]));
     }
     setRecentSearch(JSON.parse(localStorage.getItem("recentSearch") || "[]"));
-    if (isSearch) {
-      setValue(pathname[3]);
-    }
+    // if (isSearch) {
+    //   setValue(pathname[3]);
+    // }
   }, []);
 
   return (
@@ -127,31 +131,47 @@ export default function FormSearch(props: IFormSearchProps) {
         {isShownSearch && (
           <div
             ref={refSearch}
-            className="absolute w-full h-[100px] top-[45px] left-0 border shadow rounded-lg p-4 bg-white"
+            className="absolute w-full top-[45px] left-0  bg-white"
           >
-            <div className="flex flex-col gap-4">
-              <div className="flex gap-2 items-center">
-                <p className="capitalize">Recent searches</p>
-                <div className="h-[2px] w-[2px] bg-grey rounded-full"></div>
-                <button
-                  className="border-0 text-grey"
-                  onClick={handleClearRecent}
-                >
-                  Clear
-                </button>
+            {!value ? (
+              <div className="flex flex-col gap-4 px-4 py-4 border rounded-lg">
+                <div className="flex gap-2 items-center">
+                  <p className="capitalize">Recent searches</p>
+                  <div className="h-[2px] w-[2px] bg-grey rounded-full"></div>
+                  <button
+                    className="border-0 text-grey"
+                    onClick={handleClearRecent}
+                  >
+                    Clear
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {recentSearch?.map((item: string, i: number) => (
+                    <button
+                      key={i}
+                      className="py-2 px-4 rounded border border-border text-grey hover:bg-gray-100"
+                      onClick={() => handleClickRecent(item)}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
               </div>
-              <div className="flex flex-wrap gap-2">
-                {recentSearch?.map((item: string, i: number) => (
+            ) : suggestions.length ? (
+              <div className="flex flex-col gap-[2px] border rounded-lg py-2">
+                {suggestions?.map((item: string, i: number) => (
                   <button
                     key={i}
-                    className="py-2 px-4 rounded border border-border text-grey hover:bg-gray-100"
+                    className="text-start px-4 py-2 hover:bg-gray-100 w-full"
                     onClick={() => handleClickRecent(item)}
                   >
                     {item}
                   </button>
                 ))}
               </div>
-            </div>
+            ) : (
+              <></>
+            )}
           </div>
         )}
         <button className="flex items-center h-full">
