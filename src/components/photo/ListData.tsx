@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IPhoto } from "@/interfaces/photo";
-import Photo from "./photo/Photo";
-import Empty from "./Empty";
+import Photo from "./Photo";
+import Empty from "../Empty";
 export interface IListDataProps {
   data: IPhoto[];
 }

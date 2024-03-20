@@ -5,7 +5,7 @@ import { FaShare } from "react-icons/fa6";
 import { GoKebabHorizontal } from "react-icons/go";
 import { IconType } from "react-icons";
 import Collection from "@/components/collection/Collection";
-import ListData from "@/components/ListData";
+import ListData from "@/components/photo/ListData";
 import Link from "next/link";
 import { ICollection } from "@/interfaces/collection";
 import { IPhoto } from "@/interfaces/photo";

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useState, useEffect, useCallback, useRef } from "react";
-import ListData from "../ListData";
+import ListData from "../photo/ListData";
 import Loading from "../Loading";
 import { IPhoto } from "@/interfaces/photo";
 import SkPhoto from "../skeleton/SkPhoto";

@@ -3,7 +3,7 @@
 import Collection from "@/components/collection/Collection";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import ListData from "@/components/ListData";
+import ListData from "@/components/photo/ListData";
 import { ICollection } from "@/interfaces/collection";
 
 export interface IUserPhotoProps {
