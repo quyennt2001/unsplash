@@ -11,15 +11,16 @@ async function getData(slug: string) {
       Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
-    .then(async (res) => {
+    .then((res) => {
       if (res.ok) {
-        return (await res.json()) as IDetailPhoto;
+        return res.json();
       }
       if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-        await getData(slug);
+        keyIdx = keyIdx + 1;
+        getData(slug);
+        return;
       }
-      throw new Error(res.status + " " + res.statusText);
+      throw new Error(`${res.status} ${res.statusText}`);
     })
     .catch((e) => console.log(e));
 }
@@ -33,7 +34,7 @@ export default async function PhotoPage({
   if (!slug) {
     return <Empty />;
   }
-  const photo = await getData(slug);
+  const photo: IDetailPhoto = await getData(slug);
 
   if (!photo) {
     return <Empty />;

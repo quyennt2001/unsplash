@@ -23,13 +23,14 @@ export default function FormSearch(props: IFormSearchProps) {
     pathname[1] === "s" &&
     OPTIONS.includes(pathname[2]);
 
-  const [value, setValue] = useState("");
-  const [recentSearch, setRecentSearch] = useState<string[]>([]);
+  const [value, setValue] = useState(""); // input value
+  const [recentSearch, setRecentSearch] = useState<string[]>([]);  
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [option, setOption] = useState(isSearch ? pathname[2] : OPTIONS[0]);
+  const [option, setOption] = useState(OPTIONS[0]);
   const [isShowOption, setIsShowOption] = useState(false);
   const [isShownSearch, setIsShownSearch] = useState(false);
 
+  // change input value
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     const filter = recentSearch.filter((value: string) =>
@@ -38,6 +39,7 @@ export default function FormSearch(props: IFormSearchProps) {
     setSuggestions(filter);
   };
 
+  // enter 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push(`/s/${option}/${value}`);
@@ -45,6 +47,7 @@ export default function FormSearch(props: IFormSearchProps) {
     setIsShownSearch(false);
   };
 
+  // save the search value to localstorage 
   const addValueSearch = (value: string) => {
     if (!recentSearch.includes(value) && value.trim()) {
       setRecentSearch([...recentSearch, value]);
@@ -75,6 +78,7 @@ export default function FormSearch(props: IFormSearchProps) {
     setIsShownSearch(false);
   };
 
+  // handle click outside
   useEffect(() => {
     if (!isShowOption && !isShownSearch) return;
 
@@ -101,6 +105,7 @@ export default function FormSearch(props: IFormSearchProps) {
     }
   }, [isShowOption, isShownSearch]);
 
+  // set value when redirect page 
   useEffect(() => {
     if (isSearch) {
       setOption(pathname[2]);
@@ -115,9 +120,6 @@ export default function FormSearch(props: IFormSearchProps) {
       localStorage.setItem("recentSearch", JSON.stringify([]));
     }
     setRecentSearch(JSON.parse(localStorage.getItem("recentSearch") || "[]"));
-    // if (isSearch) {
-    //   setValue(pathname[3]);
-    // }
   }, []);
 
   return (
@@ -146,7 +148,7 @@ export default function FormSearch(props: IFormSearchProps) {
                   </button>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {recentSearch?.map((item: string, i: number) => (
+                  {recentSearch?.toReversed()?.map((item: string, i: number) => (
                     <button
                       key={i}
                       className="py-2 px-4 rounded border border-border text-grey hover:bg-gray-100"
@@ -158,7 +160,7 @@ export default function FormSearch(props: IFormSearchProps) {
                 </div>
               </div>
             ) : suggestions.length ? (
-              <div className="flex flex-col gap-[2px] border rounded-lg py-2">
+              <div className="flex flex-col gap-0.5 border rounded-lg py-2">
                 {suggestions?.map((item: string, i: number) => (
                   <button
                     key={i}
@@ -175,7 +177,7 @@ export default function FormSearch(props: IFormSearchProps) {
           </div>
         )}
         <button className="flex items-center h-full">
-          <GrSearch className="w-8 h-8 pl-[14px] text-grey hover:text-black" />
+          <GrSearch className="w-8 h-8 pl-3.5 text-grey hover:text-black" />
         </button>
         <form
           onSubmit={onFormSubmit}

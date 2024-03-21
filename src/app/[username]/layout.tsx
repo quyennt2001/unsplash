@@ -16,15 +16,16 @@ async function getData(username: string) {
       Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
-    .then(async (res) => {
+    .then((res) => {
       if (res.ok) {
-        return (await res.json()) as IDetailUser;
+        return res.json();
       }
       if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-        await getData(username);
+        keyIdx = keyIdx + 1;
+        getData(username);
+        return;
       }
-      throw new Error(res.status + " " + res.statusText);
+      throw new Error(`${res.status} ${res.statusText}`);
     })
     .catch((e) => {
       console.log(e);
@@ -37,7 +38,7 @@ export default async function UserLayout({
 }: Readonly<{ children: React.ReactNode; params: { username: string } }>) {
   if (!params.username) return <Empty />;
 
-  const user = await getData(params.username);
+  const user: IDetailUser = await getData(params.username);
 
   if (!user) {
     return <PageNotFound />;
@@ -49,16 +50,13 @@ export default async function UserLayout({
       { suffix: "B", threshold: 1e9 },
       { suffix: "M", threshold: 1e6 },
       { suffix: "K", threshold: 1e3 },
-      { suffix: "", threshold: 1 },
     ];
-
     const found = map.find((x) => Math.abs(num) >= x.threshold);
     if (found) {
       const formatted =
         (num / found.threshold).toFixed(precision) + found.suffix;
       return formatted;
     }
-
     return num;
   };
 
@@ -68,18 +66,9 @@ export default async function UserLayout({
       <Tabs
         username={params.username}
         data={{
-          photos:
-            user?.total_photos < 1000
-              ? user?.total_photos
-              : formatNumber(user?.total_photos),
-          likes:
-            user?.total_likes < 1000
-              ? user?.total_likes
-              : formatNumber(user?.total_likes),
-          collections:
-            user?.total_collections < 1000
-              ? user?.total_collections
-              : formatNumber(user?.total_collections),
+          photos: formatNumber(user?.total_photos),
+          likes: formatNumber(user?.total_likes),
+          collections: formatNumber(user?.total_collections),
         }}
       />
       <div>{children}</div>

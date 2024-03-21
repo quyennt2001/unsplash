@@ -20,15 +20,16 @@ async function search(category: string, query: string) {
       Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
-    .then(async (res) => {
+    .then((res) => {
       if (res.ok) {
-        return (await res.json()) as IResultSearch;
+        return res.json();
       }
       if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-        await search(category, query);
+        keyIdx = keyIdx + 1;
+        search(category, query);
+        return;
       }
-      throw new Error(res.status + " " + res.statusText);
+      throw new Error(`${res.status} ${res.statusText}`);
     })
     .catch((e) => console.log("Error search ->", e));
 }
@@ -38,16 +39,12 @@ export default async function SearchPage({
 }: {
   params: { category: string[] };
 }) {
-  if (
-    params.category.length < 2 ||
-    params.category.length > 2 ||
-    !OPTIONS.includes(params.category[0])
-  ) {
+  if (params.category.length !== 2 || !OPTIONS.includes(params.category[0])) {
     return <PageNotFound />;
   }
-  
+
   const [category, searchValue] = [...params.category];
-  const data = await search(category, searchValue);
+  const data: IResultSearch = await search(category, searchValue);
 
   return (
     <div className="flex justify-center">

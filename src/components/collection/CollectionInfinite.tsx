@@ -39,17 +39,18 @@ export default function CollectionInfinte(props: ICollectionInfinte) {
         Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
       },
     })
-      .then(async (res) => {
+      .then((res) => {
         if (res.ok) {
-          return (await res.json()) as ICollection[];
+          return res.json();
         }
         if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-          keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-          await fetchData();
+          keyIdx = keyIdx + 1;
+          fetchData();
+          return;
         }
-        throw new Error(res.status + " " + res.statusText);
+        throw new Error(`${res.status} ${res.statusText}`);
       })
-      .then((data) => {
+      .then((data: ICollection[]) => {
         setCollections((prev) => [...prev, ...data]);
       })
       .catch((e) => {

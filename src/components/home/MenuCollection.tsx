@@ -14,21 +14,22 @@ async function getData() {
       Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
-    .then(async (res) => {
+    .then((res) => {
       if (res.ok) {
-        return (await res.json()) as ICollection[];
+        return res.json();
       }
       if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-        await getData();
+        keyIdx = keyIdx + 1;
+        getData();
+        return;
       }
-      throw new Error(res.status + " " + res.statusText);
+      throw new Error(`${res.status} ${res.statusText}`);
     })
     .catch((e) => console.log(e));
 }
 
 export default async function MenuCollection(props: IMenuCollectionProps) {
-  const collections = await getData();
+  const collections: ICollection[] = await getData();
   if (!collections || !collections.length) {
     return <Empty />;
   }

@@ -12,15 +12,16 @@ async function getData(listname: string, username: string) {
       Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
-    .then(async (res) => {
+    .then((res) => {
       if (res.ok) {
-        return (await res.json()) as ICollection[] | IPhoto[];
+        return res.json();
       }
       if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-        await getData(listname, username);
+        keyIdx = keyIdx + 1;
+        getData(listname, username);
+        return;
       }
-      throw new Error(res.status + " " + res.statusText);
+      throw new Error(`${res.status} ${res.statusText}`);
     })
     .catch((e) => {
       console.log(e);
@@ -33,7 +34,10 @@ export default async function ListPhotos({
   params: { photos: string[any]; username: string };
 }) {
   const listname = params?.photos ? params.photos[0] : "photos";
-  const data = await getData(listname, params.username);
+  const data: ICollection[] | IPhoto[] = await getData(
+    listname,
+    params.username
+  );
 
   if (!data || !data.length) {
     return <Empty />;

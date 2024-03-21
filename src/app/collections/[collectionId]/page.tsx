@@ -21,15 +21,16 @@ async function getCollections(collectionId: string) {
       Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
-    .then(async (res) => {
+    .then((res) => {
       if (res.ok) {
-        return (await res.json()) as ICollection;
+        return res.json();
       }
       if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-        await getCollections(collectionId);
+        keyIdx = keyIdx + 1;
+        getCollections(collectionId);
+        return;
       }
-      throw new Error(res.status + " " + res.statusText);
+      throw new Error(`${res.status} ${res.statusText}`);
     })
     .catch((e) => console.log(e));
 }
@@ -40,15 +41,16 @@ async function getPhotos(collectionId: string) {
       Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
-    .then(async (res) => {
+    .then((res) => {
       if (res.ok) {
-        return (await res.json()) as IPhoto[];
+        return res.json();
       }
       if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-        await getPhotos(collectionId);
+        keyIdx = keyIdx + 1;
+        getPhotos(collectionId);
+        return;
       }
-      throw new Error(res.status + " " + res.statusText);
+      throw new Error(`${res.status} ${res.statusText}`);
     })
     .catch((e) => console.log(e));
 }
@@ -59,15 +61,16 @@ async function getRelateds(collectionId: string) {
       Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
-    .then(async (res) => {
+    .then((res) => {
       if (res.ok) {
-        return (await res.json()) as ICollection[];
+        return res.json();
       }
       if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-        await getRelateds(collectionId);
+        keyIdx = keyIdx + 1;
+        getRelateds(collectionId);
+        return;
       }
-      throw new Error(res.status + " " + res.statusText);
+      throw new Error(`${res.status} ${res.statusText}`);
     })
     .catch((e) => console.log(e));
 }
@@ -77,9 +80,9 @@ export default async function DetailCollection({
 }: {
   params: { collectionId: string };
 }) {
-  const collection = await getCollections(params.collectionId);
-  const photos = (await getPhotos(params.collectionId)) || [];
-  const relateds = (await getRelateds(params.collectionId)) || [];
+  const collection: ICollection = await getCollections(params.collectionId);
+  const photos: IPhoto[] = await getPhotos(params.collectionId);
+  const relateds: ICollection[] = await getRelateds(params.collectionId);
 
   if (!collection) {
     return <Empty />;

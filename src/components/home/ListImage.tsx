@@ -13,21 +13,22 @@ async function getData() {
       Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
-    .then(async (res) => {
+    .then((res) => {
       if (res.ok) {
-        return (await res.json()) as IPhoto[];
+        return res.json();
       }
       if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-        keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-        await getData();
+        keyIdx = keyIdx + 1;
+        getData();
+        return;
       }
-      throw new Error(res.status + " " + res.statusText);
+      throw new Error(`${res.status} ${res.statusText}`);
     })
     .catch((e) => console.log(e));
 }
 
 export default async function ListImage(props: IListImageProps) {
-  const data = await getData();
+  const data: IPhoto[] = await getData();
   if (!data) {
     return <Empty />;
   }

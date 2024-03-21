@@ -38,15 +38,16 @@ export default function ImageInfinite(props: IListImageProps) {
         Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
       },
     })
-      .then(async (res) => {
+      .then((res) => {
         if (res.ok) {
           return res.json();
         }
         if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-          keyIdx = (keyIdx + 1) % CLIENT_ID.length;
-          await fetchData();
+          keyIdx = keyIdx + 1;
+          fetchData();
+          return;
         }
-        throw new Error(res.status + " " + res.statusText);
+        throw new Error(`${res.status} ${res.statusText}`);
       })
       .then((data: IPhoto[]) => {
         setData((prev) => [...prev, ...data]);
