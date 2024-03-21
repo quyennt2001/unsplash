@@ -14,7 +14,7 @@ export default function Loading(props: ILoadingProps) {
       }
     >
       <svg
-        className="animate-spin h-5 w-5 rounded-full border-t-white border-2 border-gray-400 z-[5]"
+        className="animate-spin size-5 rounded-full border-t-white border-2 border-gray-400 z-[5]"
         viewBox="0 0 24 24"
       ></svg>
     </div>

@@ -32,7 +32,7 @@ async function getCollections(collectionId: string) {
       }
       throw new Error(`${res.status} ${res.statusText}`);
     })
-    .catch((e) => console.log(e));
+    .catch((e) => console.log('Error in collectionId', e));
 }
 
 async function getPhotos(collectionId: string) {
@@ -52,7 +52,7 @@ async function getPhotos(collectionId: string) {
       }
       throw new Error(`${res.status} ${res.statusText}`);
     })
-    .catch((e) => console.log(e));
+    .catch((e) => console.log('Error in collectionId', e));
 }
 
 async function getRelateds(collectionId: string) {
@@ -72,7 +72,7 @@ async function getRelateds(collectionId: string) {
       }
       throw new Error(`${res.status} ${res.statusText}`);
     })
-    .catch((e) => console.log(e));
+    .catch((e) => console.log('Error in collectionId', e));
 }
 
 export default async function DetailCollection({
@@ -90,12 +90,12 @@ export default async function DetailCollection({
 
   return (
     <div className="flex justify-center">
-      <div className="w-[1280px] mb-14">
-        <div className="pt-14 pb-[72px] gap-4 flex flex-col">
+      <div className="w-main mb-14">
+        <div className="pt-14 pb-18 gap-4 flex flex-col">
           <p className="text-5xl font-bold">{collection.title}</p>
           <div className="flex justify-between max-md:flex-col max-md:gap-6">
             <div className="flex flex-col gap-6 w-1/2 max-md:w-full">
-              <p className="text-lg max-md:text-[15px]">
+              <p className="text-lg max-md:text-nor">
                 {collection.description}
               </p>
               <Link
@@ -113,7 +113,7 @@ export default async function DetailCollection({
           </div>
         </div>
         <div className="flex mb-6">{collection?.total_photos} photos</div>
-        <div className="flex flex-col gap-[72px]">
+        <div className="flex flex-col gap-18">
           <ListData data={photos} />
           <div className="flex flex-col">
             <p className="text-2xl font-semibold mt-4 mb-6">

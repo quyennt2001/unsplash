@@ -24,7 +24,7 @@ async function getData() {
       }
       throw new Error(`${res.status} ${res.statusText}`);
     })
-    .catch((e) => console.log(e));
+    .catch((e) => console.log('Error collections page', e));
 }
 
 export default async function ListCollections(props: IListCollectionsProps) {
@@ -35,10 +35,10 @@ export default async function ListCollections(props: IListCollectionsProps) {
         <Empty />
       ) : (
         <div className="flex justify-center">
-          <div className="flex flex-col w-[1280px]">
-            <div className="pt-14 pb-[72px] flex flex-col gap-4">
+          <div className="flex flex-col w-main">
+            <div className="pt-14 pb-18 flex flex-col gap-4">
               <p className="text-5xl font-bold">Collections</p>
-              <p className="text-lg max-md:text-[15px]">
+              <p className="text-lg max-md:text-nor">
                 Explore the world through collections of beautiful photos free
                 to use under the <br className="max-md:hidden" />
                 <span className="underline cursor-pointer text-grey">

@@ -46,23 +46,23 @@ export default function PhotoDetailInfor(props: IPhotoDetailInforProps) {
           </div>
         </div>
         <p className="text-sm max-w-[50%] max-md:max-w-full">{data?.description}</p>
-        <div className="flex flex-col gap-[6px] text-grey">
+        <div className="flex flex-col gap-1.5 text-grey">
           {data?.created_at && (
-            <div className="flex gap-[6px] items-center">
-              <LuCalendar className="h-[14px] w-[14px]" />
+            <div className="flex gap-1.5 items-center">
+              <LuCalendar className="size-3.5" />
               <p className="text-sm">
                 Published on {data.created_at.substring(0, 10)}
               </p>
             </div>
           )}
           {data?.exif?.name && (
-            <div className="flex gap-[6px] items-center">
-              <MdOutlineCameraAlt className="h-[14px] w-[14px]" />
+            <div className="flex gap-1.5 items-center">
+              <MdOutlineCameraAlt className="size-3.5" />
               <p className="text-sm">{data.exif.name}</p>
             </div>
           )}
-          <div className="flex gap-[6px] items-center">
-            <AiOutlineFileProtect className="h-[14px] w-[14px]" />
+          <div className="flex gap-1.5 items-center">
+            <AiOutlineFileProtect className="size-3.5" />
             <p className="text-sm">Free to use under the Unsplash License</p>
           </div>
         </div>

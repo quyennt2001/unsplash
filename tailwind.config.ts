@@ -19,11 +19,30 @@ const config: Config = {
         border: "#d1d1d1",
         "modal-white": "rgba(255, 255, 255, 0.2)",
         modal: "rgba(0, 0, 0, 0.4)",
-        sketelon: 'rgba(0, 0, 0, 0.06)',
-        bg: '#f5f5f5'
+        sketelon: "rgba(0, 0, 0, 0.06)",
+        bg: "#f5f5f5",
+        e: "#eee",
+        e7: "#e7e7e7",
       },
       boxShadow: {
         popup: "0 8px 16px #00000029",
+      },
+      fontSize: {
+        nor: "15px",
+        mini: "12px",
+      },
+      width: {
+        main: "1280px",
+      },
+      padding: {
+        18: "72px",
+        2.75: "11px",
+      },
+      gap: {
+        18: "72px",
+      },
+      aspectRatio: {
+        collection: "10/7",
       },
     },
   },

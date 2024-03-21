@@ -10,6 +10,7 @@ import { IUser } from "@/interfaces/user";
 import { IResultSearch } from "@/interfaces/search";
 import Image from "next/image";
 import logo from "../../../../public/logo.png";
+import { formatNumber } from "@/app/[username]/layout";
 
 export const OPTIONS = ["photos", "collections", "users"];
 
@@ -48,12 +49,12 @@ export default async function SearchPage({
 
   return (
     <div className="flex justify-center">
-      <div className="w-[1280px]">
+      <div className="w-main">
         <div className="my-5">
-          <h1 className="text-[30px] font-bold capitalize">
+          <h1 className="text-3xl font-bold capitalize">
             {params.category[1]}
           </h1>
-          <p>About {data?.total} results</p>
+          <p>About {formatNumber(data?.total)} results</p>
         </div>
         {!data?.total ? (
           <Empty />

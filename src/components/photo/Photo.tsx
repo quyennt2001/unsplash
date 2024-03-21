@@ -50,7 +50,7 @@ export default function Photo(props: IPhotoProps) {
           />
           {/* <Link href={`/photos/${data.slug}`}> */}
           <div
-            className="absolute top-0 left-0 w-full h-full hidden flex-col bg-modal justify-between group-hover:flex p-5"
+            className="absolute top-0 left-0 size-full hidden flex-col bg-modal justify-between group-hover:flex p-5"
             onClick={handleClickShowModal}
           >
             <div className="flex justify-end gap-2">
@@ -62,10 +62,10 @@ export default function Photo(props: IPhotoProps) {
                 <button className="flex gap-2 items-center justify-start">
                   <Avatar src={data?.user?.profile_image?.medium} />
                   <div className="flex flex-col justify-between text-white items-start">
-                    <p className="text-[15px] truncate font-medium max-w-[250px]">
+                    <p className="text-nor truncate font-medium max-w-[250px]">
                       {data?.user?.name}
                     </p>
-                    <p className="text-[12px] opacity-80 truncate max-w-[250px]">
+                    <p className="text-mini opacity-80 truncate max-w-[250px]">
                       {data?.user?.for_hire
                         ? "Available for hire"
                         : "Made to change"}

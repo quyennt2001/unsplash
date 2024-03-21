@@ -13,7 +13,7 @@ export default function Home(props: IHomeProps) {
     <div className="no-scrollbar">
       <Navbar />
       <div className="flex justify-center relative">
-        <div className="flex flex-col w-[1280px]">
+        <div className="flex flex-col w-main">
           <div className="flex items-end py-14 gap-6 w-full">
             <div className="flex flex-col gap-4 grow">
               <div className="flex gap-2 flex-wrap items-end w-full justify-between">
@@ -24,7 +24,7 @@ export default function Home(props: IHomeProps) {
                     <p>Powered by creators everywhere.</p>
                   </div>
                 </div>
-                <button className="h-8 bg-[#eee] rounded-lg flex items-center flex-wrap gap-2 text-[12px] px-3 hover:bg-[#e7e7e7]">
+                <button className="h-8 bg-e rounded-lg flex items-center flex-wrap gap-2 text-mini px-3 hover:bg-e7">
                   Supported by
                   <div className="flex items-center gap-2 font-bold uppercase">
                     <RiAttachment2 />
@@ -36,10 +36,10 @@ export default function Home(props: IHomeProps) {
                 <FormSearch className="rounded-lg" />
               </div> */}
             </div>
-            <div className="w-[280px] h-[280px] bg-white border border-gray-200 rounded-lg max-md:hidden">
+            <div className="size-[280px] bg-white border border-gray-200 rounded-lg max-md:hidden">
               <MenuCollection />
             </div>
-            <div className="w-[280px] h-[280px] rounded-lg relative flex items-end max-xl:hidden">
+            <div className="size-[280px] rounded-lg relative flex items-end max-xl:hidden">
               <div className="flex h-full w-full absolute top-0 left-0 z-[2]">
                 <Image
                   src="https://unsplash-assets.imgix.net/unsplashplus/asset-plus-018.jpg?dpr=1&h=280&w=280&auto=format&fit=crop&q=60"
@@ -51,7 +51,7 @@ export default function Home(props: IHomeProps) {
                 />
               </div>
               <div className="p-5 flex flex-col gap-2 text-white font-semibold relative z-[3]">
-                <p className="text-[12px]">Discover Unsplash+</p>
+                <p className="text-mini">Discover Unsplash+</p>
                 <p className="text-lg">
                   Unlimited downloads.
                   <br />

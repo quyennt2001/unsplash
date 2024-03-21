@@ -54,7 +54,7 @@ export default function UserInformation(props: IUserInformationProps) {
 
   return (
     <div className="flex justify-center pt-14 pb-14 relative z-20">
-      <div className="flex w-[1280px] gap-12 max-md:flex-col max-md:gap-6">
+      <div className="flex w-main gap-12 max-md:flex-col max-md:gap-6">
         <div className="w-[32%] max-md:w-full flex items-start justify-end max-md:justify-start">
           <div className="relative border rounded-full">
             <Image
@@ -64,8 +64,8 @@ export default function UserInformation(props: IUserInformationProps) {
               alt=""
               className="rounded-full z-[1]"
             />
-            <div className="absolute top-1 right-3 h-8 w-8 flex items-center justify-center z-[2] bg-border text-white rounded-full border-white border-[2px]">
-              <IoArrowDownSharp className="h-6 w-6 rounded-full " />
+            <div className="absolute top-1 right-3 size-8 flex items-center justify-center z-[2] bg-border text-white rounded-full border-white border-2">
+              <IoArrowDownSharp className="size-6 rounded-full " />
             </div>
           </div>
         </div>
@@ -83,9 +83,9 @@ export default function UserInformation(props: IUserInformationProps) {
               <div className="relative group">
                 <button
                   onClick={() => setIsClickMenu(!isClickMenu)}
-                  className="h-8 bg-white border border-border text-[#767676] px-[11px] rounded-[4px] hover:border-black hover:text-black"
+                  className="h-8 bg-white border border-border text-grey px-2.75 rounded hover:border-black hover:text-black"
                 >
-                  <GoKebabHorizontal className="h-[18px] w-[18px]" />
+                  <GoKebabHorizontal className="size-[18px]" />
                 </button>
                 {isClickMenu && (
                   <div ref={refMenu}>
@@ -98,10 +98,12 @@ export default function UserInformation(props: IUserInformationProps) {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <p className="w-[70%] max-lg:w-[90%] text-wrap text-[15px] leading-[1.6] max-md:w-full">{user?.bio}</p>
+              <p className="w-[70%] max-lg:w-[90%] text-wrap text-nor leading-[1.6] max-md:w-full">
+                {user?.bio}
+              </p>
               <div className="flex flex-col gap-2">
                 <button className="flex gap-2 text-grey hover:text-black items-center text-sm">
-                  <HiMapPin className="h-4 w-4" />
+                  <HiMapPin className="size-4" />
                   {user?.location}
                 </button>
                 <div className="relative">
@@ -111,12 +113,12 @@ export default function UserInformation(props: IUserInformationProps) {
                   >
                     <GrAttachment />
                     Connect with {user?.first_name}
-                    <FaCaretDown className="h-4 w-4" />
+                    <FaCaretDown className="size-4" />
                   </button>
                   {isClickConnect && (
                     <div
                       ref={refConnect}
-                      className="absolute z-[1] top-6 shadow-popup rounded-[4px] origin-top-left py-2 bg-white border border-border"
+                      className="absolute z-[1] top-6 shadow-popup rounded origin-top-left py-2 bg-white border border-border"
                     >
                       <button className="flex gap-6 items-center text-sm h-9 w-full px-4 py-2 hover:bg-gray-100 text-grey z-[3]">
                         <FaEarthAsia />

@@ -54,7 +54,7 @@ export default function CollectionInfinte(props: ICollectionInfinte) {
         setCollections((prev) => [...prev, ...data]);
       })
       .catch((e) => {
-        console.log(e);
+        console.log('Error in collection infinite', e);
       })
       .finally(() => {
         setIsLoading(false);

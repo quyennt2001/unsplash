@@ -25,11 +25,11 @@ export default function SkPhotoDetail(props: ISkPhotoDetailProps) {
           <div className="flex gap-2">
             <ButtonIcon icon={FaHeart as IconType} />
             <ButtonIcon icon={FaPlus as IconType} />
-            <div className="bg-white h-8 flex items-center justify-center rounded-[4px] text-grey hover:text-black">
-              <button className="px-[11px] border border-border h-full rounded-l-[4px] hover:border-black hover:text-black">
+            <div className="bg-white h-8 flex items-center justify-center rounded text-grey hover:text-black">
+              <button className="px-2.75 border border-border h-full rounded-l hover:border-black hover:text-black">
                 Download
               </button>
-              <button className="px-[11px] border border-border border-l-white h-full rounded-r-[4px] hover:border-black hover:text-black">
+              <button className="px-2.75 border border-border border-l-white h-full rounded-r hover:border-black hover:text-black">
                 <FaAngleDown />
               </button>
             </div>
@@ -37,7 +37,7 @@ export default function SkPhotoDetail(props: ISkPhotoDetailProps) {
         </div>
       </div>
       <div className=" flex justify-center">
-        <div className="relative min-h-[300px] min-w-[400px] max-md:w-full bg-sketelon"></div>
+        <div className="relative min-hxt-[0px] min-w-[400px] max-md:w-full bg-sketelon"></div>
       </div>
       <div className="py-5">
         <div className="flex flex-col gap-8">
@@ -63,8 +63,8 @@ export default function SkPhotoDetail(props: ISkPhotoDetailProps) {
           </div>
           <p className="w-[50px] h-3 rounded-2xl bg-sketelon"></p>
           <p className="w-[50px] h-3 rounded-2xl bg-sketelon"></p>
-          <div className="flex gap-[6px] items-center">
-            <AiOutlineFileProtect className="h-[14px] w-[14px]" />
+          <div className="flex gap-1.5 items-center">
+            <AiOutlineFileProtect className="size-3.5" />
             <p className="text-sm">Free to use under the Unsplash License</p>
           </div>
         </div>

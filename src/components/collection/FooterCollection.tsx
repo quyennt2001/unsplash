@@ -10,7 +10,7 @@ export interface IFooterCollectionProps {}
 export default function FooterCollection(props: IFooterCollectionProps) {
   return (
     <div className="flex justify-center pt-24 pb-10">
-      <div className="w-[1280px] flex flex-col gap-8">
+      <div className="w-main flex flex-col gap-8">
         <p className="capitalize text-[28px] font-bold">unsplash</p>
         <div className="flex justify-between items-start max-md:flex-col gap-6">
           <div className="flex gap-20 max-md:flex-col max-md:gap-6">
@@ -50,13 +50,13 @@ export default function FooterCollection(props: IFooterCollectionProps) {
           </div>
           <div className="flex gap-2 text-grey">
             <button className="hover:text-black p-2">
-              <RiTwitterXLine className="h-6 w-6" />
+              <RiTwitterXLine className="size-6" />
             </button>
             <button className="hover:text-black p-2">
-              <FaFacebook className="h-6 w-6" />
+              <FaFacebook className="size-6" />
             </button>
             <button className="hover:text-black p-2">
-              <FaInstagram className="h-6 w-6" />
+              <FaInstagram className="size-6" />
             </button>
           </div>
         </div>

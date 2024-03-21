@@ -22,7 +22,7 @@ export default function Collection(props: ICollectionProps) {
         <Link href={`/collections/${data?.id}`}>
           <div className="flex flex-col gap-4">
             {data?.preview_photos?.length ? (
-              <div className="aspect-[10/7] flex gap-[2px] relative group">
+              <div className="aspect-collection flex gap-0.5 relative group">
                 <div className="absolute top-0 left-0 h-full w-full z-10 rounded-md bg-modal-white group-hover:flex hidden"></div>
                 <div className="w-2/3 h-full">
                   <div className="relative h-full">
@@ -32,12 +32,12 @@ export default function Collection(props: ICollectionProps) {
                         style={{ objectFit: "cover" }}
                         fill
                         alt="preview photo collection"
-                        className="rounded-l-md h-full w-full"
+                        className="rounded-l-md size-full"
                       />
                     )}
                   </div>
                 </div>
-                <div className="flex flex-col gap-[2px] w-1/3 h-full">
+                <div className="flex flex-col gap-0.5 w-1/3 h-full">
                   <div className="h-1/2 w-full">
                     <div className="relative aspect-[9/10] bg-bg rounded-tr-md">
                       {preview_photo[1]?.urls?.regular && (
@@ -48,7 +48,7 @@ export default function Collection(props: ICollectionProps) {
                           sizes="100vw"
                           width={0}
                           height={0}
-                          className="rounded-tr-md h-full w-full"
+                          className="rounded-tr-md size-full"
                         />
                       )}
                     </div>
@@ -63,7 +63,7 @@ export default function Collection(props: ICollectionProps) {
                           width={0}
                           height={0}
                           sizes="100vw"
-                          className="rounded-br-md h-full w-full"
+                          className="rounded-br-md size-full"
                         />
                       )}
                     </div>
@@ -71,14 +71,14 @@ export default function Collection(props: ICollectionProps) {
                 </div>
               </div>
             ) : (
-              <div className="aspect-[10/7] flex gap-[2px] relative group bg-bg rounded-md"></div>
+              <div className="aspect-collection flex gap-0.5 relative group bg-bg rounded-md"></div>
             )}
             <div className="truncate text-lg font-semibold">{data?.title}</div>
           </div>
         </Link>
         <div className="flex gap-2 items-center text-grey text-sm">
           <p className="">{data?.total_photos || 0} photos</p>
-          <span className="h-[1px] w-[1px] rounded-full bg-grey"></span>
+          <span className="size-px rounded-full bg-grey"></span>
           <p className="">Curated by {props?.username || data?.user?.username}</p>
         </div>
       </div>

@@ -14,12 +14,12 @@ export default function Navbar(props: INavbarProps) {
             <div className="flex gap-6 items-center">
               <Button name="editorial" selected={true} />
               <Button name="unsplash+" selected={false} />
-              <span className="h-8 w-[2px] border-r-2 border-r-border"></span>
+              <span className="h-8 w-0.5 border-r-2 border-r-border"></span>
             </div>
             <div className="flex gap-6 overflow-hidden relative">
               <div className="absolute right-0 top-0 h-14 flex items-center z-10 bg-white">
                 <button className="px-2 h-10 text-grey hover:text-black">
-                  <MdOutlineNavigateNext className="h-7 w-7 " />
+                  <MdOutlineNavigateNext className="size-7" />
                 </button>
               </div>
               {/* <div className="absolute left-0 top-0 h-14 flex items-center z-10 bg-white">

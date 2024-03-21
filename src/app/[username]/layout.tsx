@@ -28,9 +28,24 @@ async function getData(username: string) {
       throw new Error(`${res.status} ${res.statusText}`);
     })
     .catch((e) => {
-      console.log(e);
+      console.log("Error layout user", e);
     });
 }
+
+export const formatNumber = (num: number, precision = 0) => {
+  const map = [
+    { suffix: "T", threshold: 1e12 },
+    { suffix: "B", threshold: 1e9 },
+    { suffix: "M", threshold: 1e6 },
+    { suffix: "K", threshold: 1e3 },
+  ];
+  const found = map.find((x) => Math.abs(num) >= x.threshold);
+  if (found) {
+    const formatted = (num / found.threshold).toFixed(precision) + found.suffix;
+    return formatted;
+  }
+  return num;
+};
 
 export default async function UserLayout({
   children,
@@ -43,22 +58,6 @@ export default async function UserLayout({
   if (!user) {
     return <PageNotFound />;
   }
-
-  const formatNumber = (num: number, precision = 1) => {
-    const map = [
-      { suffix: "T", threshold: 1e12 },
-      { suffix: "B", threshold: 1e9 },
-      { suffix: "M", threshold: 1e6 },
-      { suffix: "K", threshold: 1e3 },
-    ];
-    const found = map.find((x) => Math.abs(num) >= x.threshold);
-    if (found) {
-      const formatted =
-        (num / found.threshold).toFixed(precision) + found.suffix;
-      return formatted;
-    }
-    return num;
-  };
 
   return (
     <div className="">
@@ -73,7 +72,7 @@ export default async function UserLayout({
       />
       <div>{children}</div>
       <div className="w-full flex justify-center">
-        <div className="w-[1280px] py-20 flex flex-col gap-10">
+        <div className="w-main py-20 flex flex-col gap-10">
           <div className="flex flex-col gap-10">
             <p className="text-2xl font-semibold leading-[1.3]">
               Pawel's work appears in the following categories

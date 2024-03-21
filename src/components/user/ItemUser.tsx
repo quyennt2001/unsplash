@@ -15,13 +15,13 @@ export default function ItemUser(props: IItemUserProps) {
         href={`/${data?.username}`}
         className="flex gap-4 items-center h-max"
       >
-        <div className="flex h-16 w-16">
+        <div className="flex size-16">
           <Avatar src={data?.profile_image?.medium} className="roudh-16 w-16" />
         </div>
         <div className=" w-[calc(100%-80px)]">
           <div className="flex flex-col justify-between w-full">
             <p className="text-lg font-semibold truncate">{data?.name}</p>
-            <p className="text-[15px] text-grey truncate">{data?.username}</p>
+            <p className="text-nor text-grey truncate">{data?.username}</p>
           </div>
         </div>
       </Link>
@@ -34,7 +34,7 @@ export default function ItemUser(props: IItemUserProps) {
                 width={0}
                 alt=""
                 src={item.urls.raw}
-                className="w-full h-full"
+                className="size-full"
                 style={{ objectFit: "cover" }}
                 sizes="100vw"
               />
@@ -45,7 +45,7 @@ export default function ItemUser(props: IItemUserProps) {
         <></>
       )}
       <Link href={`/${data?.username}`}>
-        <button className="text-grey border border-border rounded-[4px] px-[11px] h-8 w-full text-sm hover:border-black hover:text-black">
+        <button className="text-grey border border-border rounded px-2.75 h-8 w-full text-sm hover:border-black hover:text-black">
           View profile
         </button>
       </Link>

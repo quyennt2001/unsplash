@@ -129,7 +129,7 @@ export default function FormSearch(props: IFormSearchProps) {
         props?.className
       }
     >
-      <div className="has-[:focus]:bg-white group flex items-center grow relative rounded-l-3xl h-full bg-[#eee] hover:bg-[#e7e7e7] ">
+      <div className="has-[:focus]:bg-white group flex items-center grow relative rounded-l-3xl h-full bg-e hover:bg-e7 ">
         {isShownSearch && (
           <div
             ref={refSearch}
@@ -139,7 +139,7 @@ export default function FormSearch(props: IFormSearchProps) {
               <div className="flex flex-col gap-4 px-4 py-4 border rounded-lg">
                 <div className="flex gap-2 items-center">
                   <p className="capitalize">Recent searches</p>
-                  <div className="h-[2px] w-[2px] bg-grey rounded-full"></div>
+                  <div className="size-0.5 bg-grey rounded-full"></div>
                   <button
                     className="border-0 text-grey"
                     onClick={handleClearRecent}
@@ -177,7 +177,7 @@ export default function FormSearch(props: IFormSearchProps) {
           </div>
         )}
         <button className="flex items-center h-full">
-          <GrSearch className="w-8 h-8 pl-3.5 text-grey hover:text-black" />
+          <GrSearch className="size-8 pl-3.5 text-grey hover:text-black" />
         </button>
         <form
           onSubmit={onFormSubmit}
@@ -203,7 +203,7 @@ export default function FormSearch(props: IFormSearchProps) {
               className="flex items-center bg-inherit  justify-center h-max "
               onClick={() => setValue("")}
             >
-              <IoCloseOutline className="h-5 w-5 text-grey hover:text-black" />
+              <IoCloseOutline className="size-5 text-grey hover:text-black" />
             </button>
           </div>
         )}
@@ -212,13 +212,13 @@ export default function FormSearch(props: IFormSearchProps) {
         {isShowOption && (
           <div
             ref={refOption}
-            className="absolute top-[45px] left-0 w-full bg-white shadow border rounded-lg flex flex-col gap-1 text-grey py-[6px]"
+            className="absolute top-[45px] left-0 w-full bg-white shadow-popup border rounded-lg flex flex-col gap-1 text-grey py-[6px]"
           >
             {OPTIONS.filter((item: string) => item !== option).map(
               (item: string, i: number) => (
                 <button
                   key={i}
-                  className="capitalize hover:bg-[#e7e7e7] bg-inherit px-4 py-2"
+                  className="capitalize hover:bg-e7 bg-inherit px-4 py-2"
                   onClick={() => handleClickOption(item)}
                 >
                   {item}
@@ -229,7 +229,7 @@ export default function FormSearch(props: IFormSearchProps) {
         )}
         <button
           onClick={() => setIsShowOption(!isShowOption)}
-          className="flex items-center justify-center bg-white w-full h-full capitalize rounded-r-3xl text-grey gap-2 border-l-2 border-l-border"
+          className="flex items-center justify-center bg-white size-full capitalize rounded-r-3xl text-grey gap-2 border-l-2 border-l-border"
         >
           {option}
           <FaAngleDown />

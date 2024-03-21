@@ -40,7 +40,7 @@ export default function ModalPhoto(props: IHomeProps) {
       })
       .then((data: IDetailPhoto) => setData(data))
       .catch((e) => {
-        console.log(e);
+        console.log("Error in modal photo", e);
       });
   };
 

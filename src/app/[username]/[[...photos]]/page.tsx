@@ -24,7 +24,7 @@ async function getData(listname: string, username: string) {
       throw new Error(`${res.status} ${res.statusText}`);
     })
     .catch((e) => {
-      console.log(e);
+      console.log('Error user page', e);
     });
 }
 

@@ -12,15 +12,15 @@ export interface IHeaderProps {}
 export default function Header(props: IHeaderProps) {
   return (
     <div className="md:sticky md:top-0 text-text bg-white text-sm z-10">
-      <div className="py-[11px] px-[20px] h-[62px] flex items-center gap-4">
+      <div className="py-2.75 px-5 h-[62px] flex items-center gap-4">
         <Link href="/" className="flex items-center">
-          <button className="w-9 h-9 relative">
-            <Image src={logo} alt="" style={{objectFit: 'cover'}} />
+          <button className="size-9 relative">
+            <Image src={logo} alt="" style={{ objectFit: "cover" }} />
           </button>
         </Link>
         <div className="flex items-center gap-4 grow h-full">
           <FormSearch />
-          <div className="flex gap-6 items-center pl-4  pr-8 border-r-2 border-r-[#d1d1d1] max-lg:hidden">
+          <div className="flex gap-6 items-center pl-4  pr-8 border-r-2 border-r-border max-lg:hidden">
             <div className="relative group h-full flex items-center">
               <button className="text-grey hover:text-black">Explore</button>
               <Dropdown items={["backgrounds", "images", "wallpapers"]} />
@@ -29,14 +29,14 @@ export default function Header(props: IHeaderProps) {
             <button>Unsplash+</button>
           </div>
           <div className="flex gap-2 items-center max-sm:hidden">
-            <Button name="Log in" selected={false} className="px-[11px]" />
-            <button className="h-8 leading-[30px] text-grey border border-border px-[11px] rounded-[4px] hover:border-black">
+            <Button name="Log in" selected={false} className="px-2.75" />
+            <button className="h-8 leading-[30px] text-grey border border-border px-2.75 rounded hover:border-black">
               Submit a photo
             </button>
           </div>
         </div>
-        <button className="h-full w-8 px-[2px]">
-          <FiMenu className="h-6 w-6 text-grey hover:text-black" />
+        <button className="h-full w-8 px-0.5">
+          <FiMenu className="size-6 text-grey hover:text-black" />
         </button>
       </div>
     </div>

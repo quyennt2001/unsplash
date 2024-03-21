@@ -25,7 +25,7 @@ async function getData() {
       }
       throw new Error(`${res.status} ${res.statusText}`);
     })
-    .catch((e) => console.log(e));
+    .catch((e) => console.log('Error in menu collection', e));
 }
 
 export default async function MenuCollection(props: IMenuCollectionProps) {

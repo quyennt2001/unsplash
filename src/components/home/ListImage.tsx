@@ -24,7 +24,7 @@ async function getData() {
       }
       throw new Error(`${res.status} ${res.statusText}`);
     })
-    .catch((e) => console.log(e));
+    .catch((e) => console.log('Error in list image', e));
 }
 
 export default async function ListImage(props: IListImageProps) {

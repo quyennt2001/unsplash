@@ -39,6 +39,7 @@ export default function ImageInfinite(props: IListImageProps) {
       },
     })
       .then((res) => {
+        console.log(keyIdx)
         if (res.ok) {
           return res.json();
         }
@@ -50,10 +51,12 @@ export default function ImageInfinite(props: IListImageProps) {
         throw new Error(`${res.status} ${res.statusText}`);
       })
       .then((data: IPhoto[]) => {
-        setData((prev) => [...prev, ...data]);
+        if (data) {
+          setData((prev) => [...prev, ...data]);
+        }
       })
       .catch((e) => {
-        console.log(e);
+        console.log("Error image infinite", e);
       })
       .finally(() => {
         setIsLoading(false);

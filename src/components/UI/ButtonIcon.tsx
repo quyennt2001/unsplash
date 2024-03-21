@@ -5,13 +5,16 @@ export interface IButtonIconProps {
   icon: IconType;
   className?: String;
   name?: String;
-  ref?: any 
+  ref?: any;
 }
 
 export default function ButtonIcon(props: IButtonIconProps) {
   return (
-    <button ref={props?.ref} className="bg-white px-[11px] gap-1 h-8 flex items-center justify-center rounded-[4px] text-grey hover:text-black hover:border-black border border-border">
-      {<props.icon className="w-[14px] h-[14px]" />}
+    <button
+      ref={props?.ref}
+      className="bg-white px-2.75 gap-1 h-8 flex items-center justify-center rounded text-grey hover:text-black hover:border-black border border-border"
+    >
+      {<props.icon className="size-3.5" />}
       {props?.name && <p className="capitalize">{props?.name}</p>}
     </button>
   );
