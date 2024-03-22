@@ -2,6 +2,7 @@ import Link from "next/link";
 import * as React from "react";
 import Avatar from "../UI/Avatar";
 import Image from "next/image";
+import { blurHashToDataURL } from "@/ultils/blurhashDataURL";
 
 export interface IItemUserProps {
   data: any;
@@ -9,6 +10,7 @@ export interface IItemUserProps {
 
 export default function ItemUser(props: IItemUserProps) {
   const { data } = props;
+  const blurDataUrl = blurHashToDataURL('LXFr@jE1D%aeBDxat7WV00xux]t7')
   return (
     <div className="p-4 flex flex-col gap-4 justify-between border border-border hover:border-black rounded-lg">
       <Link
@@ -37,6 +39,8 @@ export default function ItemUser(props: IItemUserProps) {
                 className="size-full"
                 style={{ objectFit: "cover" }}
                 sizes="100vw"
+                placeholder="blur"
+                        blurDataURL={blurDataUrl}
               />
             </div>
           ))}

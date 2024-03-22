@@ -4,6 +4,7 @@ import { IDetailPhoto } from "@/interfaces/detailPhoto";
 import Image from "next/image";
 import * as React from "react";
 import decode from '@simpleimg/decode-blurhash'
+import { blurHashToDataURL } from "@/ultils/blurhashDataURL";
 
 export interface IPhotoDetailProps {
   sticky: number;
@@ -12,7 +13,8 @@ export interface IPhotoDetailProps {
 
 export default function PhotoDetail(props: IPhotoDetailProps) {
   const { photo, sticky } = props;
-  const blurDataUrl = decode(photo?.blur_hash)
+  // const blurDataUrl = decode(photo?.blur_hash)
+  const blurDataUrl = blurHashToDataURL(photo?.blur_hash)
 
   return (
     <div className="bg-white">

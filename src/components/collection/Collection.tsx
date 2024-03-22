@@ -4,6 +4,7 @@ import * as React from "react";
 import Tag from "../UI/Tag";
 import { ICollection } from "@/interfaces/collection";
 import Empty from "../Empty";
+import { blurHashToDataURL } from "@/ultils/blurhashDataURL";
 
 export interface ICollectionProps {
   data: ICollection;
@@ -12,10 +13,11 @@ export interface ICollectionProps {
 
 export default function Collection(props: ICollectionProps) {
   const { data } = props;
-  if(!data) {
-    return <Empty />
+  if (!data) {
+    return <Empty />;
   }
   const preview_photo = data.preview_photos;
+  const blurDataUrl = blurHashToDataURL("LXFr@jE1D%aeBDxat7WV00xux]t7");
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-col">
@@ -33,6 +35,8 @@ export default function Collection(props: ICollectionProps) {
                         fill
                         alt="preview photo collection"
                         className="rounded-l-md size-full"
+                        placeholder="blur"
+                        blurDataURL={blurDataUrl}
                       />
                     )}
                   </div>
@@ -49,6 +53,8 @@ export default function Collection(props: ICollectionProps) {
                           width={0}
                           height={0}
                           className="rounded-tr-md size-full"
+                          placeholder="blur"
+                          blurDataURL={blurDataUrl}
                         />
                       )}
                     </div>
@@ -64,6 +70,8 @@ export default function Collection(props: ICollectionProps) {
                           height={0}
                           sizes="100vw"
                           className="rounded-br-md size-full"
+                          placeholder="blur"
+                          blurDataURL={blurDataUrl}
                         />
                       )}
                     </div>
@@ -79,7 +87,9 @@ export default function Collection(props: ICollectionProps) {
         <div className="flex gap-2 items-center text-grey text-sm">
           <p className="">{data?.total_photos || 0} photos</p>
           <span className="size-px rounded-full bg-grey"></span>
-          <p className="">Curated by {props?.username || data?.user?.username}</p>
+          <p className="">
+            Curated by {props?.username || data?.user?.username}
+          </p>
         </div>
       </div>
       <div className="flex gap-2 flex-wrap">

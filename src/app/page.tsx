@@ -5,10 +5,12 @@ import FormSearch from "@/components/UI/FormSearch";
 import Navbar from "@/components/home/Navbar";
 import MenuCollection from "@/components/home/MenuCollection";
 import ListImage from "@/components/home/ListImage";
+import { blurHashToDataURL } from "@/ultils/blurhashDataURL";
 
 export interface IHomeProps {}
 
 export default function Home(props: IHomeProps) {
+  const blurDataUrl = blurHashToDataURL('LXFr@jE1D%aeBDxat7WV00xux]t7')
   return (
     <div className="no-scrollbar">
       <Navbar />
@@ -48,6 +50,8 @@ export default function Home(props: IHomeProps) {
                   sizes="100vw"
                   alt=""
                   className="rounded-lg w-full h-auto"
+                  placeholder="blur"
+                  blurDataURL={blurDataUrl}
                 />
               </div>
               <div className="p-5 flex flex-col gap-2 text-white font-semibold relative z-[3]">

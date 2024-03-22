@@ -14,6 +14,7 @@ import ModalPhoto from "./ModalPhoto";
 import { IPhoto } from "@/interfaces/photo";
 import Empty from "../Empty";
 import decode from "@simpleimg/decode-blurhash";
+import { blurHashToDataURL } from "@/ultils/blurhashDataURL";
 
 export interface IPhotoProps {
   data: IPhoto;
@@ -33,7 +34,8 @@ export default function Photo(props: IPhotoProps) {
     document.body.style.overflow = "hidden";
     window.history.pushState(null, "", `/photos/${data.slug}`);
   };
-  const blurDataUrl = decode(data?.blur_hash);
+  // const blurDataUrl = decode(data?.blur_hash);
+  const blurDataUrl = blurHashToDataURL(data?.blur_hash);
 
   return (
     <>
