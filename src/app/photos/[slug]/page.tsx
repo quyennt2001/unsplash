@@ -22,7 +22,8 @@ async function getData(slug: string) {
       }
       throw new Error(`${res.status} ${res.statusText}`);
     })
-    .catch((e) => console.log('Error in photo page', e));
+    .then((data) => data)
+    .catch((e) => console.log("Error in photo page", e));
 }
 
 export default async function PhotoPage({

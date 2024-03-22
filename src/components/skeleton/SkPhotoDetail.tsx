@@ -37,7 +37,7 @@ export default function SkPhotoDetail(props: ISkPhotoDetailProps) {
         </div>
       </div>
       <div className=" flex justify-center">
-        <div className="relative min-hxt-[0px] min-w-[400px] max-md:w-full bg-sketelon"></div>
+        <div className="relative min-h-[300px] min-w-[400px] max-md:w-full bg-sketelon"></div>
       </div>
       <div className="py-5">
         <div className="flex flex-col gap-8">

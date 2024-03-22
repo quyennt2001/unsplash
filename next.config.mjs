@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
-import dotenv from "dotenv";
-dotenv.config();
+
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -31,14 +30,6 @@ const nextConfig = {
       },
     ],
   },
-  // rewrites: async () => {
-  //   return [
-  //     {
-  //       source: '/@:username/',
-  //       destination: "/:username"
-  //     }
-  //   ]
-  // }
 };
 
 export default nextConfig;

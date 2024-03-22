@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { FaArrowDown } from "react-icons/fa";
@@ -13,6 +13,7 @@ import Avatar from "../UI/Avatar";
 import ModalPhoto from "./ModalPhoto";
 import { IPhoto } from "@/interfaces/photo";
 import Empty from "../Empty";
+import decode from "@simpleimg/decode-blurhash";
 
 export interface IPhotoProps {
   data: IPhoto;
@@ -32,6 +33,7 @@ export default function Photo(props: IPhotoProps) {
     document.body.style.overflow = "hidden";
     window.history.pushState(null, "", `/photos/${data.slug}`);
   };
+  const blurDataUrl = decode(data?.blur_hash);
 
   return (
     <>
@@ -43,10 +45,12 @@ export default function Photo(props: IPhotoProps) {
           <Image
             src={data?.urls?.regular}
             alt=""
-            height={0}
-            width={0}
+            height={data?.height}
+            width={data?.width}
             className="w-full h-auto"
             sizes="100vw"
+            placeholder={blurDataUrl ? "blur" : "empty"}
+            blurDataURL={blurDataUrl}
           />
           {/* <Link href={`/photos/${data.slug}`}> */}
           <div

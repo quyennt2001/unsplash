@@ -9,15 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@plaiceholder/next": "^3.0.0",
+    "@simpleimg/decode-blurhash": "^1.0.10",
     "axios": "^1.6.7",
+    "blurhash": "^2.0.5",
     "dotenv": "^16.4.5",
     "fs": "^0.0.1-security",
     "next": "14.1.1",
+    "plaiceholder": "^3.0.0",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.0.1",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-responsive-masonry": "^2.2.0",
-    "recoil": "^0.7.7"
+    "recoil": "^0.7.7",
+    "use-next-blurhash": "^1.0.5"
   },
   "devDependencies": {
     "@types/node": "^20",

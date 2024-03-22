@@ -3,6 +3,7 @@ import PhotoDetailInfor from "@/components/photo/PhotoDetailInfor";
 import { IDetailPhoto } from "@/interfaces/detailPhoto";
 import Image from "next/image";
 import * as React from "react";
+import decode from '@simpleimg/decode-blurhash'
 
 export interface IPhotoDetailProps {
   sticky: number;
@@ -11,24 +12,24 @@ export interface IPhotoDetailProps {
 
 export default function PhotoDetail(props: IPhotoDetailProps) {
   const { photo, sticky } = props;
+  const blurDataUrl = decode(photo?.blur_hash)
 
   return (
     <div className="bg-white">
       <PhotoDetailHeader data={photo?.user} sticky={sticky} />
       <div className=" flex justify-center py-[10px]">
-        <React.Suspense fallback={<p>loading</p>}>
-          <div className="relative max-h-[600px] max-md:w-full max-md:h-auto flex justify-center">
-            <Image
-              src={photo?.urls?.regular}
-              height={0}
-              width={0}
-              alt=""
-              className="w-auto h-full max-md:w-full max-md:h-auto"
-              sizes="100vw"
-              style={{ objectFit: "contain" }}
-            />
-          </div>
-        </React.Suspense>
+        <div className="relative max-h-[550px] max-md:w-full max-md:h-auto flex justify-center">
+          <Image
+            src={photo?.urls?.regular}
+            height={photo?.height}
+            width={photo?.width}
+            alt=""
+            sizes="100vw"
+            style={{ objectFit: "contain" }}
+            placeholder={blurDataUrl ? "blur" : "empty"}
+            blurDataURL={blurDataUrl}
+          />
+        </div>
       </div>
       <PhotoDetailInfor data={photo} />
     </div>
