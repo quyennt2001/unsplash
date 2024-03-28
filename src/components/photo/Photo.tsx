@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { FaHeart } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { FaArrowDown } from "react-icons/fa";
@@ -13,22 +14,21 @@ import Avatar from "../UI/Avatar";
 import ModalPhoto from "./ModalPhoto";
 import { IPhoto } from "@/interfaces/photo";
 import Empty from "../Empty";
-import decode from "@simpleimg/decode-blurhash";
 import { blurHashToDataURL } from "@/ultils/blurhashDataURL";
 import { tokenStore } from "@/store/userStore";
 import { likePhoto, unlikePhoto } from "@/services/photoService";
+import { CLIENT_ID } from "@/services";
 
 export interface IPhotoProps {
   data: IPhoto;
 }
 
 export default function Photo(props: IPhotoProps) {
-  const [isShow, setIsShow] = useState<boolean>(false);
-  const [liked, setLiked] = useState(false);
-  const { accessToken } = tokenStore();
-
   const { data } = props;
-  // console.log(data);
+  const { accessToken } = tokenStore();
+  const [isShow, setIsShow] = useState<boolean>(false);
+  const [liked, setLiked] = useState(data?.liked_by_user);
+  const router = useRouter();
 
   if (!data?.slug) {
     return <Empty />;
@@ -44,14 +44,16 @@ export default function Photo(props: IPhotoProps) {
     // console.log("click");
     if (accessToken) {
       if (data?.liked_by_user) {
-        console.log("unlike");
+        setLiked(false);
         await unlikePhoto(data?.id, accessToken);
       } else {
-        console.log("like");
+        setLiked(true);
         await likePhoto(data.id, accessToken);
       }
     } else {
-      console.log("Please login");
+      router.push(
+        `https://unsplash.com/oauth/authorize?client_id=${CLIENT_ID[0]}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code&scope=public+write_likes+read_photos+read_collections+read_user`
+      );
     }
   };
 
@@ -77,16 +79,21 @@ export default function Photo(props: IPhotoProps) {
         </div>
         <div className="absolute pointer-events-none top-0 left-0 size-full hidden flex-col bg-modal justify-between group-hover:flex p-5">
           <div className="flex justify-end gap-2">
+            <div onClick={handleClickLike}>
+              <ButtonIcon
+                icon={FaHeart as IconType}
+                // onClick={handleClickLike}
+                className={
+                  liked
+                    ? "text-white bg-error hover:bg-[#e04c4c]"
+                    : "text-grey hover:text-black bg-white border-border border"
+                }
+              />
+            </div>
             <ButtonIcon
-              icon={FaHeart as IconType}
-              // onClick={handleClickLike}
-              className={
-                data?.liked_by_user
-                  ? "text-white bg-error hover:bg-[#e04c4c]"
-                  : ""
-              }
+              icon={FaPlus as IconType}
+              className="text-grey hover:text-black bg-white border-border border"
             />
-            <ButtonIcon icon={FaPlus as IconType} />
           </div>
           <div className="flex justify-between w-full items-center">
             <Link
@@ -107,7 +114,10 @@ export default function Photo(props: IPhotoProps) {
                 </div>
               </button>
             </Link>
-            <ButtonIcon icon={FaArrowDown as IconType} />
+            <ButtonIcon
+              icon={FaArrowDown as IconType}
+              className="text-grey hover:text-black bg-white border-border border"
+            />
           </div>
         </div>
       </div>

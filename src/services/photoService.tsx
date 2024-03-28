@@ -58,10 +58,12 @@ export async function getAPhoto(slug: string, accessToken: string) {
     .catch((e) => console.log("Error in get a photo", e));
 }
 
-export async function getFirstPagePhoto() {
+export async function getFirstPagePhoto(accessToken: string) {
   return fetch(`${BASE_URL}/photos?page=1`, {
     headers: {
-      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+      Authorization: accessToken
+        ? `Bearer ${accessToken}`
+        : `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
     .then((res) => {
@@ -70,10 +72,10 @@ export async function getFirstPagePhoto() {
       }
       if (res.status === 403 && keyIdx < CLIENT_ID.length) {
         keyIdx = keyIdx + 1;
-        getFirstPagePhoto();
+        getFirstPagePhoto(accessToken);
         return;
       }
       throw new Error(`${res.status} ${res.statusText}`);
     })
-    .catch((e) => console.log('Error in list image', e));
+    .catch((e) => console.log("Error in list image", e));
 }

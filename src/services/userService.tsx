@@ -1,6 +1,6 @@
 import { BASE_URL, CLIENT_ID } from ".";
 
-const URL = `${BASE_URL}/users`
+const URL = `${BASE_URL}/users`;
 
 let keyIdx = 0;
 export async function getPublicUser(username: string) {
@@ -25,10 +25,16 @@ export async function getPublicUser(username: string) {
     });
 }
 
-export async function getListOfUser(listname: string, username: string, accessToken: string) {
+export async function getListOfUser(
+  listname: string,
+  username: string,
+  accessToken: string
+) {
   return fetch(`${URL}/${username}/${listname}`, {
     headers: {
-      Authorization: accessToken ? `Bearer ${accessToken}` : `Client-ID ${CLIENT_ID[keyIdx]}`,
+      Authorization: accessToken
+        ? `Bearer ${accessToken}`
+        : `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
     .then((res) => {
@@ -43,6 +49,6 @@ export async function getListOfUser(listname: string, username: string, accessTo
       throw new Error(`${res.status} ${res.statusText}`);
     })
     .catch((e) => {
-      console.log('Error get list of user', e);
+      console.log("Error get list of user", e);
     });
 }

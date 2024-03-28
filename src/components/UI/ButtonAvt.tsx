@@ -27,6 +27,7 @@ export default function ButtonAvt(props: IButtonAvtProps) {
   const [loading, setLoading] = useState(false);
 
   const handleLogout = () => {
+    window.location.reload()
     setSelect(false);
     setToast("Successfully logged out");
     clearUser();
@@ -96,7 +97,7 @@ export default function ButtonAvt(props: IButtonAvtProps) {
             CLIENT_ID[0]
           }&redirect_uri=${
             process.env.NEXT_PUBLIC_REDIRECT_URI
-          }&response_type=code&scope=public+write_likes+read_photos+read_collections`}
+          }&response_type=code&scope=public+write_likes+read_photos+read_collections+read_user`}
         >
           <button className="px-2.75 h-14 w-max font-medium hover:text-black text-grey">
             Log in

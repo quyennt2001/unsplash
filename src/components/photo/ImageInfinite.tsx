@@ -7,15 +7,17 @@ import Loading from "../Loading";
 import { IPhoto } from "@/interfaces/photo";
 import SkPhoto from "../skeleton/SkPhoto";
 import { BASE_URL, CLIENT_ID } from "@/services/index";
+import { tokenStore } from "@/store/userStore";
 
 export interface IListImageProps {
   initialValue: IPhoto[];
-  limit?: number 
+  limit?: number;
 }
 
 export default function ImageInfinite(props: IListImageProps) {
   const [data, setData] = useState<IPhoto[]>(props.initialValue);
   const [isLoading, setIsLoading] = useState(false);
+  const { accessToken } = tokenStore();
 
   const page = useRef(2);
 
@@ -24,7 +26,11 @@ export default function ImageInfinite(props: IListImageProps) {
       document.documentElement.offsetHeight -
         (window.innerHeight + window.scrollY) <=
       200;
-    if (!isScroll || isLoading || (props?.limit && props?.limit <= data?.length)) {
+    if (
+      !isScroll ||
+      isLoading ||
+      (props?.limit && props?.limit <= data?.length)
+    ) {
       return;
     }
     fetchData();
@@ -36,7 +42,9 @@ export default function ImageInfinite(props: IListImageProps) {
     setIsLoading(true);
     fetch(`${BASE_URL}/photos?page=${page.current}`, {
       headers: {
-        Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+        Authorization: accessToken
+          ? `Bearer ${accessToken}`
+          : `Client-ID ${CLIENT_ID[keyIdx]}`,
       },
     })
       .then(async (res) => {

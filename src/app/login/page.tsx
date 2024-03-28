@@ -22,7 +22,7 @@ export default async function Login({
   searchParams: { [key: string]: string };
 }) {
   const data = await handleLogin(searchParams.code);
-  console.log(data)
+  // console.log(data)
   if (!data) {
     return <LoginClient data={data} />;
   }

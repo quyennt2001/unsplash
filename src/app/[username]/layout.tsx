@@ -8,7 +8,8 @@ import Empty from "@/components/Empty";
 import { IAggregated, IDetailUser } from "@/interfaces/detailUser";
 import PageNotFound from "@/components/PageNotFound";
 import { getPublicUser } from "@/services/userService";
-
+// import { cookies } from "next/headers";
+// import { tokenStore } from "@/store/userStore";
 
 export const formatNumber = (num: number) => {
   const map = [
@@ -30,8 +31,8 @@ export default async function UserLayout({
   params,
 }: Readonly<{ children: React.ReactNode; params: { username: string } }>) {
   if (!params.username) return <Empty />;
-
   const user: IDetailUser = await getPublicUser(params.username);
+  console.log(user)
 
   if (!user) {
     return <PageNotFound />;
