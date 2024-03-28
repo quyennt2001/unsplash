@@ -10,7 +10,7 @@ export interface IButtonProps {
 
 export default function Button(props: IButtonProps) {
   return (
-    <div className={"relative " + props?.className}>
+    <div className={"relative " + props?.className} >
       {props?.span && (
         <span className="absolute text-[10px] text-grey top-0 left-1/2 translate-x-[-50%] capitalize">
           {props?.span}

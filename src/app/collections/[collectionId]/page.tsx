@@ -9,80 +9,20 @@ import ListData from "@/components/photo/ListData";
 import Link from "next/link";
 import { ICollection } from "@/interfaces/collection";
 import { IPhoto } from "@/interfaces/photo";
-import { BASE_URL, CLIENT_ID } from "@/app/api/apiConfig";
 import Empty from "@/components/Empty";
+import { getCollection, getPhotosOfCollection, getRelatedCollections } from "@/services/collectionService";
 
 export interface IDetailCollectionProps {}
 
-let keyIdx = 0;
-async function getCollections(collectionId: string) {
-  return fetch(`${BASE_URL}/collections/${collectionId}`, {
-    headers: {
-      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-        keyIdx = keyIdx + 1;
-        getCollections(collectionId);
-        return;
-      }
-      throw new Error(`${res.status} ${res.statusText}`);
-    })
-    .catch((e) => console.log('Error in collectionId', e));
-}
-
-async function getPhotos(collectionId: string) {
-  return fetch(`${BASE_URL}/collections/${collectionId}/photos`, {
-    headers: {
-      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-        keyIdx = keyIdx + 1;
-        getPhotos(collectionId);
-        return;
-      }
-      throw new Error(`${res.status} ${res.statusText}`);
-    })
-    .catch((e) => console.log('Error in collectionId', e));
-}
-
-async function getRelateds(collectionId: string) {
-  return fetch(`${BASE_URL}/collections/${collectionId}/related`, {
-    headers: {
-      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-        keyIdx = keyIdx + 1;
-        getRelateds(collectionId);
-        return;
-      }
-      throw new Error(`${res.status} ${res.statusText}`);
-    })
-    .catch((e) => console.log('Error in collectionId', e));
-}
 
 export default async function DetailCollection({
   params,
 }: {
   params: { collectionId: string };
 }) {
-  const collection: ICollection = await getCollections(params.collectionId);
-  const photos: IPhoto[] = await getPhotos(params.collectionId);
-  const relateds: ICollection[] = await getRelateds(params.collectionId);
+  const collection: ICollection = await getCollection(params.collectionId);
+  const photos: IPhoto[] = await getPhotosOfCollection(params.collectionId);
+  const relateds: ICollection[] = await getRelatedCollections(params.collectionId);
 
   if (!collection) {
     return <Empty />;

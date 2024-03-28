@@ -5,14 +5,17 @@ export interface IButtonIconProps {
   icon: IconType;
   className?: String;
   name?: String;
-  ref?: any;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export default function ButtonIcon(props: IButtonIconProps) {
   return (
     <button
-      ref={props?.ref}
-      className={`bg-white px-2.75 gap-1 h-8 flex items-center justify-center rounded text-grey hover:text-black border border-border pointer-events-auto ${props?.className}`}
+      className={`px-2.75 gap-1 h-8 min-w-10 flex items-center justify-center rounded pointer-events-auto ${
+        props?.className
+          ? props.className
+          : "text-grey hover:text-black bg-white border-border border hover:border-black"
+      }`}
     >
       {<props.icon className="size-3.5" />}
       {props?.name && <p className="capitalize">{props?.name}</p>}

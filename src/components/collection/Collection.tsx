@@ -17,7 +17,6 @@ export default function Collection(props: ICollectionProps) {
     return <Empty />;
   }
   const preview_photo = data.preview_photos;
-  const blurDataUrl = blurHashToDataURL("LXFr@jE1D%aeBDxat7WV00xux]t7");
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-col">
@@ -36,7 +35,9 @@ export default function Collection(props: ICollectionProps) {
                         alt="preview photo collection"
                         className="rounded-l-md size-full"
                         placeholder="blur"
-                        blurDataURL={blurDataUrl}
+                        blurDataURL={blurHashToDataURL(
+                          preview_photo[0]?.blur_hash
+                        )}
                       />
                     )}
                   </div>
@@ -54,7 +55,9 @@ export default function Collection(props: ICollectionProps) {
                           height={0}
                           className="rounded-tr-md size-full"
                           placeholder="blur"
-                          blurDataURL={blurDataUrl}
+                          blurDataURL={blurHashToDataURL(
+                            preview_photo[1]?.blur_hash
+                          )}
                         />
                       )}
                     </div>
@@ -71,7 +74,9 @@ export default function Collection(props: ICollectionProps) {
                           sizes="100vw"
                           className="rounded-br-md size-full"
                           placeholder="blur"
-                          blurDataURL={blurDataUrl}
+                          blurDataURL={blurHashToDataURL(
+                            preview_photo[2]?.blur_hash
+                          )}
                         />
                       )}
                     </div>

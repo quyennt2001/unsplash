@@ -6,7 +6,7 @@ import ListData from "../photo/ListData";
 import Loading from "../Loading";
 import { IPhoto } from "@/interfaces/photo";
 import SkPhoto from "../skeleton/SkPhoto";
-import { BASE_URL, CLIENT_ID } from "@/app/api/apiConfig";
+import { BASE_URL, CLIENT_ID } from "@/services/index";
 
 export interface IListImageProps {
   initialValue: IPhoto[];

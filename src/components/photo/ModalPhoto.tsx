@@ -4,9 +4,8 @@ import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 import PhotoDetail from "./PhotoDetail";
 import { IDetailPhoto } from "@/interfaces/detailPhoto";
-import Empty from "../Empty";
 import SkPhotoDetail from "../skeleton/SkPhotoDetail";
-import { BASE_URL, CLIENT_ID } from "@/app/api/apiConfig";
+import { BASE_URL, CLIENT_ID } from "@/services/index";
 
 export interface IHomeProps {
   slug: string;

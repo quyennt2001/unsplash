@@ -17,7 +17,7 @@ export default function ItemMenuCollection(props: IItemMenuCollectionProps) {
         <div className="flex gap-2 h-[34px]">
           <div className="relative size-8 rounded-md border">
             <Image
-              src={data.preview_photos[0].urls.regular}
+              src={data.preview_photos[0]?.urls?.regular}
               height={0}
               width={0}
               sizes="100vw"

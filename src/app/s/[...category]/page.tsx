@@ -1,39 +1,18 @@
 import * as React from "react";
-import { BASE_URL, CLIENT_ID } from "@/app/api/apiConfig";
 import Empty from "@/components/Empty";
 import { ICollection } from "@/interfaces/collection";
 import Collection from "@/components/collection/Collection";
 import PageNotFound from "@/components/PageNotFound";
 import ListData from "@/components/photo/ListData";
 import ItemUser from "@/components/user/ItemUser";
-import { IUser } from "@/interfaces/user";
 import { IResultSearch } from "@/interfaces/search";
 import Image from "next/image";
 import logo from "../../../../public/logo.png";
 import { formatNumber } from "@/app/[username]/layout";
+import { search } from "@/services/searchService";
+import { IDetailUser } from "@/interfaces/detailUser";
 
 export const OPTIONS = ["photos", "collections", "users"];
-
-let keyIdx = 0;
-async function search(category: string, query: string) {
-  return fetch(`${BASE_URL}/search/${category}?query=${query}&per_page=20`, {
-    headers: {
-      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-        keyIdx = keyIdx + 1;
-        search(category, query);
-        return;
-      }
-      throw new Error(`${res.status} ${res.statusText}`);
-    })
-    .catch((e) => console.log("Error search ->", e));
-}
 
 export default async function SearchPage({
   params,
@@ -68,7 +47,7 @@ export default async function SearchPage({
           <ListData data={data?.results} />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {data.results.map((item: IUser, i: number) => (
+            {data.results.map((item: IDetailUser, i: number) => (
               <ItemUser key={i} data={item} />
             ))}
           </div>

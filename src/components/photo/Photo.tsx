@@ -15,6 +15,8 @@ import { IPhoto } from "@/interfaces/photo";
 import Empty from "../Empty";
 import decode from "@simpleimg/decode-blurhash";
 import { blurHashToDataURL } from "@/ultils/blurhashDataURL";
+import { tokenStore } from "@/store/userStore";
+import { likePhoto, unlikePhoto } from "@/services/photoService";
 
 export interface IPhotoProps {
   data: IPhoto;
@@ -22,8 +24,11 @@ export interface IPhotoProps {
 
 export default function Photo(props: IPhotoProps) {
   const [isShow, setIsShow] = useState<boolean>(false);
+  const [liked, setLiked] = useState(false);
+  const { accessToken } = tokenStore();
 
   const { data } = props;
+  // console.log(data);
 
   if (!data?.slug) {
     return <Empty />;
@@ -34,6 +39,22 @@ export default function Photo(props: IPhotoProps) {
     document.body.style.overflow = "hidden";
     window.history.pushState(null, "", `/photos/${data.slug}`);
   };
+
+  const handleClickLike = async () => {
+    // console.log("click");
+    if (accessToken) {
+      if (data?.liked_by_user) {
+        console.log("unlike");
+        await unlikePhoto(data?.id, accessToken);
+      } else {
+        console.log("like");
+        await likePhoto(data.id, accessToken);
+      }
+    } else {
+      console.log("Please login");
+    }
+  };
+
   const blurDataUrl = blurHashToDataURL(data?.blur_hash);
 
   return (
@@ -41,7 +62,7 @@ export default function Photo(props: IPhotoProps) {
       {isShow && (
         <ModalPhoto slug={data.slug} setIsShow={setIsShow} isShow={isShow} />
       )}
-      <div className="w-full h-auto relative cursor-zoom-in group mb-5" >
+      <div className="w-full h-auto relative cursor-zoom-in group mb-5">
         <div className="relative w-full" onClick={handleClickShowModal}>
           <Image
             src={data?.urls?.regular}
@@ -56,11 +77,22 @@ export default function Photo(props: IPhotoProps) {
         </div>
         <div className="absolute pointer-events-none top-0 left-0 size-full hidden flex-col bg-modal justify-between group-hover:flex p-5">
           <div className="flex justify-end gap-2">
-            <ButtonIcon icon={FaHeart as IconType} />
+            <ButtonIcon
+              icon={FaHeart as IconType}
+              // onClick={handleClickLike}
+              className={
+                data?.liked_by_user
+                  ? "text-white bg-error hover:bg-[#e04c4c]"
+                  : ""
+              }
+            />
             <ButtonIcon icon={FaPlus as IconType} />
           </div>
           <div className="flex justify-between w-full items-center">
-            <Link href={data?.user?.username} className="pointer-events-auto">
+            <Link
+              href={`/${data?.user?.username}`}
+              className="pointer-events-auto"
+            >
               <button className="flex gap-2 items-center justify-start">
                 <Avatar src={data?.user?.profile_image?.medium} />
                 <div className="flex flex-col justify-between text-white items-start">

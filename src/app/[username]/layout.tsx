@@ -4,33 +4,11 @@ import Image from "next/image";
 import * as React from "react";
 import logo from "../../../public/logo.png";
 import Tag from "@/components/UI/Tag";
-import { BASE_URL, CLIENT_ID } from "../api/apiConfig";
 import Empty from "@/components/Empty";
 import { IAggregated, IDetailUser } from "@/interfaces/detailUser";
 import PageNotFound from "@/components/PageNotFound";
+import { getPublicUser } from "@/services/userService";
 
-let keyIdx = 0;
-async function getData(username: string) {
-  return fetch(`${BASE_URL}/users/${username}`, {
-    headers: {
-      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-        keyIdx = keyIdx + 1;
-        getData(username);
-        return;
-      }
-      throw new Error(`${res.status} ${res.statusText}`);
-    })
-    .catch((e) => {
-      console.log("Error layout user", e);
-    });
-}
 
 export const formatNumber = (num: number) => {
   const map = [
@@ -53,7 +31,7 @@ export default async function UserLayout({
 }: Readonly<{ children: React.ReactNode; params: { username: string } }>) {
   if (!params.username) return <Empty />;
 
-  const user: IDetailUser = await getData(params.username);
+  const user: IDetailUser = await getPublicUser(params.username);
 
   if (!user) {
     return <PageNotFound />;

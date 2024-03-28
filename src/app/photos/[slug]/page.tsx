@@ -1,30 +1,12 @@
 import * as React from "react";
 import PhotoDetail from "@/components/photo/PhotoDetail";
-import { BASE_URL, CLIENT_ID } from "@/app/api/apiConfig";
+import { cookies } from "next/headers";
 import { IDetailPhoto } from "@/interfaces/detailPhoto";
 import Empty from "@/components/Empty";
+import { getAPhoto } from "@/services/photoService";
 
 let keyIdx = 0;
-async function getData(slug: string) {
-  return fetch(`${BASE_URL}/photos/${slug}`, {
-    headers: {
-      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-        keyIdx = keyIdx + 1;
-        getData(slug);
-        return;
-      }
-      throw new Error(`${res.status} ${res.statusText}`);
-    })
-    .then((data) => data)
-    .catch((e) => console.log("Error in photo page", e));
-}
+
 
 export default async function PhotoPage({
   params,
@@ -35,7 +17,9 @@ export default async function PhotoPage({
   if (!slug) {
     return <Empty />;
   }
-  const photo: IDetailPhoto = await getData(slug);
+  const cookieStore = cookies()
+  const accessToken = cookieStore.get('accessToken')?.value || ''
+  const photo: IDetailPhoto = await getAPhoto(slug, accessToken);
 
   if (!photo) {
     return <Empty />;

@@ -24,7 +24,7 @@ const config: Config = {
         bg: "#f5f5f5",
         e: "#eee",
         e7: "#e7e7e7",
-        error: '#dc3545',
+        error: '#f15151',
         info: '#007bff',
         success: '#28a745',
         warning: '#ffc107',

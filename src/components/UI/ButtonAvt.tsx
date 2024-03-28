@@ -6,7 +6,8 @@ import { useState, useRef, useEffect } from "react";
 import { tokenStore, userStore } from "@/store/userStore";
 import { toastStore } from "@/store/toastStore";
 import Link from "next/link";
-import Button from "./Button";
+import { useRouter } from "next/navigation";
+import { CLIENT_ID } from "@/services/index";
 
 export interface IButtonAvtProps {
   // src: string;
@@ -14,6 +15,8 @@ export interface IButtonAvtProps {
 }
 
 export default function ButtonAvt(props: IButtonAvtProps) {
+  const router = useRouter();
+
   const { user, clearUser } = userStore();
   const { clearToken } = tokenStore();
   const { setToast } = toastStore();
@@ -90,12 +93,14 @@ export default function ButtonAvt(props: IButtonAvtProps) {
       ) : (
         <Link
           href={`https://unsplash.com/oauth/authorize?client_id=${
-            process.env.NEXT_PUBLIC_ACCESS_KEY?.split(",")[0]
+            CLIENT_ID[0]
           }&redirect_uri=${
             process.env.NEXT_PUBLIC_REDIRECT_URI
-          }&response_type=code&scope=public`}
+          }&response_type=code&scope=public+write_likes+read_photos+read_collections`}
         >
-          <Button name="Log in" selected={false} className="px-2.75" />
+          <button className="px-2.75 h-14 w-max font-medium hover:text-black text-grey">
+            Log in
+          </button>
         </Link>
       )}
     </>

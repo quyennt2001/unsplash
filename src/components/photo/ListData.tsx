@@ -2,8 +2,6 @@ import * as React from "react";
 import { IPhoto } from "@/interfaces/photo";
 import Photo from "./Photo";
 import Empty from "../Empty";
-import Masonry from "./Masonry";
-// import Masonry from "react-responsive-masonry";
 export interface IListDataProps {
   data: IPhoto[];
 }
@@ -20,6 +18,5 @@ export default function ListData(props: IListDataProps) {
         <Photo data={image} key={i} />
       ))}
     </div>
-    // <Masonry images={data} columnCount={3}/>
   );
 }

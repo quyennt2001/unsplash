@@ -3,33 +3,16 @@ import ItemMenuCollection from "./ItemMenuCollection";
 import Link from "next/link";
 import { ICollection } from "@/interfaces/collection";
 import Empty from "../Empty";
-import { BASE_URL, CLIENT_ID } from "@/app/api/apiConfig";
+import { BASE_URL, CLIENT_ID } from "@/services/index";
+import { getFirstPageCollection } from "@/services/collectionService";
 
 export interface IMenuCollectionProps {}
 
 let keyIdx = 0;
-async function getData() {
-  return fetch(`${BASE_URL}/collections?per_page=4`, {
-    headers: {
-      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-        keyIdx = keyIdx + 1;
-        getData();
-        return;
-      }
-      throw new Error(`${res.status} ${res.statusText}`);
-    })
-    .catch((e) => console.log('Error in menu collection', e));
-}
+
 
 export default async function MenuCollection(props: IMenuCollectionProps) {
-  const collections: ICollection[] = await getData();
+  const collections: ICollection[] = await getFirstPageCollection(4);
   if (!collections || !collections.length) {
     return <Empty />;
   }

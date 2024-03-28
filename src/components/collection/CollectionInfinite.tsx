@@ -6,7 +6,7 @@ import * as React from "react";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { ICollection } from "@/interfaces/collection";
 import SkCollection from "@/components/skeleton/SkCollection";
-import { BASE_URL, CLIENT_ID } from "@/app/api/apiConfig";
+import { BASE_URL, CLIENT_ID } from "@/services/index";
 
 export interface ICollectionInfinte {
   initialValue: ICollection[];
