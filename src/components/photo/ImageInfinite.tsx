@@ -10,6 +10,7 @@ import { BASE_URL, CLIENT_ID } from "@/app/api/apiConfig";
 
 export interface IListImageProps {
   initialValue: IPhoto[];
+  limit?: number 
 }
 
 export default function ImageInfinite(props: IListImageProps) {
@@ -23,7 +24,7 @@ export default function ImageInfinite(props: IListImageProps) {
       document.documentElement.offsetHeight -
         (window.innerHeight + window.scrollY) <=
       200;
-    if (!isScroll || isLoading) {
+    if (!isScroll || isLoading || (props?.limit && props?.limit <= data?.length)) {
       return;
     }
     fetchData();
@@ -63,7 +64,7 @@ export default function ImageInfinite(props: IListImageProps) {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isLoading]);
 
   return (
     <>

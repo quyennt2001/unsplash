@@ -1,19 +1,20 @@
 import * as React from "react";
 import Image from "next/image";
 import { RiAttachment2 } from "react-icons/ri";
-import FormSearch from "@/components/UI/FormSearch";
 import Navbar from "@/components/home/Navbar";
 import MenuCollection from "@/components/home/MenuCollection";
 import ListImage from "@/components/home/ListImage";
 import { blurHashToDataURL } from "@/ultils/blurhashDataURL";
+import Toast from "@/components/Toast";
 
 export interface IHomeProps {}
 
 export default function Home(props: IHomeProps) {
-  const blurDataUrl = blurHashToDataURL('LXFr@jE1D%aeBDxat7WV00xux]t7')
+  const blurDataUrl = blurHashToDataURL("LXFr@jE1D%aeBDxat7WV00xux]t7");
   return (
     <div className="no-scrollbar">
       <Navbar />
+      <Toast />
       <div className="flex justify-center relative">
         <div className="flex flex-col w-main">
           <div className="flex items-end py-14 gap-6 w-full">
@@ -22,7 +23,7 @@ export default function Home(props: IHomeProps) {
                 <div className="flex grow flex-col gap-2">
                   <p className="capitalize text-[40px] font-bold">unsplash</p>
                   <div className="flex flex-col text-lg">
-                    <p className="">The internet's source for visuals.</p>
+                    <p className="">The internet&apos;s source for visuals.</p>
                     <p>Powered by creators everywhere.</p>
                   </div>
                 </div>

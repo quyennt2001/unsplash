@@ -3,7 +3,6 @@ import PhotoDetailInfor from "@/components/photo/PhotoDetailInfor";
 import { IDetailPhoto } from "@/interfaces/detailPhoto";
 import Image from "next/image";
 import * as React from "react";
-import decode from '@simpleimg/decode-blurhash'
 import { blurHashToDataURL } from "@/ultils/blurhashDataURL";
 
 export interface IPhotoDetailProps {

@@ -24,7 +24,7 @@ export default function FormSearch(props: IFormSearchProps) {
     OPTIONS.includes(pathname[2]);
 
   const [value, setValue] = useState(""); // input value
-  const [recentSearch, setRecentSearch] = useState<string[]>([]);  
+  const [recentSearch, setRecentSearch] = useState<string[]>([]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [option, setOption] = useState(OPTIONS[0]);
   const [isShowOption, setIsShowOption] = useState(false);
@@ -39,7 +39,7 @@ export default function FormSearch(props: IFormSearchProps) {
     setSuggestions(filter);
   };
 
-  // enter 
+  // enter
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push(`/s/${option}/${value}`);
@@ -47,7 +47,7 @@ export default function FormSearch(props: IFormSearchProps) {
     setIsShownSearch(false);
   };
 
-  // save the search value to localstorage 
+  // save the search value to localstorage
   const addValueSearch = (value: string) => {
     if (!recentSearch.includes(value) && value.trim()) {
       setRecentSearch([...recentSearch, value]);
@@ -105,7 +105,7 @@ export default function FormSearch(props: IFormSearchProps) {
     }
   }, [isShowOption, isShownSearch]);
 
-  // set value when redirect page 
+  // set value when redirect page
   useEffect(() => {
     if (isSearch) {
       setOption(pathname[2]);
@@ -129,12 +129,12 @@ export default function FormSearch(props: IFormSearchProps) {
         props?.className
       }
     >
-      <div className="has-[:focus]:bg-white group flex items-center grow relative rounded-l-3xl h-full bg-e hover:bg-e7 ">
+      <div
+        ref={refSearch}
+        className="has-[:focus]:bg-white group flex items-center grow relative rounded-l-3xl h-full bg-e hover:bg-e7 "
+      >
         {isShownSearch && (
-          <div
-            ref={refSearch}
-            className="absolute w-full top-[45px] left-0  bg-white"
-          >
+          <div className="absolute w-full top-[45px] left-0  bg-white rounded-lg">
             {!value ? (
               <div className="flex flex-col gap-4 px-4 py-4 border rounded-lg">
                 <div className="flex gap-2 items-center">
@@ -148,15 +148,17 @@ export default function FormSearch(props: IFormSearchProps) {
                   </button>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {recentSearch?.toReversed()?.map((item: string, i: number) => (
-                    <button
-                      key={i}
-                      className="py-2 px-4 rounded border border-border text-grey hover:bg-gray-100"
-                      onClick={() => handleClickRecent(item)}
-                    >
-                      {item}
-                    </button>
-                  ))}
+                  {recentSearch
+                    ?.toReversed()
+                    ?.map((item: string, i: number) => (
+                      <button
+                        key={i}
+                        className="py-2 px-4 rounded border border-border text-grey hover:bg-gray-100"
+                        onClick={() => handleClickRecent(item)}
+                      >
+                        {item}
+                      </button>
+                    ))}
                 </div>
               </div>
             ) : suggestions.length ? (
@@ -185,7 +187,7 @@ export default function FormSearch(props: IFormSearchProps) {
         >
           <input
             type="text"
-            onFocus={() => {
+            onClick={() => {
               if (recentSearch.length > 0) {
                 setIsShownSearch(true);
               }
@@ -208,12 +210,9 @@ export default function FormSearch(props: IFormSearchProps) {
           </div>
         )}
       </div>
-      <div className="h-full relative w-32">
+      <div ref={refOption} className="h-full relative w-32">
         {isShowOption && (
-          <div
-            ref={refOption}
-            className="absolute top-[45px] left-0 w-full bg-white shadow-popup border rounded-lg flex flex-col gap-1 text-grey py-[6px]"
-          >
+          <div className="absolute top-[45px] left-0 w-full bg-white shadow-popup border rounded-lg flex flex-col gap-1 text-grey py-[6px]">
             {OPTIONS.filter((item: string) => item !== option).map(
               (item: string, i: number) => (
                 <button

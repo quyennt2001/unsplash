@@ -41,8 +41,8 @@ export default function PhotoDetailInfor(props: IPhotoDetailInforProps) {
             </div>
           </div>
           <div className="flex gap-2 items-center">
-            <ButtonIcon icon={PiShareFatFill as IconType} name="share" />
-            <ButtonIcon icon={GoKebabHorizontal as IconType} />
+            <ButtonIcon icon={PiShareFatFill as IconType} name="share" className='hover:border-black' />
+            <ButtonIcon icon={GoKebabHorizontal as IconType} className='hover:border-black' />
           </div>
         </div>
         <p className="text-sm max-w-[50%] max-md:max-w-full">{data?.description}</p>

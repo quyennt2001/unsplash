@@ -32,7 +32,7 @@ async function getData(username: string) {
     });
 }
 
-export const formatNumber = (num: number, precision = 0) => {
+export const formatNumber = (num: number) => {
   const map = [
     { suffix: "T", threshold: 1e12 },
     { suffix: "B", threshold: 1e9 },
@@ -41,7 +41,7 @@ export const formatNumber = (num: number, precision = 0) => {
   ];
   const found = map.find((x) => Math.abs(num) >= x.threshold);
   if (found) {
-    const formatted = (num / found.threshold).toFixed(precision) + found.suffix;
+    const formatted = (num / found.threshold).toFixed(0) + found.suffix;
     return formatted;
   }
   return num;
@@ -65,9 +65,9 @@ export default async function UserLayout({
       <Tabs
         username={params.username}
         data={{
-          photos: formatNumber(user?.total_photos),
-          likes: formatNumber(user?.total_likes),
-          collections: formatNumber(user?.total_collections),
+          photos: formatNumber(user?.total_photos || 0),
+          likes: formatNumber(user?.total_likes || 0),
+          collections: formatNumber(user?.total_collections || 0),
         }}
       />
       <div>{children}</div>
@@ -75,7 +75,7 @@ export default async function UserLayout({
         <div className="w-main py-20 flex flex-col gap-10">
           <div className="flex flex-col gap-10">
             <p className="text-2xl font-semibold leading-[1.3]">
-              Pawel's work appears in the following categories
+              Pawel&apos;s work appears in the following categories
             </p>
             <div className="flex gap-2 flex-wrap">
               {user?.tags?.aggregated.map((cate: IAggregated, i: number) => (

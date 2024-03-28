@@ -16,6 +16,7 @@ const config: Config = {
       colors: {
         text: "#111",
         grey: "#767676",
+        'grey-bold': '#555',
         border: "#d1d1d1",
         "modal-white": "rgba(255, 255, 255, 0.2)",
         modal: "rgba(0, 0, 0, 0.4)",
@@ -23,6 +24,11 @@ const config: Config = {
         bg: "#f5f5f5",
         e: "#eee",
         e7: "#e7e7e7",
+        error: '#dc3545',
+        info: '#007bff',
+        success: '#28a745',
+        warning: '#ffc107',
+
       },
       boxShadow: {
         popup: "0 8px 16px #00000029",
@@ -33,6 +39,7 @@ const config: Config = {
       },
       width: {
         main: "1280px",
+        15: '60px'
       },
       padding: {
         18: "72px",

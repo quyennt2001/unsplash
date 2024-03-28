@@ -11,7 +11,7 @@ export default function Avatar(props: IAvatarProps) {
     <div
       className={`rounded-full relative border ` + (props?.className ? props?.className : 'size-8')}
     >
-      <Image src={props?.src} fill alt="" className="rounded-full" />
+      <Image src={props.src} fill alt="" className="rounded-full" />
     </div>
   );
 }

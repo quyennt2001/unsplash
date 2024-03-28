@@ -1,6 +1,5 @@
 import Link from "next/link";
 import * as React from "react";
-import img from "../../public/logo.png";
 import Avatar from "../UI/Avatar";
 import ButtonIcon from "../UI/ButtonIcon";
 import { FaHeart } from "react-icons/fa";
@@ -35,8 +34,8 @@ export default function PhotoDetailHeader(props: IPhotoDetailHeaderProps) {
           </div>
         </Link>
         <div className="flex gap-2">
-          <ButtonIcon icon={FaHeart as IconType} />
-          <ButtonIcon icon={FaPlus as IconType} />
+          <ButtonIcon icon={FaHeart as IconType} className='hover:border-black' />
+          <ButtonIcon icon={FaPlus as IconType} className='hover:border-black' />
           <div className="bg-white h-8 flex items-center justify-center rounded text-grey hover:text-black">
             <button className="px-2.75 border border-border h-full rounded-l hover:border-black hover:text-black">
               Download

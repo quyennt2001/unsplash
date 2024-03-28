@@ -1,15 +1,21 @@
+"use client";
+
 import Image from "next/image";
 import * as React from "react";
+import { useState, useEffect } from "react";
 import FormSearch from "../UI/FormSearch";
 import { FiMenu } from "react-icons/fi";
 import logo from "../../../public/logo.png";
 import Button from "../UI/Button";
-import Dropdown from "../UI/Dropdown";
 import Link from "next/link";
+import { userStore } from "@/store/userStore";
+import ButtonAvt from "../UI/ButtonAvt";
 
 export interface IHeaderProps {}
 
 export default function Header(props: IHeaderProps) {
+ 
+
   return (
     <div className="md:sticky md:top-0 text-text bg-white text-sm z-10">
       <div className="py-2.75 px-5 h-[62px] flex items-center gap-4">
@@ -23,16 +29,15 @@ export default function Header(props: IHeaderProps) {
           <div className="flex gap-6 items-center pl-4  pr-8 border-r-2 border-r-border max-lg:hidden">
             <div className="relative group h-full flex items-center">
               <button className="text-grey hover:text-black">Explore</button>
-              <Dropdown items={["backgrounds", "images", "wallpapers"]} />
             </div>
             <button className="text-grey hover:text-black">Advertise</button>
             <button>Unsplash+</button>
           </div>
-          <div className="flex gap-2 items-center max-sm:hidden">
-            <Button name="Log in" selected={false} className="px-2.75" />
+          <div className="flex gap-3 items-center max-sm:hidden">
             <button className="h-8 leading-[30px] text-grey border border-border px-2.75 rounded hover:border-black">
               Submit a photo
             </button>
+            <ButtonAvt />
           </div>
         </div>
         <button className="h-full w-8 px-0.5">

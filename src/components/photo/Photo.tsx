@@ -34,7 +34,6 @@ export default function Photo(props: IPhotoProps) {
     document.body.style.overflow = "hidden";
     window.history.pushState(null, "", `/photos/${data.slug}`);
   };
-  // const blurDataUrl = decode(data?.blur_hash);
   const blurDataUrl = blurHashToDataURL(data?.blur_hash);
 
   return (

@@ -1,3 +1,43 @@
+import { Tags } from "./detailUser";
+import { IPhoto } from "./photo";
+
+export interface ICurrentUser {
+  accepted_tos: boolean;
+  allow_message: boolean;
+  badge: any;
+  bio: string;
+  confirmed: boolean;
+  downloads: number;
+  first_name: string;
+  followed_by_user: boolean;
+  followers_count: number;
+  following_count: number;
+  for_hire: boolean;
+  id: string;
+  instagram_username: string;
+  last_name: string;
+  links: IUserLinks;
+  location: any;
+  meta: {
+    index: boolean;
+  };
+  name: string;
+  numeric_id: number;
+  photos: IPhoto[];
+  portfolio_url: any;
+  profile_image: IProfileImage;
+  social: ISocial;
+  tags: Tags;
+  total_collections: number;
+  total_likes: number;
+  total_photos: number;
+  total_promoted_photos: number;
+  twitter_username: string;
+  uid: string;
+  updated_at: string;
+  username: string;
+}
+
 export interface IUser {
   id: string;
   updated_at: string;
