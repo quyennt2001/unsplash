@@ -1,6 +1,17 @@
 import { Tags } from "./detailUser";
 import { IPhoto } from "./photo";
 
+export interface IUpdateUser {
+  username: string,
+  first_name: string,
+  last_name: string,
+  email: string,
+  url: string,
+  location: string,
+  bio: string,
+  instagram_username: string 
+}
+
 export interface ICurrentUser {
   accepted_tos: boolean;
   allow_message: boolean;
@@ -8,6 +19,7 @@ export interface ICurrentUser {
   bio: string;
   confirmed: boolean;
   downloads: number;
+  email: string;
   first_name: string;
   followed_by_user: boolean;
   followers_count: number;

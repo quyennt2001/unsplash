@@ -8,7 +8,7 @@ import { ICurrentUser } from "@/interfaces/user";
 
 export interface ILoginClientProps {
   data: any;
-  user?: ICurrentUser;
+  user: ICurrentUser | null;
 }
 
 export default function LoginClient(props: ILoginClientProps) {

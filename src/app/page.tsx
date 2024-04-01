@@ -5,7 +5,6 @@ import Navbar from "@/components/home/Navbar";
 import MenuCollection from "@/components/home/MenuCollection";
 import ListImage from "@/components/home/ListImage";
 import { blurHashToDataURL } from "@/ultils/blurhashDataURL";
-import Toast from "@/components/Toast";
 
 export interface IHomeProps {}
 
@@ -14,7 +13,6 @@ export default function Home(props: IHomeProps) {
   return (
     <div className="no-scrollbar">
       <Navbar />
-      <Toast />
       <div className="flex justify-center relative">
         <div className="flex flex-col w-main">
           <div className="flex items-end py-14 gap-6 w-full">

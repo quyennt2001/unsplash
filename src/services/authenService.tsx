@@ -30,22 +30,3 @@ export async function handleLogin(code: string) {
     .catch((e) => console.log("Error login ->", e));
 }
 
-export async function getCurrentUser(access_token: string) {
-    return fetch(`${BASE_URL}/me`, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    })
-      .then(async (res) => {
-        if (res.ok) {
-          return await res.json();
-        }
-        if (res.status === 403 && keyIdx < CLIENT_ID.length) {
-          keyIdx += 1;
-          await getCurrentUser(access_token);
-        }
-        throw new Error(`${res.status} ${res.statusText}`);
-      })
-      .then((data) => data)
-      .catch((e) => console.log("Error get current user", e));
-  }

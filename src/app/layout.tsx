@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
+import Toast from "@/components/Toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
         <header className="z-30 sticky top-0">
           <Header />
         </header>
+        <Toast />
         {/* <div className="w-full px-5">{modal}</div> */}
         <div className="w-full px-5">{children}</div>
       </body>

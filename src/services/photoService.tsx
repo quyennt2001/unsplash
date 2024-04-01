@@ -66,14 +66,14 @@ export async function getFirstPagePhoto(accessToken: string) {
         : `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
-    .then((res) => {
+    .then( async (res) => {
       if (res.ok) {
         return res.json();
       }
       if (res.status === 403 && keyIdx < CLIENT_ID.length) {
         keyIdx = keyIdx + 1;
-        getFirstPagePhoto(accessToken);
-        return;
+        await getFirstPagePhoto('');
+        // return;
       }
       throw new Error(`${res.status} ${res.statusText}`);
     })

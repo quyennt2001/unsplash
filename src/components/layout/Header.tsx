@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import * as React from "react";
-import { useState, useEffect } from "react";
 import FormSearch from "../UI/FormSearch";
 import { FiMenu } from "react-icons/fi";
 import logo from "../../../public/logo.png";
@@ -14,8 +13,6 @@ import ButtonAvt from "../UI/ButtonAvt";
 export interface IHeaderProps {}
 
 export default function Header(props: IHeaderProps) {
- 
-
   return (
     <div className="md:sticky md:top-0 text-text bg-white text-sm z-10">
       <div className="py-2.75 px-5 h-[62px] flex items-center gap-4">

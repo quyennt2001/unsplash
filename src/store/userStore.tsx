@@ -4,7 +4,7 @@ import { IUser, ICurrentUser } from "@/interfaces/user";
 
 interface CurrentUserState {
   user: ICurrentUser | null;
-  setUser: (user: ICurrentUser | undefined) => void;
+  setUser: (user: ICurrentUser | null) => void;
   clearUser: () => void;
 }
 
@@ -16,7 +16,7 @@ interface TokenState {
 
 export const userStore = create<CurrentUserState>((set) => ({
   user: JSON.parse(Cookies.get("current_user") || "null"),
-  setUser: (user: ICurrentUser | undefined) => {
+  setUser: (user: ICurrentUser | null) => {
     set({ user: user });
     Cookies.set("current_user", JSON.stringify(user), { expires: 1 });
   },

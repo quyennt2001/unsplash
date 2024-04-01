@@ -32,7 +32,7 @@ export default async function UserLayout({
 }: Readonly<{ children: React.ReactNode; params: { username: string } }>) {
   if (!params.username) return <Empty />;
   const user: IDetailUser = await getPublicUser(params.username);
-  console.log(user)
+  // console.log(user)
 
   if (!user) {
     return <PageNotFound />;
