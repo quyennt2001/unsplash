@@ -7,13 +7,13 @@ import { useRouter } from "next/navigation";
 import { MdDone } from "react-icons/md";
 import Image from "next/image";
 import Input from "@/components/UI/Input";
-import { updateCurrentUser } from "@/services/userService";
+import { getCurrentUser, updateCurrentUser } from "@/services/userService";
 import { toastStore } from "@/store/toastStore";
 import { ICustom, IDetailUser } from "@/interfaces/detailUser";
 import { ICurrentUser } from "@/interfaces/user";
 
 export interface IAccountProps {
-    currentUser: IDetailUser
+  currentUser: IDetailUser;
 }
 
 export default function Account(props: IAccountProps) {
@@ -23,7 +23,7 @@ export default function Account(props: IAccountProps) {
   const { accessToken } = tokenStore();
   const { setToast } = toastStore();
 
-  const [updateUser, setUpdateUser] = useState<ICurrentUser|null>(user)
+  const [updateUser, setUpdateUser] = useState<ICurrentUser | null>(user);
   const [loading, setLoading] = useState(false);
   const [tag, setTag] = useState<any>();
   const [tags, setTags] = useState<ICustom[]>(user?.tags.custom || []);
@@ -38,7 +38,7 @@ export default function Account(props: IAccountProps) {
     const res = await updateCurrentUser(updateUser, accessToken);
     if (res) {
       setToast("Account updated");
-      setUser(updateUser)
+      setUser(res);
     } else {
       setToast("Account update failed");
     }
@@ -65,6 +65,19 @@ export default function Account(props: IAccountProps) {
   const onDelete = (index: number) => {
     setTags(tags.filter((tag: ICustom, i: number) => i !== index));
   };
+
+  useEffect(() => {
+    if (accessToken) {
+      const getUser = async () => {
+        const res = await getCurrentUser(accessToken);
+        setUser(res);
+        setUpdateUser(res);
+      };
+      getUser();
+    } else {
+      router.push("/");
+    }
+  }, [accessToken]);
 
   useEffect(() => {
     setLoading(true);

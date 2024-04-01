@@ -6,9 +6,10 @@ import { useState, useRef, useEffect } from "react";
 import { tokenStore, userStore } from "@/store/userStore";
 import { toastStore } from "@/store/toastStore";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { CLIENT_ID } from "@/services/index";
 import Router from "next/router";
+import path from "path";
 
 export interface IButtonAvtProps {
   // src: string;
@@ -17,6 +18,7 @@ export interface IButtonAvtProps {
 
 export default function ButtonAvt(props: IButtonAvtProps) {
   const router = useRouter();
+  const pathname = usePathname().split("/");
 
   const { user, clearUser } = userStore();
   const { clearToken } = tokenStore();
@@ -28,7 +30,11 @@ export default function ButtonAvt(props: IButtonAvtProps) {
   const [loading, setLoading] = useState(false);
 
   const handleLogout = () => {
-    window.location.reload();
+    if (pathname[1] === "account") {
+      router.push("/");
+    } else {
+      window.location.reload();
+    }
     setSelect(false);
     setToast("Successfully logged out");
     clearUser();

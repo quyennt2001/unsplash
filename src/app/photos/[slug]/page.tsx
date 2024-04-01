@@ -18,7 +18,7 @@ export default async function PhotoPage({
     return <Empty />;
   }
   const cookieStore = cookies()
-  const accessToken = cookieStore.get('accessToken')?.value || ''
+  const accessToken = cookieStore.get('access_token')?.value || ''
   const photo: IDetailPhoto = await getAPhoto(slug, accessToken);
 
   if (!photo) {

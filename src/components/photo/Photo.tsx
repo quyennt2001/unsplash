@@ -82,7 +82,6 @@ export default function Photo(props: IPhotoProps) {
             <div onClick={handleClickLike}>
               <ButtonIcon
                 icon={FaHeart as IconType}
-                // onClick={handleClickLike}
                 className={
                   liked
                     ? "text-white bg-error hover:bg-[#e04c4c]"

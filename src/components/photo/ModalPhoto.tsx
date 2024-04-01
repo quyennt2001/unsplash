@@ -6,6 +6,7 @@ import PhotoDetail from "./PhotoDetail";
 import { IDetailPhoto } from "@/interfaces/detailPhoto";
 import SkPhotoDetail from "../skeleton/SkPhotoDetail";
 import { BASE_URL, CLIENT_ID } from "@/services/index";
+import { tokenStore } from "@/store/userStore";
 
 export interface IHomeProps {
   slug: string;
@@ -19,11 +20,14 @@ export default function ModalPhoto(props: IHomeProps) {
   const { slug, setIsShow, isShow } = props;
   const ref = useRef<HTMLInputElement>(null);
   const [data, setData] = useState<IDetailPhoto>();
+  const { accessToken } = tokenStore();
 
   const fetchData = async () => {
     fetch(`${BASE_URL}/photos/${slug}`, {
       headers: {
-        Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+        Authorization: accessToken
+          ? `Bearer ${accessToken}`
+          : `Client-ID ${CLIENT_ID[keyIdx]}`,
       },
     })
       .then((res) => {
@@ -37,7 +41,10 @@ export default function ModalPhoto(props: IHomeProps) {
         }
         throw new Error(`${res.status} ${res.statusText}`);
       })
-      .then((data: IDetailPhoto) => setData(data))
+      .then((data: IDetailPhoto) => {
+        setData(data);
+        console.log(data);
+      })
       .catch((e) => {
         console.log("Error in modal photo", e);
       });

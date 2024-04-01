@@ -12,12 +12,11 @@ export interface IPhotoDetailProps {
 
 export default function PhotoDetail(props: IPhotoDetailProps) {
   const { photo, sticky } = props;
-  // const blurDataUrl = decode(photo?.blur_hash)
   const blurDataUrl = blurHashToDataURL(photo?.blur_hash)
 
   return (
     <div className="bg-white">
-      <PhotoDetailHeader data={photo?.user} sticky={sticky} />
+      <PhotoDetailHeader user={photo?.user} photo={photo} sticky={sticky} />
       <div className=" flex justify-center py-[10px]">
         <div className="relative max-h-[550px] max-md:w-full max-md:h-auto flex justify-center">
           <Image

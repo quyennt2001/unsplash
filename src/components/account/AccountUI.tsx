@@ -7,23 +7,23 @@ import { useRouter } from "next/navigation";
 import { MdDone } from "react-icons/md";
 import Image from "next/image";
 import Input from "@/components/UI/Input";
-import { updateCurrentUser } from "@/services/userService";
+import { getCurrentUser, updateCurrentUser } from "@/services/userService";
 import { toastStore } from "@/store/toastStore";
 import { ICustom, IDetailUser } from "@/interfaces/detailUser";
 import { ICurrentUser } from "@/interfaces/user";
 
 export interface IAccountProps {
-    currentUser: IDetailUser
+  currentUser: IDetailUser;
 }
 
-export default function AccountUI(props: IAccountProps) {
+export default function Account(props: IAccountProps) {
   const router = useRouter();
 
   const { user, setUser } = userStore();
   const { accessToken } = tokenStore();
   const { setToast } = toastStore();
 
-  const [updateUser, setUpdateUser] = useState<ICurrentUser|null>(user)
+  const [updateUser, setUpdateUser] = useState<ICurrentUser | null>(user);
   const [loading, setLoading] = useState(false);
   const [tag, setTag] = useState<any>();
   const [tags, setTags] = useState<ICustom[]>(user?.tags.custom || []);
@@ -38,7 +38,7 @@ export default function AccountUI(props: IAccountProps) {
     const res = await updateCurrentUser(updateUser, accessToken);
     if (res) {
       setToast("Account updated");
-      setUser(updateUser)
+      setUser(res);
     } else {
       setToast("Account update failed");
     }
@@ -56,7 +56,7 @@ export default function AccountUI(props: IAccountProps) {
   const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (checkValue(tag)) {
-        tags.push({ type: "search", title: e.target.value });
+        // tags.push({ type: "search", title: e.target.value });
         setTag("");
       }
     }
@@ -65,6 +65,16 @@ export default function AccountUI(props: IAccountProps) {
   const onDelete = (index: number) => {
     setTags(tags.filter((tag: ICustom, i: number) => i !== index));
   };
+
+  useEffect(() => {
+    const getUser = async () => {
+      const res = await getCurrentUser(accessToken);
+      console.log(res)
+      setUser(res);
+      setUpdateUser(res)
+    };
+    getUser();
+  }, [accessToken]);
 
   useEffect(() => {
     setLoading(true);
