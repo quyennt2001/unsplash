@@ -5,11 +5,14 @@ import Navbar from "@/components/home/Navbar";
 import MenuCollection from "@/components/home/MenuCollection";
 import ListImage from "@/components/home/ListImage";
 import { blurHashToDataURL } from "@/ultils/blurhashDataURL";
+import { getARandomPhoto } from "@/services/photoService";
+import { IPhoto } from "@/interfaces/photo";
 
 export interface IHomeProps {}
 
-export default function Home(props: IHomeProps) {
+export default async function Home(props: IHomeProps) {
   const blurDataUrl = blurHashToDataURL("LXFr@jE1D%aeBDxat7WV00xux]t7");
+  const photo: IPhoto = await getARandomPhoto();
   return (
     <div className="no-scrollbar">
       <Navbar />
@@ -43,14 +46,14 @@ export default function Home(props: IHomeProps) {
             <div className="size-[280px] rounded-lg relative flex items-end max-xl:hidden">
               <div className="flex h-full w-full absolute top-0 left-0 z-[2]">
                 <Image
-                  src="https://unsplash-assets.imgix.net/unsplashplus/asset-plus-018.jpg?dpr=1&h=280&w=280&auto=format&fit=crop&q=60"
+                  src={`${photo?.urls?.raw}&w=280`}
                   height={0}
                   width={0}
                   sizes="100vw"
                   alt=""
                   className="rounded-lg w-full h-auto"
                   placeholder="blur"
-                  blurDataURL={blurDataUrl}
+                  blurDataURL={blurHashToDataURL(photo?.blur_hash)}
                 />
               </div>
               <div className="p-5 flex flex-col gap-2 text-white font-semibold relative z-[3]">

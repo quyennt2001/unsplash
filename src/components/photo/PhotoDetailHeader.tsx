@@ -24,12 +24,13 @@ export interface IPhotoDetailHeaderProps {
 
 export default function PhotoDetailHeader(props: IPhotoDetailHeaderProps) {
   const { user, sticky, photo } = props;
+  const { accessToken } = tokenStore();
+  const [liked, setLiked] = useState(photo?.liked_by_user);
   const router = useRouter();
+  
   if (!user) {
     return <></>;
   }
-  const { accessToken } = tokenStore();
-  const [liked, setLiked] = useState(photo?.liked_by_user);
 
   const handleClickLike = async () => {
     if (accessToken) {

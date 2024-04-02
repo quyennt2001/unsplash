@@ -90,10 +90,10 @@ export default function Collection(props: ICollectionProps) {
           </div>
         </Link>
         <div className="flex gap-2 items-center text-grey text-sm">
-          <p className="">{data?.total_photos || 0} photos</p>
+          <p className="">{data?.total_photos || 0} images</p>
           <span className="size-px rounded-full bg-grey"></span>
           <p className="">
-            Curated by {props?.username || data?.user?.username}
+            Curated by {data?.user?.name}
           </p>
         </div>
       </div>

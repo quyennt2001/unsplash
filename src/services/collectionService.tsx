@@ -24,10 +24,12 @@ export async function getFirstPageCollection(per_page: number) {
     .catch((e) => console.log("Error collections first page", e));
 }
 
-export async function getCollection(collectionId: string) {
+export async function getCollection(collectionId: string, accessToken: string) {
   return fetch(`${URL}/${collectionId}`, {
     headers: {
-      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+      Authorization: accessToken
+        ? `Bearer ${accessToken}`
+        : `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
     .then((res) => {
@@ -36,7 +38,7 @@ export async function getCollection(collectionId: string) {
       }
       if (res.status === 403 && keyIdx < CLIENT_ID.length) {
         keyIdx = keyIdx + 1;
-        getCollection(collectionId);
+        getCollection(collectionId, "");
         return;
       }
       throw new Error(`${res.status} ${res.statusText}`);
@@ -44,10 +46,15 @@ export async function getCollection(collectionId: string) {
     .catch((e) => console.log("Error in collectionId", e));
 }
 
-export async function getPhotosOfCollection(collectionId: string) {
+export async function getPhotosOfCollection(
+  collectionId: string,
+  accessToken: string
+) {
   return fetch(`${URL}/${collectionId}/photos`, {
     headers: {
-      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+      Authorization: accessToken
+        ? `Bearer ${accessToken}`
+        : `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
     .then((res) => {
@@ -56,7 +63,7 @@ export async function getPhotosOfCollection(collectionId: string) {
       }
       if (res.status === 403 && keyIdx < CLIENT_ID.length) {
         keyIdx = keyIdx + 1;
-        getPhotosOfCollection(collectionId);
+        getPhotosOfCollection(collectionId, accessToken);
         return;
       }
       throw new Error(`${res.status} ${res.statusText}`);
@@ -64,10 +71,15 @@ export async function getPhotosOfCollection(collectionId: string) {
     .catch((e) => console.log("Error in collectionId", e));
 }
 
-export async function getRelatedCollections(collectionId: string) {
+export async function getRelatedCollections(
+  collectionId: string,
+  accessToken: string
+) {
   return fetch(`${URL}/${collectionId}/related`, {
     headers: {
-      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`,
+      Authorization: accessToken
+        ? `Bearer ${accessToken}`
+        : `Client-ID ${CLIENT_ID[keyIdx]}`,
     },
   })
     .then((res) => {
@@ -76,11 +88,10 @@ export async function getRelatedCollections(collectionId: string) {
       }
       if (res.status === 403 && keyIdx < CLIENT_ID.length) {
         keyIdx = keyIdx + 1;
-        getRelatedCollections(collectionId);
+        getRelatedCollections(collectionId, accessToken);
         return;
       }
       throw new Error(`${res.status} ${res.statusText}`);
     })
     .catch((e) => console.log("Error in collectionId", e));
 }
-

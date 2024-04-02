@@ -58,6 +58,27 @@ export async function getAPhoto(slug: string, accessToken: string) {
     .catch((e) => console.log("Error in get a photo", e));
 }
 
+export async function getARandomPhoto() {
+  return fetch(`${BASE_URL}/photos/random`, {
+    headers: {
+      Authorization: `Client-ID ${CLIENT_ID[keyIdx]}`
+    },
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      if (res.status === 403 && keyIdx < CLIENT_ID.length) {
+        keyIdx = keyIdx + 1;
+        getARandomPhoto();
+        return;
+      }
+      throw new Error(`${res.status} ${res.statusText}`);
+    })
+    .then((data) => data)
+    .catch((e) => console.log("Error in get a random photo", e));
+}
+
 export async function getFirstPagePhoto(accessToken: string) {
   return fetch(`${BASE_URL}/photos?page=1`, {
     headers: {

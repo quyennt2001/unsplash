@@ -10,19 +10,35 @@ import Link from "next/link";
 import { ICollection } from "@/interfaces/collection";
 import { IPhoto } from "@/interfaces/photo";
 import Empty from "@/components/Empty";
-import { getCollection, getPhotosOfCollection, getRelatedCollections } from "@/services/collectionService";
+import {
+  getCollection,
+  getPhotosOfCollection,
+  getRelatedCollections,
+} from "@/services/collectionService";
+import { cookies } from "next/headers";
 
 export interface IDetailCollectionProps {}
-
 
 export default async function DetailCollection({
   params,
 }: {
   params: { collectionId: string };
 }) {
-  const collection: ICollection = await getCollection(params.collectionId);
-  const photos: IPhoto[] = await getPhotosOfCollection(params.collectionId);
-  const relateds: ICollection[] = await getRelatedCollections(params.collectionId);
+  const cookieStore = cookies();
+  const accessToken = cookieStore.get("access_token")?.value || "";
+
+  const collection: ICollection = await getCollection(
+    params.collectionId,
+    accessToken
+  );
+  const photos: IPhoto[] = await getPhotosOfCollection(
+    params.collectionId,
+    accessToken
+  );
+  const relateds: ICollection[] = await getRelatedCollections(
+    params.collectionId,
+    accessToken
+  );
 
   if (!collection) {
     return <Empty />;
@@ -52,19 +68,21 @@ export default async function DetailCollection({
             </div>
           </div>
         </div>
-        <div className="flex mb-6">{collection?.total_photos} photos</div>
+        <div className="flex mb-6">{collection?.total_photos} images</div>
         <div className="flex flex-col gap-18">
           <ListData data={photos} />
-          <div className="flex flex-col">
-            <p className="text-2xl font-semibold mt-4 mb-6">
-              You might also like
-            </p>
-            <div className="grid grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-6">
-              {relateds.map((item: ICollection, i: number) => (
-                <Collection data={item} key={i} />
-              ))}
+          {relateds.length > 0 ? (
+            <div className="flex flex-col">
+              <p className="text-2xl font-semibold mt-4 mb-6">
+                You might also like
+              </p>
+              <div className="grid grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-6">
+                {relateds.map((item: ICollection, i: number) => (
+                  <Collection data={item} key={i} />
+                ))}
+              </div>
             </div>
-          </div>
+          ) : <></>}
         </div>
       </div>
     </div>
